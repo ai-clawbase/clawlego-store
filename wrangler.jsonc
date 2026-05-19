@@ -3,10 +3,13 @@
   // 仅托管 `pnpm build` 产出的 dist/，无 Worker 脚本。
   // 显式声明 assets 后，`wrangler deploy` 不再做框架自动识别
   // （那条路要求 Vite ≥ 6，本项目用 Vite 5）。
-  // SPA 回退与 /store/* 的 CORS 由 dist/ 内的 _redirects、_headers 提供。
+  // SPA 回退用 not_found_handling（Workers 静态资源不吃 Pages 式
+  // `/* /index.html 200`，那会被判定无限循环）。
+  // /store/* 的 CORS 仍由 dist/ 内的 _headers 提供。
   "name": "clawlego-store",
   "compatibility_date": "2026-05-19",
   "assets": {
-    "directory": "./dist"
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
   }
 }
