@@ -1,0 +1,30 @@
+{
+  "name": "clawlego-store",
+  "version": "0.1.0",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@10.13.1",
+  "description": "ClawLego 商店 — ClawTpl / ClawMod 与开源智能资产的开放注册表与浏览站点",
+  "scripts": {
+    "dev": "node scripts/build-store.mjs public && vite --host 127.0.0.1",
+    "build": "vue-tsc --noEmit && vite build && node scripts/build-store.mjs dist",
+    "preview": "vite preview --host 127.0.0.1",
+    "store:build": "node scripts/build-store.mjs dist",
+    "store:check": "node scripts/build-store.mjs --check"
+  },
+  "dependencies": {
+    "@iconify/vue": "^5.0.0",
+    "vue": "^3.4.38",
+    "vue-router": "^4.4.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.1.4",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11",
+    "vue-tsc": "^2.1.10"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "fetch",
+  "description": "抓取网页并转成适合阅读的纯文本",
+  "transport": "stdio",
+  "command": "uvx",
+  "args": ["mcp-server-fetch"],
+  "env": {},
+  "notes": "由 ClawLego 安装时合并进实例的 MCP 注册表。需要本机可用的 uvx（uv 工具链）。"
+}

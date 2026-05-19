@@ -1,0 +1,18 @@
+{
+  "id": "clawmod-web-research",
+  "kind": "mod",
+  "source": "hosted",
+  "name": "网络调研资产包",
+  "tagline": "让任意智能体具备结构化的联网调研能力",
+  "summary": "一个即插即用的智能资产包：联网抓取技能、调研简报提示词、信息源质量知识库，以及一个 fetch MCP 配置。装到任何实例上，它就会先列信源、再交叉验证、最后产出带引用的简报。",
+  "version": "1.2.0",
+  "category": "engineering",
+  "author": { "name": "ClawLego", "url": "https://clawlego.studio" },
+  "license": "MIT",
+  "icon": "material-symbols:travel-explore",
+  "accent": "#10B981",
+  "tags": ["调研", "联网", "MCP", "资产包"],
+  "contents": { "prompt": 1, "skill": 1, "mcp": 1, "subagent": 0, "knowledge": 1, "tool": 0 },
+  "install": { "target": "business/assets/mods/{id}" },
+  "updated": "2026-05-18"
+}

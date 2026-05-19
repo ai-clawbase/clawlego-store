@@ -1,0 +1,18 @@
+{
+  "id": "clawmod-life-butler",
+  "kind": "mod",
+  "source": "hosted",
+  "name": "生活管家资产包",
+  "tagline": "把日程、采购、家务收进一个智能体",
+  "summary": "一个面向日常生活的轻量资产包：每日计划提示词、采购清单技能。装到任何实例上，它就能帮你把零散的生活待办整理成一天的节奏。",
+  "version": "1.0.0",
+  "category": "life",
+  "author": { "name": "ClawLego", "url": "https://clawlego.studio" },
+  "license": "MIT",
+  "icon": "material-symbols:cottage-outline",
+  "accent": "#F59E0B",
+  "tags": ["生活", "日程", "家务", "资产包"],
+  "contents": { "prompt": 1, "skill": 1, "mcp": 0, "subagent": 0, "knowledge": 0, "tool": 0 },
+  "install": { "target": "business/assets/mods/{id}" },
+  "updated": "2026-05-15"
+}

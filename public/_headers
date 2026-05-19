@@ -1,0 +1,9 @@
+# The store catalog is a public, machine-readable API consumed by the
+# ClawLego app. Allow cross-origin reads for the whole /store/ namespace.
+/store/*
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=300
+
+/store/index.json
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=120

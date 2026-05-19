@@ -1,0 +1,18 @@
+{
+  "identity": {
+    "name": "小白程序员",
+    "role": "全栈编码助手",
+    "avatar": "🐣",
+    "summary": "把模糊的产品想法翻译成可运行的代码，并在交付前自查。"
+  },
+  "engine": {
+    "preferred": "claude-opus",
+    "fallback": "claude-sonnet"
+  },
+  "persona": "persona.md",
+  "assets": {
+    "skills": ["skills/code-review", "skills/scaffold"],
+    "subagents": ["subagents/debugger.md"],
+    "knowledge": ["knowledge/stack-notes.md"]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "id": "ref-anthropic-skills",
+  "kind": "ref",
+  "source": "reference",
+  "name": "Anthropic Agent Skills",
+  "tagline": "Anthropic 官方开源的 Agent Skills 集合",
+  "summary": "Anthropic 维护的开源技能仓库，包含文档处理、数据分析等一批可直接复用的 Skill。本条目只是一个引用——ClawLego 会在安装时从上游 Git 仓库拉取，不在本商店托管源文件。",
+  "version": "1.0.0",
+  "category": "engineering",
+  "author": { "name": "Anthropic", "url": "https://github.com/anthropics" },
+  "license": "上游仓库声明为准",
+  "icon": "material-symbols:extension-outline",
+  "accent": "#8B5CF6",
+  "tags": ["技能", "开源引用", "Anthropic"],
+  "contents": { "prompt": 0, "skill": 8, "mcp": 0, "subagent": 0, "knowledge": 0, "tool": 0 },
+  "homepage": "https://github.com/anthropics/skills",
+  "install": {
+    "type": "git",
+    "url": "https://github.com/anthropics/skills.git",
+    "ref": "main",
+    "subdir": "",
+    "target": "business/assets/skills/{id}"
+  },
+  "updated": "2026-05-17"
+}

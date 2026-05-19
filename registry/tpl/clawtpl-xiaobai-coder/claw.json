@@ -1,0 +1,18 @@
+{
+  "id": "clawtpl-xiaobai-coder",
+  "kind": "tpl",
+  "source": "hosted",
+  "name": "小白程序员",
+  "tagline": "面向非技术创业者的全栈编码出厂模板",
+  "summary": "一个开箱即用的编码型智能体基因。内置代码评审、项目脚手架两项技能，一个调试 subagent，以及一份技术栈知识库。安装后即得到一个能读懂需求、动手写代码、自查问题的工程实例。",
+  "version": "1.0.0",
+  "category": "engineering",
+  "author": { "name": "ClawLego", "url": "https://clawlego.studio" },
+  "license": "MIT",
+  "icon": "material-symbols:smart-toy-outline",
+  "accent": "#4F5BFF",
+  "tags": ["编码", "全栈", "出厂模板", "工程"],
+  "contents": { "prompt": 1, "skill": 2, "mcp": 0, "subagent": 1, "knowledge": 1, "tool": 0 },
+  "install": { "target": "business/agents/{id}" },
+  "updated": "2026-05-19"
+}
