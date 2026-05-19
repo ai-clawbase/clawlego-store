@@ -49,16 +49,16 @@ export interface StoreIndex {
 }
 
 export const KIND_LABEL: Record<ItemKind, string> = {
-  brick: 'ClawBrick 原子积木',
-  mod: 'ClawMod 功能组件',
-  tpl: 'ClawTpl 角色模版',
+  brick: 'ClawBrick 智能原子',
+  mod: 'ClawMod 智能组件',
+  tpl: 'ClawTpl 智能体模板',
   pkg: 'ClawPkg 智能体包',
 }
 
 export const KIND_SHORT: Record<ItemKind, string> = {
-  brick: '积木',
+  brick: '原子',
   mod: '组件',
-  tpl: '模版',
+  tpl: '模板',
   pkg: '智能体',
 }
 

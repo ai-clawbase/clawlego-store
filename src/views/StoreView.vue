@@ -9,7 +9,7 @@
           <span class="kicker">CLAWLEGO STORE</span>
           <h1 class="hero-title">像积木一样，<br />拼搭你的专属智能体。</h1>
           <p class="hero-sub">
-            从单件的「原子积木」，到「功能组件」与「角色模版」，再到一键克隆的「智能体包」。
+            从单件的「智能原子」，到「智能组件」与「智能体模板」，再到一键克隆的「智能体包」。
             在 ClawLego 商店里点一下，丰富的 AI 资产即刻落户你的本地实例。
           </p>
           <div class="hero-stats">
@@ -17,13 +17,13 @@
               <strong>{{ counts.pkg }}</strong><span>智能体包</span>
             </div>
             <div class="stat">
-              <strong>{{ counts.tpl }}</strong><span>模版</span>
+              <strong>{{ counts.tpl }}</strong><span>智能体模板</span>
             </div>
             <div class="stat">
-              <strong>{{ counts.mod }}</strong><span>组件</span>
+              <strong>{{ counts.mod }}</strong><span>智能组件</span>
             </div>
             <div class="stat">
-              <strong>{{ counts.brick }}</strong><span>积木</span>
+              <strong>{{ counts.brick }}</strong><span>智能原子</span>
             </div>
           </div>
         </div>
@@ -45,7 +45,7 @@
           </div>
           <div class="search">
             <Icon icon="material-symbols:search" width="18" />
-            <input v-model="query" type="search" placeholder="搜索积木、模版…" />
+            <input v-model="query" type="search" placeholder="搜索原子、模板…" />
           </div>
         </div>
 
@@ -91,17 +91,17 @@
                   <span>工具</span>
                 </div>
               </div>
-              <span>原子积木</span>
+              <span>智能原子</span>
             </div>
             <div class="arrow"></div>
             <div class="node">
               <div class="node-box mod">ClawMod</div>
-              <span>功能组件</span>
+              <span>智能组件</span>
             </div>
             <div class="arrow"></div>
             <div class="node">
               <div class="node-box tpl">ClawTpl</div>
-              <span>角色模版</span>
+              <span>智能体模板</span>
             </div>
             <div class="arrow"></div>
             <div class="node">
