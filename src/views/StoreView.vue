@@ -81,7 +81,16 @@
           </div>
           <div class="diagram">
             <div class="node">
-              <div class="node-box brick">Brick</div>
+              <div class="node-box brick">
+                Brick
+                <div class="brick-details">
+                  <span>提示词</span>
+                  <span>技能</span>
+                  <span>MCP</span>
+                  <span>知识库</span>
+                  <span>工具</span>
+                </div>
+              </div>
               <span>原子积木</span>
             </div>
             <div class="arrow"></div>
@@ -350,15 +359,41 @@ const filtered = computed(() => {
   height: 60px;
   border-radius: 12px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   font-weight: 800;
   color: #fff;
   font-size: 14px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  position: relative;
+  transition: transform .2s;
 }
-.node span { font-size: 13px; font-weight: 600; color: var(--ink-3); }
-.brick { background: #94A3B8; }
+.node-box:hover { transform: translateY(-4px); }
+
+.brick { 
+  background: #94A3B8; 
+  height: 100px !important;
+  justify-content: flex-start !important;
+  padding-top: 12px;
+}
+.brick-details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px;
+  margin-top: 8px;
+  width: 100%;
+  padding: 0 8px;
+}
+.brick-details span {
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 2px 4px;
+  border-radius: 4px;
+  color: #fff !important;
+  white-space: nowrap;
+}
 .mod { background: #6366F1; }
 .tpl { background: #8B5CF6; }
 .pkg { background: #4F5BFF; }
