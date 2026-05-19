@@ -1,17 +1,17 @@
 {
-  "id": "ref-awesome-prompts",
-  "kind": "ref",
+  "id": "clawmod-awesome-prompts",
+  "kind": "mod",
   "source": "reference",
   "name": "Awesome 提示词合集",
   "tagline": "社区维护的高质量提示词大全",
-  "summary": "一个广为流传的社区提示词合集，覆盖写作、编程、生活等大量角色化提示词。本条目是一个引用，ClawLego 安装时从上游 Git 仓库拉取，作为提示词资产登记到实例。",
+  "summary": "一个广为流传的社区提示词合集，覆盖写作、编程、生活等大量角色化提示词。作为一个提示词资产包整体登记；源文件不在本商店托管——ClawLego 安装时从上游 Git 仓库拉取。",
   "version": "1.0.0",
   "category": "general",
   "author": { "name": "f (社区维护)", "url": "https://github.com/f" },
   "license": "CC0-1.0",
   "icon": "material-symbols:auto-awesome-outline",
   "accent": "#EC4899",
-  "tags": ["提示词", "开源引用", "社区"],
+  "tags": ["提示词", "GitHub 源", "社区"],
   "contents": { "prompt": 200, "skill": 0, "mcp": 0, "subagent": 0, "knowledge": 0, "tool": 0 },
   "homepage": "https://github.com/f/awesome-chatgpt-prompts",
   "install": {
@@ -19,7 +19,7 @@
     "url": "https://github.com/f/awesome-chatgpt-prompts.git",
     "ref": "main",
     "subdir": "",
-    "target": "business/assets/prompts/{id}"
+    "target": "business/assets/mods/{id}"
   },
   "updated": "2026-05-12"
 }

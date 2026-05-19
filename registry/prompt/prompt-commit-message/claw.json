@@ -1,0 +1,16 @@
+{
+  "id": "prompt-commit-message",
+  "kind": "prompt",
+  "source": "hosted",
+  "name": "提交信息生成器",
+  "tagline": "把一段 diff 写成规范、可读的提交信息",
+  "summary": "一条单件提示词。喂给它一段代码改动,它会先归纳改动意图,再按 Conventional Commits 规范产出一行标题加要点正文,标题克制、正文只讲“为什么”。装到任意实例上即可在写提交信息时调用。",
+  "version": "1.0.0",
+  "category": "engineering",
+  "author": { "name": "ClawLego", "url": "https://clawlego.com" },
+  "license": "MIT",
+  "icon": "material-symbols:commit",
+  "accent": "#BE185D",
+  "tags": ["提示词", "Git", "提交信息", "工程"],
+  "updated": "2026-05-19"
+}

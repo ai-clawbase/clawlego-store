@@ -18,6 +18,9 @@
           <div class="head-text">
             <div class="head-badges">
               <span class="kind" :class="`kind-${item.kind}`">{{ kindLabel }}</span>
+              <span v-if="item.source === 'reference'" class="src-tag">
+                <Icon icon="material-symbols:link" width="13" /> GitHub 外部源
+              </span>
               <span class="ver mono">v{{ item.version }}</span>
             </div>
             <h1>{{ item.name }}</h1>
@@ -211,7 +214,16 @@ const sizeText = computed(() => {
 }
 .kind-tpl { background: var(--primary-soft); color: var(--primary-ink); }
 .kind-mod { background: var(--mint-soft); color: #0B7355; }
-.kind-ref { background: #FFF1E0; color: #B45309; }
+.kind-prompt { background: #FCE7F3; color: #BE185D; }
+.kind-skill { background: #EDE9FE; color: #6D28D9; }
+.src-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-3);
+}
 .ver { font-size: 12.5px; color: var(--ink-4); }
 .head-text h1 {
   margin-top: 10px;

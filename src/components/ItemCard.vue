@@ -4,7 +4,12 @@
       <span class="icon" :style="{ background: tint, color: item.accent }">
         <Icon :icon="item.icon || 'material-symbols:deployed-code-outline'" width="24" />
       </span>
-      <span class="kind" :class="`kind-${item.kind}`">{{ kindShort }}</span>
+      <span class="badges">
+        <span class="kind" :class="`kind-${item.kind}`">{{ kindShort }}</span>
+        <span v-if="item.source === 'reference'" class="src">
+          <Icon icon="material-symbols:link" width="12" /> 外部源
+        </span>
+      </span>
     </div>
 
     <h3 class="name">{{ item.name }}</h3>
@@ -13,10 +18,6 @@
     <div v-if="contentBits.length" class="contents">
       <span v-for="b in contentBits" :key="b" class="content-bit">{{ b }}</span>
     </div>
-    <p v-else class="ref-hint">
-      <Icon icon="material-symbols:link" width="14" />
-      外部开源引用
-    </p>
 
     <div class="card-foot">
       <span class="cat">{{ categoryLabel }}</span>
@@ -83,7 +84,22 @@ const contentBits = computed(() => {
 }
 .kind-tpl { background: var(--primary-soft); color: var(--primary-ink); }
 .kind-mod { background: var(--mint-soft); color: #0B7355; }
-.kind-ref { background: #FFF1E0; color: #B45309; }
+.kind-prompt { background: #FCE7F3; color: #BE185D; }
+.kind-skill { background: #EDE9FE; color: #6D28D9; }
+.badges {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+.src {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-4);
+}
 .name {
   font-size: 17px;
   font-weight: 700;
@@ -110,15 +126,6 @@ const contentBits = computed(() => {
   border: 1px solid var(--line);
   border-radius: 6px;
   padding: 3px 7px;
-}
-.ref-hint {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  margin-top: 16px;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--ink-4);
 }
 .card-foot {
   display: flex;

@@ -1,4 +1,6 @@
-export type ItemKind = 'tpl' | 'mod' | 'ref'
+// Asset kinds — three aggregation tiers, finest to coarsest.
+// `source` ('hosted' | 'reference') is orthogonal and is not a kind.
+export type ItemKind = 'tpl' | 'mod' | 'prompt' | 'skill'
 
 export interface ItemAuthor {
   name: string
@@ -49,13 +51,15 @@ export interface StoreIndex {
 export const KIND_LABEL: Record<ItemKind, string> = {
   tpl: 'ClawTpl 出厂模板',
   mod: 'ClawMod 资产包',
-  ref: '开源引用',
+  prompt: '提示词',
+  skill: '技能',
 }
 
 export const KIND_SHORT: Record<ItemKind, string> = {
   tpl: 'ClawTpl',
   mod: 'ClawMod',
-  ref: '引用',
+  prompt: '提示词',
+  skill: '技能',
 }
 
 export const CATEGORY_LABEL: Record<string, string> = {

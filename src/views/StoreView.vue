@@ -9,8 +9,9 @@
           <span class="kicker">CLAWLEGO STORE</span>
           <h1 class="hero-title">智能资产，<br />一键装进你的实例。</h1>
           <p class="hero-sub">
-            ClawTpl 出厂模板、ClawMod 资产包，以及互联网上的开源智能资产引用——
-            在 ClawLego 商店里点一下，源文件就落到你自己实例的文件树里。
+            从单件的提示词、技能，到 ClawMod 资产包，再到 ClawTpl 出厂模板——三级
+            聚合粒度的智能资产。在 ClawLego 商店里点一下，无论托管在本仓库还是来自
+            GitHub 上游，源文件都会落到你自己实例的文件树里。
           </p>
           <div class="hero-stats">
             <div class="stat">
@@ -20,7 +21,10 @@
               <strong>{{ counts.mod }}</strong><span>ClawMod</span>
             </div>
             <div class="stat">
-              <strong>{{ counts.ref }}</strong><span>开源引用</span>
+              <strong>{{ counts.prompt }}</strong><span>提示词</span>
+            </div>
+            <div class="stat">
+              <strong>{{ counts.skill }}</strong><span>技能</span>
             </div>
           </div>
         </div>
@@ -120,14 +124,16 @@ const items = computed<StoreItem[]>(() => index.value?.items ?? [])
 const counts = computed(() => ({
   tpl: items.value.filter((i) => i.kind === 'tpl').length,
   mod: items.value.filter((i) => i.kind === 'mod').length,
-  ref: items.value.filter((i) => i.kind === 'ref').length,
+  prompt: items.value.filter((i) => i.kind === 'prompt').length,
+  skill: items.value.filter((i) => i.kind === 'skill').length,
 }))
 
 const kindTabs = computed(() => [
   { key: 'all' as const, label: '全部', count: items.value.length },
   { key: 'tpl' as const, label: 'ClawTpl', count: counts.value.tpl },
   { key: 'mod' as const, label: 'ClawMod', count: counts.value.mod },
-  { key: 'ref' as const, label: '开源引用', count: counts.value.ref },
+  { key: 'prompt' as const, label: '提示词', count: counts.value.prompt },
+  { key: 'skill' as const, label: '技能', count: counts.value.skill },
 ])
 
 const categories = computed(() => {

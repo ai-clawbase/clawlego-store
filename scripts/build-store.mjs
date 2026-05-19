@@ -20,7 +20,14 @@ import { execFileSync } from 'node:child_process'
 
 const ROOT = resolve(import.meta.dirname, '..')
 const REGISTRY = join(ROOT, 'registry')
-const KINDS = ['tpl', 'mod', 'ref']
+// The three aggregation tiers, finest to coarsest: an atomic asset (a single
+// prompt / skill) → `mod` (a pack of assets) → `tpl` (a whole agent). Whether
+// the source files are hosted here or pulled from an upstream git repo is the
+// orthogonal `source` axis — not a kind.
+const KINDS = ['tpl', 'mod', 'prompt', 'skill']
+// Atomic-asset kinds: the kind names the asset type, so install target and the
+// `contents` count are derived from it.
+const ATOMIC_KINDS = ['prompt', 'skill']
 const CATEGORIES = ['design', 'life', 'engineering', 'service', 'general']
 const SITE = 'https://store.clawlego.com'
 
@@ -66,13 +73,10 @@ for (const kind of KINDS) {
     if (m.category && !CATEGORIES.includes(m.category)) {
       fail(ref, `unknown category "${m.category}" (allowed: ${CATEGORIES.join(', ')})`)
     }
+    // `source` is orthogonal to `kind`: any tier may be hosted or referenced.
     const hosted = m.source === 'hosted'
     if (!['hosted', 'reference'].includes(m.source)) {
       fail(ref, `source must be "hosted" or "reference"`)
-    }
-    if (kind === 'ref' && hosted) fail(ref, 'ref items must have source "reference"')
-    if ((kind === 'tpl' || kind === 'mod') && !hosted) {
-      fail(ref, 'tpl / mod items must have source "hosted"')
     }
 
     const filesDir = join(itemDir, 'files')
@@ -100,6 +104,14 @@ for (const kind of KINDS) {
       m.install = { ...(m.install || {}), type: 'tarball', artifact: 'bundle.tgz' }
       m.bundleBytes = statSync(tgz).size
       m.downloadUrl = `/store/${kind}/${id}/bundle.tgz`
+    }
+
+    // Atomic assets (prompt / skill) carry kind-derived defaults: a per-type
+    // install target and a `contents` count of 1 — regardless of source.
+    if (ATOMIC_KINDS.includes(kind)) {
+      m.install = m.install || {}
+      if (!m.install.target) m.install.target = `business/assets/${kind}s/{id}`
+      if (!m.contents) m.contents = { [kind]: 1 }
     }
 
     const readmePath = join(itemDir, 'README.md')
@@ -150,7 +162,12 @@ const index = {
   generatedAt: new Date().toISOString(),
   site: SITE,
   count: items.length,
-  kinds: { tpl: 'ClawTpl 出厂模板', mod: 'ClawMod 资产包', ref: '开源引用' },
+  kinds: {
+    tpl: 'ClawTpl 出厂模板',
+    mod: 'ClawMod 资产包',
+    prompt: '提示词',
+    skill: '技能',
+  },
   items,
 }
 writeFileSync(join(OUT, 'index.json'), JSON.stringify(index, null, 2) + '\n')

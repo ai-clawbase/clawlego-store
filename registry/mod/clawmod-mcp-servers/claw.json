@@ -1,17 +1,17 @@
 {
-  "id": "ref-mcp-servers",
-  "kind": "ref",
+  "id": "clawmod-mcp-servers",
+  "kind": "mod",
   "source": "reference",
   "name": "MCP 官方服务器集",
   "tagline": "Model Context Protocol 官方参考服务器仓库",
-  "summary": "Model Context Protocol 官方维护的参考 MCP 服务器集合（文件系统、Git、抓取、记忆等）。本条目是一个引用，ClawLego 在安装时从上游 Git 仓库拉取对应子目录的 MCP 配置。",
+  "summary": "Model Context Protocol 官方维护的参考 MCP 服务器集合（文件系统、Git、抓取、记忆等）。作为一个资产包整体登记；源文件不在本商店托管——ClawLego 安装时从上游 Git 仓库拉取对应子目录。",
   "version": "1.0.0",
   "category": "engineering",
   "author": { "name": "Model Context Protocol", "url": "https://github.com/modelcontextprotocol" },
   "license": "上游仓库声明为准",
   "icon": "material-symbols:cable",
   "accent": "#0EA5E9",
-  "tags": ["MCP", "开源引用", "服务器"],
+  "tags": ["MCP", "GitHub 源", "服务器"],
   "contents": { "prompt": 0, "skill": 0, "mcp": 7, "subagent": 0, "knowledge": 0, "tool": 0 },
   "homepage": "https://github.com/modelcontextprotocol/servers",
   "install": {
@@ -19,7 +19,7 @@
     "url": "https://github.com/modelcontextprotocol/servers.git",
     "ref": "main",
     "subdir": "src",
-    "target": "business/assets/mcp/{id}"
+    "target": "business/assets/mods/{id}"
   },
   "updated": "2026-05-16"
 }

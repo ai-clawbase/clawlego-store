@@ -1,0 +1,16 @@
+{
+  "id": "skill-meeting-notes",
+  "kind": "skill",
+  "source": "hosted",
+  "name": "会议纪要整理",
+  "tagline": "把零散的会议记录整理成决议、待办与未决项",
+  "summary": "一个单件技能。喂给它一段会议记录或语音转写,它会分离出已达成的决议、可执行的待办(带负责人)和悬而未决的问题,而不是简单复述对话。装到任意实例上,遇到“整理纪要”类请求时自动触发。",
+  "version": "1.0.0",
+  "category": "general",
+  "author": { "name": "ClawLego", "url": "https://clawlego.com" },
+  "license": "MIT",
+  "icon": "material-symbols:event-note-outline",
+  "accent": "#6D28D9",
+  "tags": ["技能", "会议", "纪要", "通用"],
+  "updated": "2026-05-19"
+}
