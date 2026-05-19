@@ -95,17 +95,36 @@
             </div>
             <div class="arrow"></div>
             <div class="node">
-              <div class="node-box mod">ClawMod</div>
+              <div class="node-box mod">
+                ClawMod
+                <div class="brick-details">
+                  <span>业务场景</span>
+                  <span>工作流</span>
+                  <span>数字员工</span>
+                </div>
+              </div>
               <span>智能组件</span>
             </div>
             <div class="arrow"></div>
             <div class="node">
-              <div class="node-box tpl">ClawTpl</div>
+              <div class="node-box tpl">
+                ClawTpl
+                <div class="brick-details">
+                  <span>角色人格</span>
+                  <span>专家模版</span>
+                </div>
+              </div>
               <span>智能体模板</span>
             </div>
             <div class="arrow"></div>
             <div class="node">
-              <div class="node-box pkg">ClawPkg</div>
+              <div class="node-box pkg">
+                ClawPkg
+                <div class="brick-details">
+                  <span>完整实例</span>
+                  <span>开箱即用</span>
+                </div>
+              </div>
               <span>智能体包</span>
             </div>
           </div>
@@ -356,30 +375,30 @@ const filtered = computed(() => {
 }
 .node-box {
   width: 100px;
-  height: 60px;
+  height: 120px;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-top: 12px;
   font-weight: 800;
   color: #fff;
-  font-size: 14px;
+  font-size: 13px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   position: relative;
   transition: transform .2s;
 }
 .node-box:hover { transform: translateY(-4px); }
 
-.brick { 
-  background: #94A3B8; 
-  height: 100px !important;
-  justify-content: flex-start !important;
-  padding-top: 12px;
-}
+.brick { background: #94A3B8; }
+.mod { background: #6366F1; }
+.tpl { background: #8B5CF6; }
+.pkg { background: #4F5BFF; }
+
 .brick-details {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 4px;
   margin-top: 8px;
   width: 100%;
@@ -393,10 +412,8 @@ const filtered = computed(() => {
   border-radius: 4px;
   color: #fff !important;
   white-space: nowrap;
+  text-align: center;
 }
-.mod { background: #6366F1; }
-.tpl { background: #8B5CF6; }
-.pkg { background: #4F5BFF; }
 .arrow {
   width: 24px;
   height: 2px;
