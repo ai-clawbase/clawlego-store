@@ -7,7 +7,7 @@
   "summary": "一个开箱即用的编码型智能体基因。内置代码评审、项目脚手架两项技能，一个调试 subagent，以及一份技术栈知识库。安装后即得到一个能读懂需求、动手写代码、自查问题的工程实例。",
   "version": "1.0.0",
   "category": "engineering",
-  "author": { "name": "ClawLego", "url": "https://clawlego.studio" },
+  "author": { "name": "ClawLego", "url": "https://clawlego.com" },
   "license": "MIT",
   "icon": "material-symbols:smart-toy-outline",
   "accent": "#4F5BFF",

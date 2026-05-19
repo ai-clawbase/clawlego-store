@@ -7,7 +7,7 @@
   "summary": "一个面向日常生活的轻量资产包：每日计划提示词、采购清单技能。装到任何实例上，它就能帮你把零散的生活待办整理成一天的节奏。",
   "version": "1.0.0",
   "category": "life",
-  "author": { "name": "ClawLego", "url": "https://clawlego.studio" },
+  "author": { "name": "ClawLego", "url": "https://clawlego.com" },
   "license": "MIT",
   "icon": "material-symbols:cottage-outline",
   "accent": "#F59E0B",

@@ -55,4 +55,4 @@ registry 不合法会让构建失败。
 
 本仓库归属 GitHub 组织 `ai-clawbase`，与 ClawLego 官网（`ai-clawbase/starclaw-web`）
 同组。设计体系（色板、字体、按钮）沿用官网，token 见 `src/styles.css`。
-部署目标是 Cloudflare Pages 项目 `clawlego-store` → `store.clawlego.studio`。
+部署目标是 Cloudflare Pages 项目 `clawlego-store` → `store.clawlego.com`。

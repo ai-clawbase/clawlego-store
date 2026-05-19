@@ -5,7 +5,7 @@
 //   node scripts/build-store.mjs public    → writes public/store/ (for `pnpm dev`)
 //   node scripts/build-store.mjs --check   → validate only, no output
 //
-// Output layout (served at https://store.clawlego.studio):
+// Output layout (served at https://store.clawlego.com):
 //   /store/index.json              full catalog index (the app fetches this first)
 //   /store/<kind>/<id>/claw.json   per-item manifest
 //   /store/<kind>/<id>/bundle.tgz  installable payload (hosted items only)
@@ -22,7 +22,7 @@ const ROOT = resolve(import.meta.dirname, '..')
 const REGISTRY = join(ROOT, 'registry')
 const KINDS = ['tpl', 'mod', 'ref']
 const CATEGORIES = ['design', 'life', 'engineering', 'service', 'general']
-const SITE = 'https://store.clawlego.studio'
+const SITE = 'https://store.clawlego.com'
 
 const arg = process.argv[2] || 'dist'
 const checkOnly = arg === '--check'

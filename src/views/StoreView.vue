@@ -77,7 +77,7 @@
               直接拉取它来渲染列表与执行一键安装。
             </p>
           </div>
-          <pre class="codeblock">GET https://store.clawlego.studio/store/index.json</pre>
+          <pre class="codeblock">GET https://store.clawlego.com/store/index.json</pre>
         </div>
       </section>
     </main>

@@ -11,11 +11,11 @@
       </router-link>
 
       <nav class="nav-links">
-        <a href="https://clawlego.studio" target="_blank" rel="noreferrer">官网</a>
+        <a href="https://clawlego.com" target="_blank" rel="noreferrer">官网</a>
         <a href="https://github.com/ai-clawbase/clawlego-store" target="_blank" rel="noreferrer">开源仓库</a>
       </nav>
 
-      <a class="btn btn-primary" href="https://clawlego.studio" target="_blank" rel="noreferrer">
+      <a class="btn btn-primary" href="https://clawlego.com" target="_blank" rel="noreferrer">
         下载 ClawLego
       </a>
     </div>

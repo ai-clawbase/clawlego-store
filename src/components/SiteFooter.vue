@@ -8,7 +8,7 @@
       <div class="foot-cols">
         <div class="foot-col">
           <span class="foot-h">产品</span>
-          <a href="https://clawlego.studio" target="_blank" rel="noreferrer">ClawLego 官网</a>
+          <a href="https://clawlego.com" target="_blank" rel="noreferrer">ClawLego 官网</a>
           <router-link to="/">浏览商店</router-link>
         </div>
         <div class="foot-col">
@@ -20,7 +20,7 @@
     </div>
     <div class="wrap foot-base">
       <span>© {{ year }} ClawLego · 一切皆文件</span>
-      <span class="mono">store.clawlego.studio</span>
+      <span class="mono">store.clawlego.com</span>
     </div>
   </footer>
 </template>
