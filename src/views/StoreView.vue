@@ -82,7 +82,7 @@
           <div class="diagram">
             <div class="node">
               <div class="node-box brick">
-                Brick
+                ClawBrick
                 <div class="brick-details">
                   <span>提示词</span>
                   <span>技能</span>
@@ -95,17 +95,17 @@
             </div>
             <div class="arrow"></div>
             <div class="node">
-              <div class="node-box mod">Mod</div>
+              <div class="node-box mod">ClawMod</div>
               <span>功能组件</span>
             </div>
             <div class="arrow"></div>
             <div class="node">
-              <div class="node-box tpl">Tpl</div>
+              <div class="node-box tpl">ClawTpl</div>
               <span>角色模版</span>
             </div>
             <div class="arrow"></div>
             <div class="node">
-              <div class="node-box pkg">Pkg</div>
+              <div class="node-box pkg">ClawPkg</div>
               <span>智能体包</span>
             </div>
           </div>
