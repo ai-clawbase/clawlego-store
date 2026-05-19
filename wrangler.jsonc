@@ -11,5 +11,10 @@
   "assets": {
     "directory": "./dist",
     "not_found_handling": "single-page-application"
-  }
+  },
+  // 自定义域名。custom_domain=true 时 wrangler/CI 部署会自动
+  // 在 clawlego.com zone 下建好代理 CNAME，无需手工预建 DNS。
+  "routes": [
+    { "pattern": "store.clawlego.com", "custom_domain": true }
+  ]
 }

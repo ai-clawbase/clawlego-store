@@ -1,9 +1,9 @@
 # The store catalog is a public, machine-readable API consumed by the
 # ClawLego app. Allow cross-origin reads for the whole /store/ namespace.
+# 注意：Workers 静态资源对重叠的 _headers 规则是「追加」而非「覆盖」，
+# 所以这里只保留一条 /store/* 规则。若再加一条 /store/index.json，
+# 会让命中两条规则的路径出现 `Access-Control-Allow-Origin: *, *`
+# 这种非法重复值，浏览器跨域 fetch 会被拒。
 /store/*
   Access-Control-Allow-Origin: *
   Cache-Control: public, max-age=300
-
-/store/index.json
-  Access-Control-Allow-Origin: *
-  Cache-Control: public, max-age=120
