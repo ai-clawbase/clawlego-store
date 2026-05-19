@@ -1,6 +1,6 @@
 {
   "id": "skill-meeting-notes",
-  "kind": "skill",
+  "kind": "brick",
   "source": "hosted",
   "name": "会议纪要整理",
   "tagline": "把零散的会议记录整理成决议、待办与未决项",

@@ -7,27 +7,23 @@
 
 每个条目由两个独立的维度描述：
 
-- **`kind`（粒度）** —— 智能资产的聚合层级，由细到粗共三级：
-  原子资产（`prompt` / `skill`）→ `mod`（资产包）→ `tpl`（完整智能体）。
+- **`kind`（粒度）** —— 智能资产的聚合层级，由细到粗共四级：
+  `brick`（原子积木）→ `mod`（功能组件）→ `tpl`（角色模版）→ `pkg`（智能体包）。
 - **`source`（来源）** —— 源文件托管在哪：`hosted`（本仓库托管）或
   `reference`（从上游 Git 仓库拉取）。
-
-这两个维度**互不影响**：任何一级粒度都既可以是 `hosted`，也可以是 `reference`。
-"来自 GitHub" 是一种来源，**不是**一类资产。
 
 ## 目录约定
 
 ```
 registry/
-├── tpl/<id>/      ClawTpl —— 一个完整智能体（基因 + 资产 + 引擎偏好）
-├── mod/<id>/      ClawMod —— 资产包（多个智能资产的可整体安装单元）
-├── prompt/<id>/   单件提示词 —— 粒度最细的原子资产
-└── skill/<id>/    单件技能 —— 粒度最细的原子资产
+├── brick/<id>/    ClawBrick —— 原子积木（提示词、技能、知识库等单件资产）
+├── mod/<id>/      ClawMod —— 功能组件（多个积木的有机组合）
+├── tpl/<id>/      ClawTpl —— 角色模版（人格声明 + 默认资产配置）
+└── pkg/<id>/      ClawPkg —— 智能体包（开箱即用的完整工作空间，含数据与流程）
 ```
 
 - `<id>` 即文件夹名，必须与 `claw.json` 里的 `id` 一致。
-- 约定前缀（按 `kind`，与 `source` 无关）：`clawtpl-*` / `clawmod-*` /
-  `prompt-*` / `skill-*`。
+- 约定前缀：`prompt-*` / `skill-*` / `clawmod-*` / `clawtpl-*` / `clawpkg-*`。
 
 ## 每个条目的结构
 
@@ -40,10 +36,10 @@ registry/
 | `files/`     | ✓ | – | 被托管的源文件树，构建时整体打成 `bundle.tgz` |
 
 - `hosted` 条目把要分发的源文件放进 `files/`：
-  - `prompt` —— 提示词文件（一个或多个 `.md`）。
-  - `skill` —— 一个技能的内容（通常是 `SKILL.md`）。
-  - `mod` —— 多个资产按 `prompts/` `skills/` `mcp/` `knowledge/` 等子目录组织。
-  - `tpl` —— 一个完整智能体的源文件树。
+  - `brick` —— 单个资产文件（如 `SKILL.md` 或提示词 `.md`）。
+  - `mod` —— 资产按 `prompts/` `skills/` `mcp/` `knowledge/` 等子目录组织。
+  - `tpl` —— 包含 `agent.json` 等配置的模版文件。
+  - `pkg` —— 完整的实例目录树（不含用户私密数据）。
 - `reference` 条目不带 `files/`，改在 `install` 里声明上游 Git 仓库。
 
 ## `claw.json` 字段
@@ -51,21 +47,20 @@ registry/
 | 字段 | 必需 | 说明 |
 |---|:--:|---|
 | `id` | ✓ | 与文件夹同名 |
-| `kind` | ✓ | `tpl` \| `mod` \| `prompt` \| `skill` |
-| `source` | ✓ | `hosted` \| `reference`（与 `kind` 正交） |
+| `kind` | ✓ | `brick` \| `mod` \| `tpl` \| `pkg` |
+| `source` | ✓ | `hosted` \| `reference` |
 | `name` | ✓ | 显示名 |
 | `tagline` | ✓ | 一句话副标题 |
-| `summary` |  | 段落级描述（商店详情页用） |
+| `summary` |  | 详细描述（商店详情页用） |
 | `version` | ✓ | 语义化版本 |
 | `category` | ✓ | `design` \| `life` \| `engineering` \| `service` \| `general` |
-| `tags` |  | 字符串数组 |
-| `icon` |  | Iconify 图标名，如 `material-symbols:extension` |
-| `accent` |  | 主题色，默认 `#4F5BFF` |
+| `tags` |  | 标签数组 |
+| `icon` |  | Iconify 图标名 |
+| `accent` |  | 主题色 |
 | `author` |  | `{ name, url }` |
-| `license` |  | 许可标识 |
-| `contents` |  | 资产计数 `{ prompt, skill, mcp, subagent, knowledge, tool }`；`prompt` / `skill` 条目省略时自动补为 `{ <kind>: 1 }` |
+| `license` |  | 许可 |
+| `contents` |  | 资产计数 `{ prompt, skill, mcp, subagent, knowledge, tool }`；`brick` 条目通常省略 |
 | `install` |  | 安装信息，见下 |
-| `homepage` |  | 外部主页（`reference` 条目建议填） |
 | `updated` |  | `YYYY-MM-DD`，用于排序 |
 
 ### `install` 字段
@@ -73,13 +68,9 @@ registry/
 **`source: hosted`** —— 构建脚本会自动补全 `type`（`tarball`）/ `artifact`
 （`bundle.tgz`）。
 
-- `prompt` / `skill`：可整段省略 `install`——`kind` 已表明资产类型，构建脚本会把
-  `target` 自动推导为 `business/assets/{kind}s/{id}`。
-- `tpl` / `mod`：显式写 `target`，例如：
-
-  ```json
-  { "target": "business/assets/mods/{id}" }
-  ```
+- `brick`：可省略 `install`——构建脚本会把 `target` 自动推导为 `business/assets/bricks/{id}`。
+- `mod` / `tpl` / `pkg`：通常需要显式写 `target`，例如：
+  - `pkg` 的 target 通常是 `business/instances/{id}`。
 
 **`source: reference`** —— 必须声明上游 Git 仓库：
 
@@ -93,8 +84,6 @@ registry/
 }
 ```
 
-`target` 是写入用户实例文件树的相对路径，`{id}` 会被替换为条目 id。
-
 ## 构建产物（`/store/`）
 
 ```
@@ -103,10 +92,6 @@ registry/
 /store/<kind>/<id>/bundle.tgz     可安装载荷（仅 hosted 条目）
 /store/<kind>/<id>/README.md      长描述（如有）
 ```
-
-构建脚本会补全这些字段：`detailUrl`、`downloadUrl`、`bundleBytes`，
-并对 `hosted` 条目把 `install.type` 设为 `tarball`、`install.artifact` 设为
-`bundle.tgz`。
 
 ## 新增一个条目
 

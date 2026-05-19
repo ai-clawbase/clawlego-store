@@ -20,14 +20,13 @@ import { execFileSync } from 'node:child_process'
 
 const ROOT = resolve(import.meta.dirname, '..')
 const REGISTRY = join(ROOT, 'registry')
-// The three aggregation tiers, finest to coarsest: an atomic asset (a single
-// prompt / skill) → `mod` (a pack of assets) → `tpl` (a whole agent). Whether
-// the source files are hosted here or pulled from an upstream git repo is the
-// orthogonal `source` axis — not a kind.
-const KINDS = ['tpl', 'mod', 'prompt', 'skill']
+// The four aggregation tiers, from atoms to whole agents:
+// `brick` (atomic prompt/skill) → `mod` (asset pack) → `tpl` (agent template)
+// → `pkg` (full agent clone, incl. knowledge/data).
+const KINDS = ['pkg', 'tpl', 'mod', 'brick']
 // Atomic-asset kinds: the kind names the asset type, so install target and the
 // `contents` count are derived from it.
-const ATOMIC_KINDS = ['prompt', 'skill']
+const ATOMIC_KINDS = ['brick']
 const CATEGORIES = ['design', 'life', 'engineering', 'service', 'general']
 const SITE = 'https://store.clawlego.com'
 
@@ -163,10 +162,10 @@ const index = {
   site: SITE,
   count: items.length,
   kinds: {
-    tpl: 'ClawTpl 出厂模板',
-    mod: 'ClawMod 资产包',
-    prompt: '提示词',
-    skill: '技能',
+    pkg: 'ClawPkg 智能体包',
+    tpl: 'ClawTpl 角色模版',
+    mod: 'ClawMod 功能组件',
+    brick: 'ClawBrick 原子积木',
   },
   items,
 }

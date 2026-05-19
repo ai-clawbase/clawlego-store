@@ -1,0 +1,19 @@
+{
+  "id": "clawpkg-starter",
+  "kind": "pkg",
+  "source": "hosted",
+  "name": "新手开箱即用包",
+  "tagline": "集成基础知识库与工程流程的完整智能体环境",
+  "summary": "这是一个 ClawPkg 示例。它像克隆一样导出了一个完整的智能体工作空间，包含精心调优的业务流程、通用知识库以及一套基础技能积木。它不包含任何用户私密数据，安装后即可拥有一个功能完备、开箱即用的 AI 助手环境。",
+  "version": "1.0.0",
+  "category": "general",
+  "author": { "name": "ClawLego", "url": "https://clawlego.com" },
+  "license": "MIT",
+  "icon": "material-symbols:package-2",
+  "accent": "#4F5BFF",
+  "tags": ["智能体", "开箱即用", "新手"],
+  "updated": "2026-05-20",
+  "install": {
+    "target": "business/instances/{id}"
+  }
+}

@@ -3,7 +3,7 @@
     <div class="wrap foot-inner">
       <div class="foot-brand">
         <strong>ClawLego 商店</strong>
-        <p>智能资产的开放注册表 —— ClawTpl 出厂模板、ClawMod 资产包，与互联网开源资产的引用。</p>
+        <p>像拼乐高一样建设你的智能体：从原子积木到功能组件，再到完整的角色模版与智能体包，让 AI 资产开箱即用。</p>
       </div>
       <div class="foot-cols">
         <div class="foot-col">
@@ -12,9 +12,8 @@
           <router-link to="/">浏览商店</router-link>
         </div>
         <div class="foot-col">
-          <span class="foot-h">开发者</span>
+          <span class="foot-h">资源</span>
           <a href="https://github.com/ai-clawbase/clawlego-store" target="_blank" rel="noreferrer">GitHub 仓库</a>
-          <a href="/store/index.json">目录 API</a>
         </div>
       </div>
     </div>

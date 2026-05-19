@@ -7,24 +7,23 @@
       <section class="hero">
         <div class="wrap">
           <span class="kicker">CLAWLEGO STORE</span>
-          <h1 class="hero-title">智能资产，<br />一键装进你的实例。</h1>
+          <h1 class="hero-title">像积木一样，<br />拼搭你的专属智能体。</h1>
           <p class="hero-sub">
-            从单件的提示词、技能，到 ClawMod 资产包，再到 ClawTpl 出厂模板——三级
-            聚合粒度的智能资产。在 ClawLego 商店里点一下，无论托管在本仓库还是来自
-            GitHub 上游，源文件都会落到你自己实例的文件树里。
+            从单件的「原子积木」，到「功能组件」与「角色模版」，再到一键克隆的「智能体包」。
+            在 ClawLego 商店里点一下，丰富的 AI 资产即刻落户你的本地实例。
           </p>
           <div class="hero-stats">
             <div class="stat">
-              <strong>{{ counts.tpl }}</strong><span>ClawTpl</span>
+              <strong>{{ counts.pkg }}</strong><span>智能体包</span>
             </div>
             <div class="stat">
-              <strong>{{ counts.mod }}</strong><span>ClawMod</span>
+              <strong>{{ counts.tpl }}</strong><span>模版</span>
             </div>
             <div class="stat">
-              <strong>{{ counts.prompt }}</strong><span>提示词</span>
+              <strong>{{ counts.mod }}</strong><span>组件</span>
             </div>
             <div class="stat">
-              <strong>{{ counts.skill }}</strong><span>技能</span>
+              <strong>{{ counts.brick }}</strong><span>积木</span>
             </div>
           </div>
         </div>
@@ -46,7 +45,7 @@
           </div>
           <div class="search">
             <Icon icon="material-symbols:search" width="18" />
-            <input v-model="query" type="search" placeholder="搜索名称、标签…" />
+            <input v-model="query" type="search" placeholder="搜索积木、模版…" />
           </div>
         </div>
 
@@ -71,19 +70,39 @@
         </div>
       </section>
 
-      <!-- Developer note -->
-      <section class="wrap devnote">
-        <div class="devnote-inner">
-          <div>
-            <h2>给 ClawLego 软件 / 开发者</h2>
+      <!-- Visual Hierarchy Diagram -->
+      <section class="wrap guide">
+        <div class="guide-inner">
+          <div class="guide-text">
+            <h2>积木式拼搭，组装你的智能系统</h2>
             <p>
-              整个商店目录是一份公开、可跨域读取的 JSON。ClawLego 客户端在「商店」页
-              直接拉取它来渲染列表与执行一键安装。
+              我们把复杂的智能体拆解为标准化的积木。你可以单取一块提示词积木，也可以直接搬走一整座开箱即用的智能体大厦。
             </p>
           </div>
-          <pre class="codeblock">GET https://store.clawlego.com/store/index.json</pre>
+          <div class="diagram">
+            <div class="node">
+              <div class="node-box brick">Brick</div>
+              <span>原子积木</span>
+            </div>
+            <div class="arrow"></div>
+            <div class="node">
+              <div class="node-box mod">Mod</div>
+              <span>功能组件</span>
+            </div>
+            <div class="arrow"></div>
+            <div class="node">
+              <div class="node-box tpl">Tpl</div>
+              <span>角色模版</span>
+            </div>
+            <div class="arrow"></div>
+            <div class="node">
+              <div class="node-box pkg">Pkg</div>
+              <span>智能体包</span>
+            </div>
+          </div>
         </div>
       </section>
+
     </main>
 
     <SiteFooter />
@@ -122,18 +141,18 @@ onMounted(async () => {
 const items = computed<StoreItem[]>(() => index.value?.items ?? [])
 
 const counts = computed(() => ({
+  pkg: items.value.filter((i) => i.kind === 'pkg').length,
   tpl: items.value.filter((i) => i.kind === 'tpl').length,
   mod: items.value.filter((i) => i.kind === 'mod').length,
-  prompt: items.value.filter((i) => i.kind === 'prompt').length,
-  skill: items.value.filter((i) => i.kind === 'skill').length,
+  brick: items.value.filter((i) => i.kind === 'brick').length,
 }))
 
 const kindTabs = computed(() => [
   { key: 'all' as const, label: '全部', count: items.value.length },
+  { key: 'pkg' as const, label: 'ClawPkg', count: counts.value.pkg },
   { key: 'tpl' as const, label: 'ClawTpl', count: counts.value.tpl },
   { key: 'mod' as const, label: 'ClawMod', count: counts.value.mod },
-  { key: 'prompt' as const, label: '提示词', count: counts.value.prompt },
-  { key: 'skill' as const, label: '技能', count: counts.value.skill },
+  { key: 'brick' as const, label: 'ClawBrick', count: counts.value.brick },
 ])
 
 const categories = computed(() => {
@@ -295,26 +314,71 @@ const filtered = computed(() => {
 }
 .state.err { color: #DC2626; }
 
-.devnote { margin-top: 64px; }
-.devnote-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 32px;
-  flex-wrap: wrap;
-  padding: 32px;
+.guide { margin-top: 80px; }
+.guide-inner {
+  padding: 48px;
   border-radius: var(--radius-lg);
   background: var(--bg-2);
   border: 1px solid var(--line);
+  text-align: center;
 }
-.devnote-inner h2 { font-size: 20px; font-weight: 700; }
-.devnote-inner p {
-  margin-top: 8px;
-  max-width: 460px;
-  font-size: 14px;
+.guide-text h2 { font-size: 24px; font-weight: 800; }
+.guide-text p {
+  margin-top: 12px;
   color: var(--ink-3);
+  font-size: 16px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
-.devnote .codeblock { flex-shrink: 0; }
+.diagram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 48px;
+  flex-wrap: wrap;
+}
+.node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.node-box {
+  width: 100px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: #fff;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.node span { font-size: 13px; font-weight: 600; color: var(--ink-3); }
+.brick { background: #94A3B8; }
+.mod { background: #6366F1; }
+.tpl { background: #8B5CF6; }
+.pkg { background: #4F5BFF; }
+.arrow {
+  width: 24px;
+  height: 2px;
+  background: var(--line);
+  position: relative;
+}
+.arrow::after {
+  content: '';
+  position: absolute;
+  right: -2px;
+  top: -4px;
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 8px solid var(--line);
+}
 
 @media (max-width: 680px) {
   .hero { padding: 52px 0 40px; }

@@ -1,6 +1,6 @@
 {
   "id": "prompt-commit-message",
-  "kind": "prompt",
+  "kind": "brick",
   "source": "hosted",
   "name": "提交信息生成器",
   "tagline": "把一段 diff 写成规范、可读的提交信息",

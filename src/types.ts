@@ -1,6 +1,6 @@
-// Asset kinds — three aggregation tiers, finest to coarsest.
+// Asset kinds — from atomic "bricks" to integrated "packages".
 // `source` ('hosted' | 'reference') is orthogonal and is not a kind.
-export type ItemKind = 'tpl' | 'mod' | 'prompt' | 'skill'
+export type ItemKind = 'brick' | 'mod' | 'tpl' | 'pkg'
 
 export interface ItemAuthor {
   name: string
@@ -49,17 +49,17 @@ export interface StoreIndex {
 }
 
 export const KIND_LABEL: Record<ItemKind, string> = {
-  tpl: 'ClawTpl 出厂模板',
-  mod: 'ClawMod 资产包',
-  prompt: '提示词',
-  skill: '技能',
+  brick: 'ClawBrick 原子积木',
+  mod: 'ClawMod 功能组件',
+  tpl: 'ClawTpl 角色模版',
+  pkg: 'ClawPkg 智能体包',
 }
 
 export const KIND_SHORT: Record<ItemKind, string> = {
-  tpl: 'ClawTpl',
-  mod: 'ClawMod',
-  prompt: '提示词',
-  skill: '技能',
+  brick: '积木',
+  mod: '组件',
+  tpl: '模版',
+  pkg: '智能体',
 }
 
 export const CATEGORY_LABEL: Record<string, string> = {
@@ -71,6 +71,7 @@ export const CATEGORY_LABEL: Record<string, string> = {
 }
 
 export const ASSET_LABEL: Record<string, string> = {
+  brick: '积木',
   prompt: '提示词',
   skill: '技能',
   mcp: 'MCP',
