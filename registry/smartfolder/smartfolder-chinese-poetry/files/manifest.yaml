@@ -1,0 +1,38 @@
+apiVersion: lwp.io/v0.1
+kind: LLMWorkspaceKind
+metadata:
+  name: chinese_poetry
+  version: 1.0.0
+
+spec:
+  display:
+    name: 古诗词
+    icon: carbon:book
+    description: 智能古诗词库——讲解、背诵、闯关、创作、育儿陪伴；从唐诗三百首到全宋词，让诗词成为孩子最好的国学启蒙
+    color: "#8b5cf6"
+  default_landing: business/poetry
+  capabilities:
+    skills:    [poetry-analysis]
+    commands:  [search, explain, recite, quiz, compose, daily, parent-tips, import, index, panel]
+    subagents: []
+  command_specs:
+    - { name: panel, mode: function, run: sys.dashboard, summary: 打开古诗词工作台面板(免 LLM,即时渲染) }
+  instance_schema:
+    child_name:
+      type: string
+      optional: true
+      description: 孩子的小名或昵称，用于个性化互动（如"宝宝今天背诗了吗？"）
+    age_range:
+      type: string
+      optional: true
+      default: 3-12
+      description: 目标年龄段（如 3-6、6-12、12+），影响讲解深度和出题难度
+    default_dynasty:
+      type: string
+      optional: true
+      default: 唐
+      description: 默认关注的朝代（唐诗/宋词/诗经……）
+  adapters:
+    list: builtin/file_browser
+    open: builtin/file_browser
+  cover: latest_image

@@ -1,0 +1,7 @@
+{
+  "schema_version": "1",
+  "name": "transaction",
+  "display_name": "账目",
+  "description": "账目记录(真相层,scoped 实体,一切皆文件)。落 .llm/entities/transaction/records.jsonl,只追加。字段语义与校验规则见 .llm/template/schemas/transaction.schema.json。id 为内容哈希主键(t_<sha256(date|amount|type|account|merchant|seq)>),用于跨次导入/重复入账去重。",
+  "fields": []
+}

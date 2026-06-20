@@ -1,0 +1,1 @@
+{ "schema_version": 2, "currency": "{{fields.currency}}", "period": "monthly", "total_limit": null, "categories": {}, "alerts": { "warn_ratio": 0.8, "pace_ratio": 1.2 }, "updated_at": "{{instance.created_at}}" }

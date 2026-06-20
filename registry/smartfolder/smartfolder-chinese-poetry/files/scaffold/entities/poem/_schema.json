@@ -1,0 +1,7 @@
+{
+  "schema_version": "1",
+  "name": "poem",
+  "display_name": "诗词",
+  "description": "诗词记录(真相层,scoped 实体)。落 .llm/entities/poem/records.jsonl,只追加。字段语义与校验规则见 .llm/template/schemas/poem.schema.json。id 为内容哈希主键(p_<sha256(title|author|paragraphs)>),用于跨源导入去重。",
+  "fields": []
+}

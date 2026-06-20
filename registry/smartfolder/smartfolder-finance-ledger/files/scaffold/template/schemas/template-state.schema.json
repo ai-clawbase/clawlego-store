@@ -1,0 +1,28 @@
+{
+  "title": "TemplateState",
+  "description": "实例模板状态。存为 .llm/data/_template.json。记录本实例数据当前符合的模板版本,/upgrade 据此判断要跑哪些迁移。",
+  "schema_version": 1,
+  "file": ".llm/data/_template.json",
+  "fields": {
+    "kind": { "type": "string", "required": true, "doc": "finance_ledger" },
+    "template_version": { "type": "string", "required": true, "doc": "本实例数据当前符合的模板 semver" },
+    "data_schema_version": { "type": "int", "required": true, "doc": "当前数据 schema 整数版本" },
+    "created_with": { "type": "string", "required": true, "doc": "建账时的模板版本(只读,审计用)" },
+    "migrated_at": { "type": "string", "required": false, "doc": "上次迁移完成时刻 RFC3339" },
+    "history": { "type": "array", "required": false, "doc": "[{ to:版本, at:RFC3339, migration:迁移 id, by:upgrade|create }]" }
+  },
+  "example": {
+    "kind": "finance_ledger",
+    "template_version": "2.0.0",
+    "data_schema_version": 2,
+    "created_with": "1.1.0",
+    "migrated_at": "2026-06-17T08:00:00Z",
+    "history": [
+      { "to": "2.0.0", "at": "2026-06-17T08:00:00Z", "migration": "v1-to-v2", "by": "upgrade" }
+    ]
+  },
+  "rules": [
+    "缺该文件 → 视为 v1 老实例(template_version=1.0.0, data_schema_version=1),/upgrade 会补建。",
+    "只有 /upgrade 与建账写它;命令开头读它判断是否需要提示升级。"
+  ]
+}

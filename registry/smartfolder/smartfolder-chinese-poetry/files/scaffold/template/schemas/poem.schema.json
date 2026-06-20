@@ -1,0 +1,47 @@
+{
+  "title": "Poem",
+  "description": "一首诗词作品。存为 .llm/entities/poem/records.jsonl 的一行(JSON Lines)。只追加,不删改。",
+  "data_schema_version": 1,
+  "file": ".llm/entities/poem/records.jsonl",
+  "id_rule": "p_ + sha256(title|author|paragraphs.join('')).hex[:12]",
+  "fields": {
+    "id": { "type": "string", "required": true, "doc": "内容哈希主键,见 id_rule" },
+    "schema": { "type": "int", "required": true, "doc": "写入时的 data_schema_version" },
+    "title": { "type": "string", "required": true, "doc": "诗题/词牌名" },
+    "author": { "type": "string", "required": true, "doc": "作者名" },
+    "dynasty": { "type": "string", "required": true, "doc": "朝代,如 唐/宋/元/明/清" },
+    "paragraphs": { "type": "string[]", "required": true, "doc": "诗句数组,每句一条" },
+    "notes": { "type": "string", "required": false, "doc": "原注/题解" },
+    "tags": { "type": "string[]", "required": false, "doc": "主题标签:山水/田园/边塞/送别/思乡/咏物/哲理/爱情/友情/节日/民生/怀古" },
+    "difficulty": { "type": "int", "required": false, "doc": "难度 1-5，1=启蒙,5=精深" },
+    "pinyin": { "type": "string[]", "required": false, "doc": "逐句拼音标注" },
+    "translation": { "type": "string", "required": false, "doc": "白话译文" },
+    "appreciation": { "type": "string", "required": false, "doc": "赏析/鉴赏" },
+    "background": { "type": "string", "required": false, "doc": "创作背景" },
+    "source": { "type": "string", "required": true, "doc": "数据来源,如 chinese-poetry/chinese-poetry" },
+    "source_id": { "type": "string", "required": false, "doc": "源数据集中的唯一标识" },
+    "collection": { "type": "string", "required": false, "doc": "所属集子,如 全唐诗/全宋词/唐诗三百首/诗经" },
+    "form": { "type": "string", "required": false, "doc": "体裁:五言古诗/七言绝句/词/曲/等" },
+    "recorded_at": { "type": "string", "required": true, "doc": "RFC3339 写入时刻" }
+  },
+  "example": {
+    "id": "p_a1b2c3d4e5f6",
+    "schema": 1,
+    "title": "静夜思",
+    "author": "李白",
+    "dynasty": "唐",
+    "paragraphs": ["床前明月光", "疑是地上霜", "举头望明月", "低头思故乡"],
+    "tags": ["思乡", "明月"],
+    "difficulty": 1,
+    "source": "chinese-poetry/chinese-poetry",
+    "collection": "唐诗三百首",
+    "form": "五言绝句",
+    "recorded_at": "2026-06-20T10:00:00Z"
+  },
+  "rules": [
+    "只追加,不删改历史行",
+    "不同数据源的同一首诗按 id 去重(内容哈希),保留先导入的版本",
+    "tags 从内容自动推断,也可人工补充",
+    "difficulty 由 AI 根据字数/用词深度/主题抽象度推定"
+  ]
+}

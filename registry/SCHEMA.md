@@ -7,8 +7,10 @@
 
 每个条目由两个独立的维度描述：
 
-- **`kind`（粒度）** —— 智能资产的聚合层级，由细到粗共四级：
-  `brick`（原子积木）→ `mod`（功能组件）→ `tpl`（角色模版）→ `pkg`（智能体包）。
+- **`kind`（粒度 / 类型）** —— 由细到粗的四级聚合阶梯：
+  `brick`（原子积木）→ `mod`（功能组件）→ `tpl`（角色模版）→ `pkg`（智能体包）；
+  外加两个**按用途浏览**的目录（不在阶梯上，用户按名字找而非按粒度）：
+  `smartfolder`（智能文件夹）与 `biztpl`（业务模板）。
 - **`source`（来源）** —— 源文件托管在哪：`hosted`（本仓库托管）或
   `reference`（从上游 Git 仓库拉取）。
 
@@ -16,14 +18,17 @@
 
 ```
 registry/
-├── brick/<id>/    ClawBrick —— 原子积木（提示词、技能、知识库等单件资产）
-├── mod/<id>/      ClawMod —— 功能组件（多个积木的有机组合）
-├── tpl/<id>/      ClawTpl —— 角色模版（人格声明 + 默认资产配置）
-└── pkg/<id>/      ClawPkg —— 智能体包（开箱即用的完整工作空间，含数据与流程）
+├── brick/<id>/        ClawBrick —— 原子积木（提示词、技能、知识库等单件资产）
+├── mod/<id>/          ClawMod —— 功能组件（多个积木的有机组合）
+├── tpl/<id>/          ClawTpl —— 角色模版（人格声明 + 默认资产配置）
+├── pkg/<id>/          ClawPkg —— 智能体包（开箱即用的完整工作空间，含数据与流程）
+├── smartfolder/<id>/  智能文件夹 —— 一个 SmartSpace kind 包（system/smartspace/kinds/<kind>/ 目录树）
+└── biztpl/<id>/       业务模板 —— 声明式行为模板（目标 / 工作流 / 研究脚手架，落在 business/ 下）
 ```
 
 - `<id>` 即文件夹名，必须与 `claw.json` 里的 `id` 一致。
-- 约定前缀：`prompt-*` / `skill-*` / `clawmod-*` / `clawtpl-*` / `clawpkg-*`。
+- 约定前缀：`prompt-*` / `skill-*` / `clawmod-*` / `clawtpl-*` / `clawpkg-*` /
+  `smartfolder-*` / `biztpl-*`。
 
 ## 每个条目的结构
 
@@ -40,6 +45,12 @@ registry/
   - `mod` —— 资产按 `prompts/` `skills/` `mcp/` `knowledge/` 等子目录组织。
   - `tpl` —— 包含 `agent.json` 等配置的模版文件。
   - `pkg` —— 完整的实例目录树（不含用户私密数据）。
+  - `smartfolder` —— 一个 SmartSpace kind 目录的内容（`manifest.yaml` + `about.md` +
+    `prompts/cmd_*.md` + `.source`）。`install.target` 写
+    `system/smartspace/kinds/<kind>`（kind slug 即 manifest.yaml 的 `metadata.name`）。
+  - `biztpl` —— 一个行为模板目录的内容：工作流 `WORKFLOW.md`，或目标
+    `GOAL.md` + `success.md` + `example_plan.md`。`install.target` 写
+    `business/workflows/<slug>` 或 `business/goals/<slug>`。
 - `reference` 条目不带 `files/`，改在 `install` 里声明上游 Git 仓库。
 
 ## `claw.json` 字段
@@ -47,7 +58,7 @@ registry/
 | 字段 | 必需 | 说明 |
 |---|:--:|---|
 | `id` | ✓ | 与文件夹同名 |
-| `kind` | ✓ | `brick` \| `mod` \| `tpl` \| `pkg` |
+| `kind` | ✓ | `brick` \| `mod` \| `tpl` \| `pkg` \| `smartfolder` \| `biztpl` |
 | `source` | ✓ | `hosted` \| `reference` |
 | `name` | ✓ | 显示名 |
 | `tagline` | ✓ | 一句话副标题 |

@@ -1,0 +1,17 @@
+{
+  "id": "smartfolder-doc-vault",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "文档管家",
+  "tagline": "合同、票据、证件、说明书的智能档案库，带到期提醒",
+  "summary": "把一个文档目录变成可检索的智能档案库：每份文档都识别出类型、关键信息和到期日期，再也不用翻文件夹。证件到期、合同续签会主动提醒。落盘即真实文件。",
+  "version": "1.0.0",
+  "category": "service",
+  "author": { "name": "ClawLego", "url": "https://clawlego.com" },
+  "license": "MIT",
+  "icon": "carbon:document",
+  "accent": "#F59E0B",
+  "tags": ["智能文件夹", "文档", "档案", "到期提醒"],
+  "install": { "target": "system/smartspace/kinds/doc_vault" },
+  "updated": "2026-06-12"
+}

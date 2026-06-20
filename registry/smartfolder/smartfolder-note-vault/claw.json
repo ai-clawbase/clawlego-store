@@ -1,0 +1,17 @@
+{
+  "id": "smartfolder-note-vault",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "笔记空间",
+  "tagline": "Obsidian / Notion 笔记的本地镜像，变成可检索可问答的智能笔记本",
+  "summary": "一个由笔记连接器维护的本地镜像智能文件夹：把一堆 markdown 变成可全文检索、看双链、按日期轴回看、基于内容问答的智能笔记本。带 /search /backlinks /daily /outline /ask 命令，全部只读本地镜像。需配合 Obsidian / Notion 等笔记连接器使用。",
+  "version": "1.0.0",
+  "category": "general",
+  "author": { "name": "ClawLego", "url": "https://clawlego.com" },
+  "license": "MIT",
+  "icon": "carbon:notebook",
+  "accent": "#6366F1",
+  "tags": ["智能文件夹", "笔记", "Obsidian", "Notion", "双链"],
+  "install": { "target": "system/smartspace/kinds/note_vault" },
+  "updated": "2026-06-14"
+}

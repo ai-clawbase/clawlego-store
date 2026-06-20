@@ -1,0 +1,33 @@
+apiVersion: lwp.io/v0.1
+kind: LLMWorkspaceKind
+metadata:
+  name: album
+  version: 1.2.0
+spec:
+  display:
+    name: 智能相册
+    icon: carbon:image
+    description: 把一个相册文件夹变成可检索的智能相册 App：每张图都有说明、人物、地点、标签
+    color: "#ec4899"
+  default_landing: business/album
+  capabilities:
+    # 命令的工作流写在 prompts/cmd_<name>.md 中，按 file_path 字母序拼到对话开头 prompts 段
+    skills:    []
+    commands:  [index, search, persons, timeline]
+    subagents: []
+  # 封面不是创建表单字段：放照片前没有可选项，放照片后由 harness 自动挑选
+  # （/index 写 .llm/state/cover.txt 可指定；否则取最新一张图片）。
+  cover: latest_image
+  instance_schema:
+    description:
+      type: string
+      optional: true
+      description: 相册简介
+  adapters:
+    list: builtin/file_browser
+    open: builtin/file_browser
+  defaults:
+    # 索引/水位是 agent 跑出来的产物，加 gitignore 是默认建议；用户可以自行覆盖
+    gitignore:
+      - ".llm/index/"
+      - ".llm/state/"

@@ -1,0 +1,60 @@
+{
+  "protocol": "clawui",
+  "version": "1",
+  "_generator": "finance_ledger;初始占位面板,由 ledger.reindex/ledger.report 函数(clawfn)在 /index、/report 时用最新聚合确定性重写。组件 props 是聚合快照(派生),与 .llm/entities/transaction 冲突时以实体为准。",
+  "navigation": [
+    {
+      "id": "overview",
+      "label": "总览",
+      "icon": "carbon:dashboard",
+      "page": {
+        "components": [
+          { "id": "kpi", "type": "StatGrid", "props": { "stats": [
+            { "label": "净资产", "value": "—" },
+            { "label": "本月支出", "value": "—" },
+            { "label": "本月收入", "value": "—" },
+            { "label": "本月结余", "value": "—" }
+          ] } },
+          { "id": "hint", "type": "Markdown", "props": { "content": "还没有数据。随口记一笔(如「午饭 35」),或拖入账单截图/CSV;然后我会刷新这块总览。" } }
+        ]
+      }
+    },
+    {
+      "id": "report",
+      "label": "报表",
+      "icon": "carbon:report",
+      "page": { "components": [
+        { "id": "by_cat", "type": "Table", "props": { "columns": [
+          { "key": "category", "label": "分类" },
+          { "key": "amount", "label": "金额" },
+          { "key": "ratio", "label": "占比" }
+        ], "rows": [] } }
+      ] }
+    },
+    {
+      "id": "budget",
+      "label": "预算",
+      "icon": "carbon:meter",
+      "page": { "components": [
+        { "id": "budget_table", "type": "Table", "props": { "columns": [
+          { "key": "category", "label": "分类" },
+          { "key": "used", "label": "已用" },
+          { "key": "limit", "label": "预算" },
+          { "key": "remaining", "label": "剩余" }
+        ], "rows": [] } }
+      ] }
+    },
+    {
+      "id": "accounts",
+      "label": "账户",
+      "icon": "carbon:wallet",
+      "page": { "components": [
+        { "id": "acc_table", "type": "Table", "props": { "columns": [
+          { "key": "name", "label": "账户" },
+          { "key": "type", "label": "类型" },
+          { "key": "balance", "label": "余额" }
+        ], "rows": [] } }
+      ] }
+    }
+  ]
+}

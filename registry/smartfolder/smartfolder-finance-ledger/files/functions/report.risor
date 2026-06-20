@@ -1,0 +1,116 @@
+# report.risor — /report 的确定性实现(clawfn 脚本,免 LLM,零 token)。
+#
+# 查 transaction 实体,聚合指定月份(位置参数或 month=,缺省取最近月)的分类支出,
+# 在对话里内联渲染一张报表面板(bubble surface)并回一句总账。不落 schema.json
+# (那是 /index 的活);这里只做一次性查看。聚合永不漂移、与实体严格一致。
+
+func base_amount(t) {
+  a := t.get("amount")
+  base := a == nil ? 0.0 : a
+  fx := t.get("fx")
+  ba := fx == nil ? nil : fx.get("base_amount")
+  ba == nil ? base : ba
+}
+
+func month_of(t) {
+  d := t.get("date")
+  (d == nil || len(d) < 7) ? "" : d[:7]
+}
+
+func sort_by_value_desc(m) {
+  ks := keys(m)
+  out := []
+  used := {}
+  n := len(ks)
+  i := 0
+  for i < n {
+    best := nil
+    bestv := 0.0
+    found := false
+    for j, k := range ks {
+      if used.get(k) != nil { continue }
+      v := m[k]
+      if !found || v > bestv {
+        found = true
+        bestv = v
+        best = k
+      }
+    }
+    if best != nil {
+      used[best] = true
+      out.append(best)
+    }
+    i = i + 1
+  }
+  out
+}
+
+base_ccy := ctx.fields.get("currency", "CNY")
+want := len(ctx.args) > 0 ? ctx.args[0] : ctx.params.get("month", "")
+
+txns := ctx.entity.query("transaction")
+voided := {}
+for i, t := range txns {
+  vo := t.get("void_of")
+  if vo != nil {
+    voided[vo] = true
+  }
+}
+
+# 未指定月份时取数据里最近的业务月。
+if want == "" {
+  for i, t := range txns {
+    mo := month_of(t)
+    if mo > want {
+      want = mo
+    }
+  }
+}
+
+income := 0.0
+expense := 0.0
+by_cat := {}
+n := 0
+for i, t := range txns {
+  if t.get("status") == "void" { continue }
+  id := t.get("id")
+  if id != nil && voided.get(id) != nil { continue }
+  if t.get("void_of") != nil { continue }
+  if month_of(t) != want { continue }
+  ty := t.get("type")
+  if ty == "transfer" || ty == "adjust" { continue }
+  amt := base_amount(t)
+  n = n + 1
+  if ty == "income" {
+    income = income + amt
+  } else {
+    expense = expense + amt
+    cat := t.get("category")
+    ck := cat == nil ? "未分类" : cat
+    by_cat[ck] = by_cat.get(ck, 0.0) + amt
+  }
+}
+
+rows := []
+for i, ck := range sort_by_value_desc(by_cat) {
+  amt := by_cat[ck]
+  ratio := expense > 0 ? (amt / expense * 100.0) : 0.0
+  rows.append({"category": ck, "amount": sprintf("%.2f", amt), "ratio": sprintf("%.0f%%", ratio)})
+}
+
+net := income - expense
+summary := want == "" ? "还没有可统计的账目。" : (want + " · 收入 " + sprintf("%.2f", income) + " / 支出 " + sprintf("%.2f", expense) + " / 结余 " + sprintf("%.2f", net) + "(" + base_ccy + ",共 " + string(n) + " 笔)")
+
+ctx.ui.emit("bubble", {
+  "protocol": "clawui",
+  "version": "1",
+  "components": [
+    {"id": "sum", "type": "Markdown", "props": {"content": "**" + (want == "" ? "报表" : want + " 报表") + "**\n\n" + summary}},
+    {"id": "by_cat", "type": "Table", "props": {"columns": [
+      {"key": "category", "label": "分类"},
+      {"key": "amount", "label": "金额"},
+      {"key": "ratio", "label": "占比"},
+    ], "rows": rows}},
+  ],
+})
+ctx.ok("📊 " + summary)

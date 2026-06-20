@@ -1,0 +1,39 @@
+apiVersion: lwp.io/v0.1
+kind: LLMWorkspaceKind
+metadata:
+  name: note_vault
+  version: 1.0.0
+spec:
+  display:
+    name: 笔记空间
+    icon: carbon:notebook
+    description: 笔记类产品（Obsidian / Notion 等）的本地镜像：连接器负责保鲜，这里把一堆 markdown 变成可检索、可问答、能看双链与日记轴的智能笔记本
+    color: "#6366f1"
+  # internal：与 cloud_drive 同哲学——这个文件夹只能由笔记连接器实例化
+  # （连接器声明 capability=sync + manifest.smartspace_kind=note_vault，
+  #  promote 时落成本 kind）。不出现在裸创建里，但带 connector_binding
+  #  后在新建对话框以"需要连接器"角标出现（反向流 §8.7.6）。
+  # 关联键写在实例 fields：connector_id / connector_instance_id / remote_path。
+  internal: true
+  # 反向流：任何声明 sync 能力的笔记连接器类自动获得绑定资格。
+  # 不写死 class 列表——Obsidian / Notion 之外再接新笔记源零改动。
+  connector_binding:
+    capability: sync
+  # promote 落点固定为 business/sync/<conn>/<inst>，此处声明仅作文档。
+  default_landing: business/sync
+  # 笔记里常有配图/白板截图，自动出封面。
+  cover: latest_image
+  capabilities:
+    # 命令工作流写在 prompts/cmd_<name>.md，按 file_path 字母序拼到对话开头。
+    # V1 全部只读本地镜像，不写回笔记产品（写回是连接器 V2 的事）。
+    skills:    []
+    commands:  [ask, backlinks, daily, index, outline, search]
+    subagents: []
+  adapters:
+    list: builtin/file_browser
+    open: builtin/file_browser
+  defaults:
+    # 索引/双链图/水位是 agent 跑出来的可重建产物；笔记正文不在此列。
+    gitignore:
+      - ".llm/index/"
+      - ".llm/state/"

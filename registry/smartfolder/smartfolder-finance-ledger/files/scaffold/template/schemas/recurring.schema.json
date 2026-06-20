@@ -1,0 +1,30 @@
+{
+  "title": "RecurringBills",
+  "description": "周期账单 / 订阅。存为 .llm/data/recurring.json。借鉴 MoneyWiz 计划交易:房租、工资、会员订阅等按周期提醒,可一键据实入账。",
+  "schema_version": 2,
+  "file": ".llm/data/recurring.json",
+  "shape": { "schema_version": "int = 2", "items": "Recurring[]" },
+  "recurring_fields": {
+    "id": { "type": "string", "required": true, "doc": "rec_ 前缀" },
+    "name": { "type": "string", "required": true },
+    "type": { "type": "enum", "values": ["expense", "income", "transfer"], "required": true },
+    "amount": { "type": "number", "required": true },
+    "currency": { "type": "string", "required": false, "default": "本位币" },
+    "account": { "type": "string", "required": true },
+    "to_account": { "type": "string", "required": false, "doc": "transfer 用" },
+    "category": { "type": "string", "required": false },
+    "merchant": { "type": "string", "required": false },
+    "cadence": { "type": "enum", "values": ["daily", "weekly", "monthly", "yearly", "custom"], "required": true },
+    "day": { "type": "int", "required": false, "doc": "monthly:几号;weekly:周几(1-7);yearly:配合 month" },
+    "month": { "type": "int", "required": false, "doc": "yearly 用" },
+    "next_due": { "type": "string", "required": true, "doc": "下次应发生日 YYYY-MM-DD;入账后推进到下一周期" },
+    "autopost": { "type": "bool", "required": false, "default": false, "doc": "true=到期自动入账并通知;false=只提醒待确认" },
+    "reminder_days": { "type": "int", "required": false, "default": 2, "doc": "到期前几天提醒" },
+    "active": { "type": "bool", "required": false, "default": true },
+    "note": { "type": "string", "required": false }
+  },
+  "rules": [
+    "据实入账时,生成的账目带 recurring_id=本条 id、source=recurring,再把 next_due 推进一个周期。",
+    "金额浮动的订阅(如电费):autopost=false,提醒时问实际金额。"
+  ]
+}

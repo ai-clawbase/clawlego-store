@@ -1,0 +1,5 @@
+{
+  "display_name": "账本",
+  "menu": { "label": "账本", "icon": "carbon:wallet" },
+  "note": "本工作台是派生视图:agent 在 /index、/report、/budget 后用最新聚合重写本目录的 schema.json。可重建,真相永远在 .llm/data/records。"
+}

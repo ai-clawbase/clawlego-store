@@ -1,0 +1,30 @@
+apiVersion: lwp.io/v0.1
+kind: LLMWorkspaceKind
+metadata:
+  name: download_station
+  version: 1.1.0
+
+spec:
+  display:
+    name: 下载整理站
+    icon: carbon:download
+    description: 下载目录变成会自我整理的中转站：识别每个下载物是什么该去哪，方案先行、确认后动
+    color: "#14b8a6"
+  default_landing: business/downloads
+  capabilities:
+    # 命令的工作流写在 prompts/cmd_<name>.md 中，按 file_path 字母序拼到对话开头 prompts 段
+    skills:    []
+    commands:  [index, sort, clean]
+    subagents: []
+  instance_schema:
+    description:
+      type: string
+      optional: true
+      description: 这个下载目录的来源（如「qBittorrent 完成目录」；留空即通用）
+  adapters:
+    list: builtin/file_browser
+    open: builtin/file_browser
+  defaults:
+    gitignore:
+      - ".llm/index/"
+      - ".llm/state/"

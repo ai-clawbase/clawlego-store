@@ -1,6 +1,13 @@
 // Asset kinds — from atomic "bricks" to integrated "packages".
 // `source` ('hosted' | 'reference') is orthogonal and is not a kind.
-export type ItemKind = 'brick' | 'mod' | 'tpl' | 'pkg'
+//
+// Beyond the four-tier granularity ladder we surface two purpose-typed
+// catalogs that users browse by name rather than by granularity:
+//   - `smartfolder` —— 智能文件夹模板 (a SmartSpace kind pack: drops a
+//     system/smartspace/kinds/<kind>/ tree into the workspace).
+//   - `biztpl`      —— 业务模板 (declarative behavior templates: goals /
+//     workflows / research scaffolds under business/).
+export type ItemKind = 'brick' | 'mod' | 'tpl' | 'pkg' | 'smartfolder' | 'biztpl'
 
 export interface ItemAuthor {
   name: string
@@ -53,6 +60,8 @@ export const KIND_LABEL: Record<ItemKind, string> = {
   mod: 'ClawMod 智能组件',
   tpl: 'ClawTpl 智能体模板',
   pkg: 'ClawPkg 智能体包',
+  smartfolder: '智能文件夹',
+  biztpl: '业务模板',
 }
 
 export const KIND_SHORT: Record<ItemKind, string> = {
@@ -60,6 +69,8 @@ export const KIND_SHORT: Record<ItemKind, string> = {
   mod: '组件',
   tpl: '模板',
   pkg: '智能体',
+  smartfolder: '文件夹',
+  biztpl: '业务',
 }
 
 export const CATEGORY_LABEL: Record<string, string> = {

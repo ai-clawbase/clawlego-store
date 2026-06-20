@@ -1,0 +1,22 @@
+{
+  "title": "CategoryTaxonomy",
+  "description": "分类法。存为 .llm/data/categories.json。两级(父类/子类),带图标。用户可增改;入账拿不准归到 其他 并在清单标注。",
+  "schema_version": 2,
+  "file": ".llm/data/categories.json",
+  "shape": {
+    "schema_version": "int = 2",
+    "expense": "Category[] 支出分类",
+    "income": "Category[] 收入分类"
+  },
+  "category_fields": {
+    "name": { "type": "string", "required": true },
+    "icon": { "type": "string", "required": false },
+    "color": { "type": "string", "required": false },
+    "sub": { "type": "string[]", "required": false, "doc": "子类名列表" },
+    "archived": { "type": "bool", "required": false }
+  },
+  "rules": [
+    "改名时不回改历史账目;在 categories.json 里给旧名加 alias 映射(可选 aliases:{旧名:新名}),统计时归并。",
+    "新增分类直接 append;删除=archived:true。"
+  ]
+}

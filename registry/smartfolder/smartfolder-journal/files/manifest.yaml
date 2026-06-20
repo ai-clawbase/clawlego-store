@@ -1,0 +1,35 @@
+apiVersion: lwp.io/v0.1
+kind: LLMWorkspaceKind
+metadata:
+  name: journal
+  version: 1.0.0
+spec:
+  display:
+    name: 日记空间
+    icon: carbon:pen
+    description: 一个会陪你写、帮你回看的日记本：引导成文、周期回顾、情绪曲线；纯 Markdown 落盘，永远属于你
+    color: "#a855f7"
+  default_landing: business/journal
+  capabilities:
+    # 命令的工作流写在 prompts/cmd_<name>.md 中，按 file_path 字母序拼到对话开头 prompts 段
+    skills:    []
+    commands:  [write, review, mood]
+    subagents: []
+  instance_schema:
+    tone:
+      type: "enum:[listener,coach,minimal]"
+      optional: true
+      default: listener
+      description: 陪写风格——listener 倾听共情 / coach 追问推动 / minimal 只记录不评论
+    description:
+      type: string
+      optional: true
+      description: 这本日记是写什么的（如「育儿记录」「创业日志」；留空即生活日记）
+  adapters:
+    list: builtin/file_browser
+    open: builtin/file_browser
+  defaults:
+    # 索引/情绪曲线是 agent 跑出来的可重建产物；日记正文不在此列
+    gitignore:
+      - ".llm/index/"
+      - ".llm/state/"

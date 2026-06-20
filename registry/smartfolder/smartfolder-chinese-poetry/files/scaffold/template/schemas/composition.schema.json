@@ -1,0 +1,14 @@
+{
+  "title": "Composition",
+  "description": "孩子的创作作品。存于 .llm/data/compositions/<child-name>/<date>-<title>.md。",
+  "fields": {
+    "title": { "type": "string", "required": true, "doc": "作品标题" },
+    "child_name": { "type": "string", "required": true, "doc": "创作者(孩子名)" },
+    "age": { "type": "int", "required": false, "doc": "创作时年龄" },
+    "date": { "type": "string", "required": true, "doc": "创作日期 YYYY-MM-DD" },
+    "content": { "type": "string", "required": true, "doc": "作品正文" },
+    "inspiration": { "type": "string", "required": false, "doc": "灵感来源(如 读了静夜思后)" },
+    "parent_note": { "type": "string", "required": false, "doc": "家长/老师的评语" },
+    "tags": { "type": "string[]", "required": false, "doc": "主题标签" }
+  }
+}

@@ -86,6 +86,8 @@ const contentBits = computed(() => {
 .kind-mod { background: var(--mint-soft); color: #0B7355; }
 .kind-prompt { background: #FCE7F3; color: #BE185D; }
 .kind-skill { background: #EDE9FE; color: #6D28D9; }
+.kind-smartfolder { background: #E0EAFF; color: #3538CD; }
+.kind-biztpl { background: #FEF0C7; color: #B54708; }
 .badges {
   display: flex;
   flex-direction: column;

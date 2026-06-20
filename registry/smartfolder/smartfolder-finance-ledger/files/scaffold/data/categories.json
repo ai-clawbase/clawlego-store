@@ -1,0 +1,26 @@
+{
+  "schema_version": 2,
+  "expense": [
+    { "name": "餐饮", "icon": "carbon:restaurant", "sub": ["早餐", "午餐", "晚餐", "外卖", "饮料零食", "请客"] },
+    { "name": "交通", "icon": "carbon:bicycle", "sub": ["打车", "公交地铁", "加油", "停车", "火车飞机"] },
+    { "name": "居住", "icon": "carbon:home", "sub": ["房租", "房贷", "物业", "水电燃气", "维修"] },
+    { "name": "日用", "icon": "carbon:shopping-cart", "sub": ["超市", "日化", "家居"] },
+    { "name": "购物", "icon": "carbon:shopping-bag", "sub": ["服饰", "数码", "美妆"] },
+    { "name": "娱乐", "icon": "carbon:game-console", "sub": ["电影", "游戏", "旅行", "运动"] },
+    { "name": "医疗", "icon": "carbon:health-cross", "sub": ["看病", "药品", "保健"] },
+    { "name": "教育", "icon": "carbon:education", "sub": ["书籍", "课程", "学费"] },
+    { "name": "人情", "icon": "carbon:gift", "sub": ["红包", "礼物", "请客"] },
+    { "name": "通讯", "icon": "carbon:phone", "sub": ["话费", "网费", "会员订阅"] },
+    { "name": "金融", "icon": "carbon:finance", "sub": ["手续费", "利息", "保险"] },
+    { "name": "其他", "icon": "carbon:overflow-menu-horizontal" }
+  ],
+  "income": [
+    { "name": "工资", "icon": "carbon:wallet" },
+    { "name": "奖金", "icon": "carbon:bonus" },
+    { "name": "兼职", "icon": "carbon:user-multiple" },
+    { "name": "理财", "icon": "carbon:chart-line" },
+    { "name": "报销", "icon": "carbon:receipt" },
+    { "name": "红包", "icon": "carbon:gift" },
+    { "name": "其他", "icon": "carbon:overflow-menu-horizontal" }
+  ]
+}
