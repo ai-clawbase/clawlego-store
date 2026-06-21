@@ -1,21 +1,26 @@
 // build-store.mjs — turns the human-edited `registry/` tree into the
 // machine-readable store catalog that the ClawLego app consumes.
 //
-//   node scripts/build-store.mjs dist      → writes dist/store/
-//   node scripts/build-store.mjs public    → writes public/store/ (for `pnpm dev`)
-//   node scripts/build-store.mjs --check   → validate only, no output
+//   node scripts/build-store.mjs dist       → writes dist/store/ (+ refreshes the git manifest)
+//   node scripts/build-store.mjs public     → writes public/store/ (for `pnpm dev`)
+//   node scripts/build-store.mjs --manifest → only (re)write the committed git manifest
+//   node scripts/build-store.mjs --check    → validate only; also fails if the git manifest is stale
 //
-// Output layout (served at https://store.clawlego.com):
+// HTTP catalog (served at https://store.clawlego.com):
 //   /store/index.json              full catalog index (the app fetches this first)
 //   /store/<kind>/<id>/claw.json   per-item manifest
 //   /store/<kind>/<id>/bundle.tgz  installable payload (hosted items only)
 //   /store/<kind>/<id>/README.md   long-form description (optional)
+//
+// Git marketplace (the repo itself, recognized by clone URL — see EMBED.md / MARKETPLACE.md):
+//   .clawlego/marketplace.json     committed, deterministic index of registry/ entries,
+//                                  installed straight from the cloned working tree.
 
 import {
   readdirSync, readFileSync, writeFileSync, mkdirSync,
   existsSync, statSync, cpSync, rmSync,
 } from 'node:fs'
-import { join, resolve } from 'node:path'
+import { dirname, join, resolve } from 'node:path'
 import { execFileSync } from 'node:child_process'
 
 const ROOT = resolve(import.meta.dirname, '..')
@@ -32,13 +37,21 @@ const KINDS = ['pkg', 'tpl', 'mod', 'brick', 'smartfolder', 'biztpl']
 const ATOMIC_KINDS = ['brick']
 const CATEGORIES = ['design', 'life', 'engineering', 'service', 'general']
 const SITE = 'https://store.clawlego.com'
+const REPO_URL = 'https://github.com/ai-clawbase/clawlego-store.git'
+const REPO_REF = 'main'
+const MARKETPLACE = join(ROOT, '.clawlego', 'marketplace.json')
 
 const arg = process.argv[2] || 'dist'
 const checkOnly = arg === '--check'
-const OUT = checkOnly ? null : join(ROOT, arg, 'store')
+const manifestOnly = arg === '--manifest'
+// `dist`/`public` write the HTTP catalog; `dist`, `public` and `--manifest`
+// all (re)write the committed git manifest; `--check` writes nothing.
+const writeStore = !checkOnly && !manifestOnly
+const OUT = writeStore ? join(ROOT, arg, 'store') : null
 
 const errors = []
 const items = []
+const entries = [] // git-marketplace entries (installed from the working tree)
 
 function listDirs(p) {
   if (!existsSync(p)) return []
@@ -49,7 +62,7 @@ function fail(id, msg) {
   errors.push(`${id}: ${msg}`)
 }
 
-if (!checkOnly) {
+if (writeStore) {
   rmSync(OUT, { recursive: true, force: true })
   mkdirSync(OUT, { recursive: true })
 }
@@ -88,7 +101,37 @@ for (const kind of KINDS) {
       if (!url) fail(ref, 'reference item must declare install.url')
     }
 
-    if (checkOnly) continue
+    // --- git-marketplace entry (collected in every mode) ---
+    // The repo is itself a marketplace: a clone is installed straight from the
+    // working tree, so entries point at registry/ paths, not the HTTP catalog.
+    // `install.target` mirrors the HTTP contract (atomic kinds derive a default),
+    // with `{id}` resolved so each entry is self-contained.
+    const ins = m.install || {}
+    const target =
+      (ins.target || (ATOMIC_KINDS.includes(kind) ? `business/assets/${kind}s/{id}` : null))
+    const relDir = `registry/${kind}/${id}`
+    const entry = {
+      id, kind,
+      source: m.source,
+      name: m.name,
+      tagline: m.tagline,
+      version: m.version,
+      category: m.category,
+      path: relDir,
+      manifest: `${relDir}/claw.json`,
+      install: hosted
+        ? { type: 'files', files: `${relDir}/files`, target: target ? target.replace('{id}', id) : null }
+        : {
+            type: 'git',
+            url: ins.url || null,
+            ref: ins.ref || null,
+            subdir: ins.subdir || null,
+            target: target ? target.replace('{id}', id) : null,
+          },
+    }
+    entries.push(entry)
+
+    if (!writeStore) continue
     if (errors.length) continue
 
     // --- emit ---
@@ -152,8 +195,37 @@ if (errors.length) {
   process.exit(1)
 }
 
+// --- git marketplace manifest (deterministic, committed) ---
+// No volatile fields (e.g. timestamps) so the tracked file only changes when
+// registry/ actually changes — like a lockfile.
+entries.sort((a, b) => `${a.kind}/${a.id}`.localeCompare(`${b.kind}/${b.id}`))
+const marketplace = {
+  schema: 'clawlego-marketplace/v1',
+  id: 'clawlego-store',
+  name: 'ClawLego 官方商店',
+  owner: { name: 'ai-clawbase', url: 'https://github.com/ai-clawbase' },
+  site: SITE,
+  source: { type: 'git', url: REPO_URL, ref: REPO_REF },
+  count: entries.length,
+  entries,
+}
+const marketplaceStr = JSON.stringify(marketplace, null, 2) + '\n'
+
 if (checkOnly) {
-  console.log('✓ registry/ is valid')
+  const current = existsSync(MARKETPLACE) ? readFileSync(MARKETPLACE, 'utf8') : ''
+  if (current !== marketplaceStr) {
+    console.error('\n✗ .clawlego/marketplace.json is stale — run `pnpm store:manifest` and commit.')
+    process.exit(1)
+  }
+  console.log(`✓ registry/ is valid — ${entries.length} entr(ies), git manifest up to date`)
+  process.exit(0)
+}
+
+mkdirSync(dirname(MARKETPLACE), { recursive: true })
+writeFileSync(MARKETPLACE, marketplaceStr)
+
+if (manifestOnly) {
+  console.log(`✓ git manifest written — ${entries.length} entr(ies) → .clawlego/marketplace.json`)
   process.exit(0)
 }
 

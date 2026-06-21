@@ -11,6 +11,7 @@
     "build": "vue-tsc --noEmit && vite build && node scripts/build-store.mjs dist",
     "preview": "vite preview --host 127.0.0.1",
     "store:build": "node scripts/build-store.mjs dist",
+    "store:manifest": "node scripts/build-store.mjs --manifest",
     "store:check": "node scripts/build-store.mjs --check"
   },
   "dependencies": {

@@ -1,0 +1,408 @@
+{
+  "schema": "clawlego-marketplace/v1",
+  "id": "clawlego-store",
+  "name": "ClawLego 官方商店",
+  "owner": {
+    "name": "ai-clawbase",
+    "url": "https://github.com/ai-clawbase"
+  },
+  "site": "https://store.clawlego.com",
+  "source": {
+    "type": "git",
+    "url": "https://github.com/ai-clawbase/clawlego-store.git",
+    "ref": "main"
+  },
+  "count": 24,
+  "entries": [
+    {
+      "id": "biztpl-crosscheck-research",
+      "kind": "biztpl",
+      "source": "hosted",
+      "name": "交叉验证调研工作流",
+      "tagline": "多角度并行调研 + 交叉投票去伪存真",
+      "version": "1.0.0",
+      "category": "general",
+      "path": "registry/biztpl/biztpl-crosscheck-research",
+      "manifest": "registry/biztpl/biztpl-crosscheck-research/claw.json",
+      "install": {
+        "type": "files",
+        "files": "registry/biztpl/biztpl-crosscheck-research/files",
+        "target": "business/workflows/crosscheck_research"
+      }
+    },
+    {
+      "id": "biztpl-literature-review",
+      "kind": "biztpl",
+      "source": "hosted",
+      "name": "文献综述目标",
+      "tagline": "把一次文献综述拆成可推进、可验收的目标",
+      "version": "1.0.0",
+      "category": "general",
+      "path": "registry/biztpl/biztpl-literature-review",
+      "manifest": "registry/biztpl/biztpl-literature-review/claw.json",
+      "install": {
+        "type": "files",
+        "files": "registry/biztpl/biztpl-literature-review/files",
+        "target": "business/goals/literature-review"
+      }
+    },
+    {
+      "id": "prompt-commit-message",
+      "kind": "brick",
+      "source": "hosted",
+      "name": "提交信息生成器",
+      "tagline": "把一段 diff 写成规范、可读的提交信息",
+      "version": "1.0.0",
+      "category": "engineering",
+      "path": "registry/brick/prompt-commit-message",
+      "manifest": "registry/brick/prompt-commit-message/claw.json",
+      "install": {
+        "type": "files",
+        "files": "registry/brick/prompt-commit-message/files",
+        "target": "business/assets/bricks/prompt-commit-message"
+      }
+    },
+    {
+      "id": "skill-meeting-notes",
+      "kind": "brick",
+      "source": "hosted",
+      "name": "会议纪要整理",
+      "tagline": "把零散的会议记录整理成决议、待办与未决项",
+      "version": "1.0.0",
+      "category": "general",
+      "path": "registry/brick/skill-meeting-notes",
+      "manifest": "registry/brick/skill-meeting-notes/claw.json",
+      "install": {
+        "type": "files",
+        "files": "registry/brick/skill-meeting-notes/files",
+        "target": "business/assets/bricks/skill-meeting-notes"
+      }
+    },
+    {
+      "id": "clawmod-anthropic-skills",
+      "kind": "mod",
+      "source": "reference",
+      "name": "Anthropic Agent Skills",
+      "tagline": "Anthropic 官方开源的 Agent Skills 集合",
+      "version": "1.0.0",
+      "category": "engineering",
+      "path": "registry/mod/clawmod-anthropic-skills",
+      "manifest": "registry/mod/clawmod-anthropic-skills/claw.json",
+      "install": {
+        "type": "git",
+        "url": "https://github.com/anthropics/skills.git",
+        "ref": "main",
+        "subdir": null,
+        "target": "business/assets/mods/clawmod-anthropic-skills"
+      }
+    },
+    {
+      "id": "clawmod-awesome-prompts",
+      "kind": "mod",
+      "source": "reference",
+      "name": "Awesome 提示词合集",
+      "tagline": "社区维护的高质量提示词大全",
+      "version": "1.0.0",
+      "category": "general",
+      "path": "registry/mod/clawmod-awesome-prompts",
+      "manifest": "registry/mod/clawmod-awesome-prompts/claw.json",
+      "install": {
+        "type": "git",
+        "url": "https://github.com/f/awesome-chatgpt-prompts.git",
+        "ref": "main",
+        "subdir": null,
+        "target": "business/assets/mods/clawmod-awesome-prompts"
+      }
+    },
+    {
+      "id": "clawmod-life-butler",
+      "kind": "mod",
+      "source": "hosted",
+      "name": "生活管家资产包",
+      "tagline": "把日程、采购、家务收进一个智能体",
+      "version": "1.0.0",
+      "category": "life",
+      "path": "registry/mod/clawmod-life-butler",
+      "manifest": "registry/mod/clawmod-life-butler/claw.json",
+      "install": {
+        "type": "files",
+        "files": "registry/mod/clawmod-life-butler/files",
+        "target": "business/assets/mods/clawmod-life-butler"
+      }
+    },
+    {
+      "id": "clawmod-mcp-servers",
+      "kind": "mod",
+      "source": "reference",
+      "name": "MCP 官方服务器集",
+      "tagline": "Model Context Protocol 官方参考服务器仓库",
+      "version": "1.0.0",
+      "category": "engineering",
+      "path": "registry/mod/clawmod-mcp-servers",
+      "manifest": "registry/mod/clawmod-mcp-servers/claw.json",
+      "install": {
+        "type": "git",
+        "url": "https://github.com/modelcontextprotocol/servers.git",
+        "ref": "main",
+        "subdir": "src",
+        "target": "business/assets/mods/clawmod-mcp-servers"
+      }
+    },
+    {
+      "id": "clawmod-web-research",
+      "kind": "mod",
+      "source": "hosted",
+      "name": "网络调研资产包",
+      "tagline": "让任意智能体具备结构化的联网调研能力",
+      "version": "1.2.0",
+      "category": "engineering",
+      "path": "registry/mod/clawmod-web-research",
+      "manifest": "registry/mod/clawmod-web-research/claw.json",
+      "install": {
+        "type": "files",
+        "files": "registry/mod/clawmod-web-research/files",
+        "target": "business/assets/mods/clawmod-web-research"
+      }
+    },
+    {
+      "id": "clawpkg-starter",
+      "kind": "pkg",
+      "source": "hosted",
+      "name": "新手开箱即用包",
+      "tagline": "集成基础知识库与工程流程的完整智能体环境",
+      "version": "1.0.0",
+      "category": "general",
+      "path": "registry/pkg/clawpkg-starter",
+      "manifest": "registry/pkg/clawpkg-starter/claw.json",
+      "install": {
+        "type": "files",
+        "files": "registry/pkg/clawpkg-starter/files",
+        "target": "business/instances/clawpkg-starter"
+      }
+    },
+    {
+      "id": "smartfolder-album",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "智能相册",
+      "tagline": "把一个相册文件夹变成可检索的智能相册 App",
+      "version": "1.0.0",
+      "category": "life",
+      "path": "registry/smartfolder/smartfolder-album",
+      "manifest": "registry/smartfolder/smartfolder-album/claw.json",
+      "install": {
+        "type": "files",
+        "files": "registry/smartfolder/smartfolder-album/files",
+        "target": "system/smartspace/kinds/album"
+      }
+    },
+    {
+      "id": "smartfolder-chinese-poetry",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "古诗词",
+      "tagline": "智能古诗词库——讲解、背诵、闯关、创作、育儿陪伴",
+      "version": "1.0.0",
+      "category": "life",
+      "path": "registry/smartfolder/smartfolder-chinese-poetry",
+      "manifest": "registry/smartfolder/smartfolder-chinese-poetry/claw.json",
+      "install": {
+        "type": "files",
+        "files": "registry/smartfolder/smartfolder-chinese-poetry/files",
+        "target": "system/smartspace/kinds/chinese_poetry"
+      }
+    },
+    {
+      "id": "smartfolder-code-repo",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "智能代码库",
+      "tagline": "把一个代码目录变成可导航、可检索、可问答的智能代码库",
+      "version": "1.0.0",
+      "category": "engineering",
+      "path": "registry/smartfolder/smartfolder-code-repo",
+      "manifest": "registry/smartfolder/smartfolder-code-repo/claw.json",
+      "install": {
+        "type": "files",
+        "files": "registry/smartfolder/smartfolder-code-repo/files",
+        "target": "system/smartspace/kinds/code_repo"
+      }
+    },
+    {
+      "id": "smartfolder-doc-vault",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "文档管家",
+      "tagline": "合同、票据、证件、说明书的智能档案库，带到期提醒",
+      "version": "1.0.0",
+      "category": "service",
+      "path": "registry/smartfolder/smartfolder-doc-vault",
+      "manifest": "registry/smartfolder/smartfolder-doc-vault/claw.json",
+      "install": {
+        "type": "files",
+        "files": "registry/smartfolder/smartfolder-doc-vault/files",
+        "target": "system/smartspace/kinds/doc_vault"
+      }
+    },
+    {
+      "id": "smartfolder-download-station",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "下载整理站",
+      "tagline": "下载目录变成会自我整理的中转站",
+      "version": "1.1.0",
+      "category": "general",
+      "path": "registry/smartfolder/smartfolder-download-station",
+      "manifest": "registry/smartfolder/smartfolder-download-station/claw.json",
+      "install": {
+        "type": "files",
+        "files": "registry/smartfolder/smartfolder-download-station/files",
+        "target": "system/smartspace/kinds/download_station"
+      }
+    },
+    {
+      "id": "smartfolder-ebook-library",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "书库",
+      "tagline": "电子书目录变成可检索的书库",
+      "version": "1.1.0",
+      "category": "life",
+      "path": "registry/smartfolder/smartfolder-ebook-library",
+      "manifest": "registry/smartfolder/smartfolder-ebook-library/claw.json",
+      "install": {
+        "type": "files",
+        "files": "registry/smartfolder/smartfolder-ebook-library/files",
+        "target": "system/smartspace/kinds/ebook_library"
+      }
+    },
+    {
+      "id": "smartfolder-finance-ledger",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "账本",
+      "tagline": "多账户记账、预算盯防、净值与现金流",
+      "version": "2.0.0",
+      "category": "life",
+      "path": "registry/smartfolder/smartfolder-finance-ledger",
+      "manifest": "registry/smartfolder/smartfolder-finance-ledger/claw.json",
+      "install": {
+        "type": "files",
+        "files": "registry/smartfolder/smartfolder-finance-ledger/files",
+        "target": "system/smartspace/kinds/finance_ledger"
+      }
+    },
+    {
+      "id": "smartfolder-git-repo",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "Git 仓库",
+      "tagline": "可 clone 和操作 Git 工作树的智能文件夹",
+      "version": "1.1.0",
+      "category": "engineering",
+      "path": "registry/smartfolder/smartfolder-git-repo",
+      "manifest": "registry/smartfolder/smartfolder-git-repo/claw.json",
+      "install": {
+        "type": "files",
+        "files": "registry/smartfolder/smartfolder-git-repo/files",
+        "target": "system/smartspace/kinds/git_repo"
+      }
+    },
+    {
+      "id": "smartfolder-journal",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "日记空间",
+      "tagline": "一个会陪你写、帮你回看的日记本",
+      "version": "1.0.0",
+      "category": "life",
+      "path": "registry/smartfolder/smartfolder-journal",
+      "manifest": "registry/smartfolder/smartfolder-journal/claw.json",
+      "install": {
+        "type": "files",
+        "files": "registry/smartfolder/smartfolder-journal/files",
+        "target": "system/smartspace/kinds/journal"
+      }
+    },
+    {
+      "id": "smartfolder-learning-space",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "学习空间",
+      "tagline": "把一堆学习材料变成会陪你学的空间",
+      "version": "1.1.0",
+      "category": "life",
+      "path": "registry/smartfolder/smartfolder-learning-space",
+      "manifest": "registry/smartfolder/smartfolder-learning-space/claw.json",
+      "install": {
+        "type": "files",
+        "files": "registry/smartfolder/smartfolder-learning-space/files",
+        "target": "system/smartspace/kinds/learning_space"
+      }
+    },
+    {
+      "id": "smartfolder-media-library",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "影视库",
+      "tagline": "NAS 上的电影 / 剧集目录变成可检索的影视库",
+      "version": "1.1.0",
+      "category": "life",
+      "path": "registry/smartfolder/smartfolder-media-library",
+      "manifest": "registry/smartfolder/smartfolder-media-library/claw.json",
+      "install": {
+        "type": "files",
+        "files": "registry/smartfolder/smartfolder-media-library/files",
+        "target": "system/smartspace/kinds/media_library"
+      }
+    },
+    {
+      "id": "smartfolder-meeting-notes",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "会议空间",
+      "tagline": "转写稿丢进来自动出纪要，行动项可追踪",
+      "version": "1.1.0",
+      "category": "service",
+      "path": "registry/smartfolder/smartfolder-meeting-notes",
+      "manifest": "registry/smartfolder/smartfolder-meeting-notes/claw.json",
+      "install": {
+        "type": "files",
+        "files": "registry/smartfolder/smartfolder-meeting-notes/files",
+        "target": "system/smartspace/kinds/meeting_notes"
+      }
+    },
+    {
+      "id": "smartfolder-note-vault",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "笔记空间",
+      "tagline": "Obsidian / Notion 笔记的本地镜像，变成可检索可问答的智能笔记本",
+      "version": "1.0.0",
+      "category": "general",
+      "path": "registry/smartfolder/smartfolder-note-vault",
+      "manifest": "registry/smartfolder/smartfolder-note-vault/claw.json",
+      "install": {
+        "type": "files",
+        "files": "registry/smartfolder/smartfolder-note-vault/files",
+        "target": "system/smartspace/kinds/note_vault"
+      }
+    },
+    {
+      "id": "clawtpl-xiaobai-coder",
+      "kind": "tpl",
+      "source": "hosted",
+      "name": "小白程序员",
+      "tagline": "面向非技术创业者的全栈编码出厂模板",
+      "version": "1.0.0",
+      "category": "engineering",
+      "path": "registry/tpl/clawtpl-xiaobai-coder",
+      "manifest": "registry/tpl/clawtpl-xiaobai-coder/claw.json",
+      "install": {
+        "type": "files",
+        "files": "registry/tpl/clawtpl-xiaobai-coder/files",
+        "target": "business/agents/clawtpl-xiaobai-coder"
+      }
+    }
+  ]
+}

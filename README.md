@@ -43,6 +43,10 @@ https://store.clawlego.com/store/<kind>/<id>/bundle.tgz  可安装载荷（hoste
 交给宿主完成**一键安装**（而非让用户回客户端自己识别查找）。消息协议见
 [`EMBED.md`](./EMBED.md)。
 
+除了上面的 HTTP 目录，本仓库**自身也是一个可按 git 仓库识别的 clawlego 市场**
+（类似 CC / Codex 插件市场）：clone 下来读 `.clawlego/marketplace.json`，即可直接
+从工作树安装条目，可 fork、可自建。规范见 [`MARKETPLACE.md`](./MARKETPLACE.md)。
+
 ## 目录结构
 
 ```
