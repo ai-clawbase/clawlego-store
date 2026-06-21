@@ -21,7 +21,17 @@
 
     <div class="card-foot">
       <span class="cat">{{ categoryLabel }}</span>
-      <span class="ver mono">v{{ item.version }}</span>
+      <button
+        v-if="embedded"
+        class="install-mini"
+        :class="`is-${installStatus}`"
+        :disabled="installStatus === 'installing' || installStatus === 'installed'"
+        @click.stop.prevent="onInstall"
+      >
+        <Icon :icon="miniIcon" width="14" :class="{ spin: installStatus === 'installing' }" />
+        {{ miniLabel }}
+      </button>
+      <span v-else class="ver mono">v{{ item.version }}</span>
     </div>
   </router-link>
 </template>
@@ -31,6 +41,7 @@ import { computed } from 'vue'
 import { Icon } from '@iconify/vue'
 import type { StoreItem } from '../types'
 import { KIND_SHORT, CATEGORY_LABEL, ASSET_LABEL } from '../types'
+import { canInstall, installState, requestInstall } from '../install'
 
 const props = defineProps<{ item: StoreItem }>()
 
@@ -45,6 +56,40 @@ const contentBits = computed(() => {
     .filter(([, n]) => n > 0)
     .map(([k, n]) => `${ASSET_LABEL[k] || k} ${n}`)
 })
+
+// One-click install — only surfaced when embedded in the desktop App.
+const embedded = canInstall()
+const installStatus = computed(() => installState(props.item.kind, props.item.id).status)
+
+const miniIcon = computed(() => {
+  switch (installStatus.value) {
+    case 'installing':
+      return 'material-symbols:progress-activity'
+    case 'installed':
+      return 'material-symbols:check-circle'
+    case 'error':
+      return 'material-symbols:refresh'
+    default:
+      return 'material-symbols:download'
+  }
+})
+
+const miniLabel = computed(() => {
+  switch (installStatus.value) {
+    case 'installing':
+      return '安装中'
+    case 'installed':
+      return '已安装'
+    case 'error':
+      return '重试'
+    default:
+      return '安装'
+  }
+})
+
+function onInstall() {
+  requestInstall(props.item)
+}
 </script>
 
 <style scoped>
@@ -146,4 +191,34 @@ const contentBits = computed(() => {
   font-size: 12px;
   color: var(--ink-4);
 }
+
+.install-mini {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 28px;
+  padding: 0 11px;
+  border-radius: 999px;
+  border: 1px solid var(--primary);
+  background: var(--primary);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter .14s, background .14s, border-color .14s;
+}
+.install-mini:hover:not(:disabled) { filter: brightness(1.08); }
+.install-mini:disabled { cursor: default; }
+.install-mini.is-installed {
+  background: var(--mint, #10b981);
+  border-color: var(--mint, #10b981);
+}
+.install-mini.is-error {
+  background: #fff;
+  border-color: #dc2626;
+  color: #dc2626;
+}
+.install-mini .spin { animation: card-install-spin .8s linear infinite; }
+@keyframes card-install-spin { to { transform: rotate(360deg); } }
 </style>

@@ -65,11 +65,46 @@
           </div>
 
           <aside class="col-side">
-            <!-- Hosted -->
-            <div v-if="item.source === 'hosted'" class="install">
+            <!-- Embedded in the desktop App: real one-click install via host. -->
+            <div v-if="embedded" class="install">
+              <h3><Icon icon="material-symbols:download" width="18" /> 一键安装</h3>
+              <p class="install-lead">{{ installLead }}</p>
+              <pre v-if="targetPath" class="codeblock">{{ targetPath }}</pre>
+              <button
+                class="btn btn-primary install-btn"
+                :class="`is-${installStatus}`"
+                :disabled="installStatus === 'installing' || installStatus === 'installed'"
+                @click="onInstall"
+              >
+                <Icon
+                  v-if="installStatus === 'installed'"
+                  icon="material-symbols:check-circle"
+                  width="18"
+                />
+                <Icon
+                  v-else-if="installStatus === 'installing'"
+                  icon="material-symbols:progress-activity"
+                  width="17"
+                  class="spin"
+                />
+                <Icon
+                  v-else-if="installStatus === 'error'"
+                  icon="material-symbols:refresh"
+                  width="17"
+                />
+                {{ installLabel }}
+              </button>
+              <p v-if="installStatus === 'error' && state.message" class="install-foot err">
+                {{ state.message }}
+              </p>
+              <p v-else class="install-foot">直接装入当前实例，无需离开本页。</p>
+            </div>
+
+            <!-- Plain browser, hosted: manual download fallback. -->
+            <div v-else-if="item.source === 'hosted'" class="install">
               <h3><Icon icon="material-symbols:download" width="18" /> 一键安装</h3>
               <p class="install-lead">
-                在 ClawLego 软件的「商店」页找到本条目，点「安装」即可。
+                在 ClawLego 桌面 App 的「商店」里打开本条目，点「安装」即可一键装入实例。
                 源文件会解压进你实例的文件树：
               </p>
               <pre class="codeblock">{{ targetPath }}</pre>
@@ -77,10 +112,10 @@
                 下载 bundle.tgz
                 <span v-if="sizeText" class="size">{{ sizeText }}</span>
               </a>
-              <p class="install-foot">手动下载用于查看内容；正常安装请在 ClawLego 内完成。</p>
+              <p class="install-foot">手动下载用于查看内容；一键安装请在 ClawLego 桌面 App 内完成。</p>
             </div>
 
-            <!-- Reference -->
+            <!-- Plain browser, reference. -->
             <div v-else class="install">
               <h3><Icon icon="material-symbols:link" width="18" /> 开源引用</h3>
               <p class="install-lead">
@@ -115,8 +150,10 @@ import SiteHeader from '../components/SiteHeader.vue'
 import SiteFooter from '../components/SiteFooter.vue'
 import type { StoreItem } from '../types'
 import { KIND_LABEL, CATEGORY_LABEL, ASSET_LABEL } from '../types'
+import { canInstall, installState, requestInstall } from '../install'
 
 const route = useRoute()
+const embedded = canInstall()
 const item = ref<StoreItem | null>(null)
 const loading = ref(true)
 const error = ref('')
@@ -171,6 +208,34 @@ const sizeText = computed(() => {
   if (!b) return ''
   return b < 1024 ? `${b} B` : `${(b / 1024).toFixed(1)} KB`
 })
+
+const state = computed(() =>
+  item.value ? installState(item.value.kind, item.value.id) : { status: 'idle' as const },
+)
+const installStatus = computed(() => state.value.status)
+
+const installLead = computed(() =>
+  item.value?.source === 'reference'
+    ? 'ClawLego 会从上游仓库拉取本条目到当前实例：'
+    : '源文件会解压进当前实例的文件树：',
+)
+
+const installLabel = computed(() => {
+  switch (installStatus.value) {
+    case 'installing':
+      return '安装中…'
+    case 'installed':
+      return '已安装'
+    case 'error':
+      return '安装失败 · 重试'
+    default:
+      return '安装到当前实例'
+  }
+})
+
+function onInstall() {
+  if (item.value) requestInstall(item.value)
+}
 </script>
 
 <style scoped>
@@ -329,11 +394,33 @@ const sizeText = computed(() => {
 .install-btn {
   width: 100%;
   margin-top: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 .install-btn .size {
   font-weight: 500;
   opacity: 0.7;
   font-size: 12.5px;
+}
+.install-btn.is-installed {
+  background: var(--mint, #10b981);
+  border-color: transparent;
+}
+.install-btn.is-installed:disabled {
+  opacity: 1;
+}
+.install-btn .spin {
+  animation: install-spin 0.8s linear infinite;
+}
+@keyframes install-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.install-foot.err {
+  color: #dc2626;
 }
 .install-foot {
   margin-top: 12px;

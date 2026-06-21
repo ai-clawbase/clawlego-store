@@ -14,10 +14,10 @@
  * 处理 `{ source: 'clawlego-store', type: 'open-external', url }`。
  */
 
-const MESSAGE_SOURCE = 'clawlego-store'
+export const MESSAGE_SOURCE = 'clawlego-store'
 
 /** 是否运行在 iframe 中（含跨域嵌入——跨域访问 window.top 会抛异常）。 */
-function isEmbedded(): boolean {
+export function isEmbedded(): boolean {
   try {
     return window.top !== window.self
   } catch {

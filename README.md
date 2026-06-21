@@ -39,6 +39,10 @@ https://store.clawlego.com/store/<kind>/<id>/bundle.tgz  可安装载荷（hoste
 
 清单字段的完整规范见 [`registry/SCHEMA.md`](./registry/SCHEMA.md)。
 
+商店被桌面 App 内嵌时，浏览页里的「安装」按钮会通过 `postMessage` 把安装意图
+交给宿主完成**一键安装**（而非让用户回客户端自己识别查找）。消息协议见
+[`EMBED.md`](./EMBED.md)。
+
 ## 目录结构
 
 ```
