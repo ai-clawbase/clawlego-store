@@ -1,7 +1,7 @@
 /**
  * 嵌入桥。
  *
- * 当商店被宿主 App（如 StarClaw3）以 iframe 方式嵌入时，外层 webview
+ * 当商店被宿主 App（如 ClawLego）以 iframe 方式嵌入时，外层 webview
  * 往往无法处理 `target="_blank"` 外链——例如 macOS 的 WKWebView 在没有
  * UIDelegate 时会静默丢弃新窗口请求，于是「官网 / 开源仓库 / 下载」点了
  * 毫无反应。

@@ -24,11 +24,12 @@
       <button
         v-if="embedded"
         class="install-mini"
-        :class="`is-${installStatus}`"
-        :disabled="installStatus === 'installing' || installStatus === 'installed'"
+        :class="`is-${installAction}`"
+        :disabled="installAction === 'installing' || installAction === 'installed'"
+        :title="installTitle"
         @click.stop.prevent="onInstall"
       >
-        <Icon :icon="miniIcon" width="14" :class="{ spin: installStatus === 'installing' }" />
+        <Icon :icon="miniIcon" width="14" :class="{ spin: installAction === 'installing' }" />
         {{ miniLabel }}
       </button>
       <span v-else class="ver mono">v{{ item.version }}</span>
@@ -59,14 +60,17 @@ const contentBits = computed(() => {
 
 // One-click install — only surfaced when embedded in the desktop App.
 const embedded = canInstall()
-const installStatus = computed(() => installState(props.item.kind, props.item.id).status)
+const view = computed(() => installState(props.item))
+const installAction = computed(() => view.value.action)
 
 const miniIcon = computed(() => {
-  switch (installStatus.value) {
+  switch (installAction.value) {
     case 'installing':
       return 'material-symbols:progress-activity'
     case 'installed':
       return 'material-symbols:check-circle'
+    case 'upgradable':
+      return 'material-symbols:arrow-circle-up'
     case 'error':
       return 'material-symbols:refresh'
     default:
@@ -75,16 +79,29 @@ const miniIcon = computed(() => {
 })
 
 const miniLabel = computed(() => {
-  switch (installStatus.value) {
+  switch (installAction.value) {
     case 'installing':
       return '安装中'
     case 'installed':
       return '已安装'
+    case 'upgradable':
+      return '升级'
     case 'error':
       return '重试'
     default:
       return '安装'
   }
+})
+
+// Hover hint surfaces the installed → store version delta on an upgrade.
+const installTitle = computed(() => {
+  if (installAction.value === 'upgradable') {
+    return `已安装 v${view.value.installedVersion} · 可升级到 v${props.item.version}`
+  }
+  if (installAction.value === 'installed') {
+    return `已安装 v${view.value.installedVersion || props.item.version}`
+  }
+  return ''
 })
 
 function onInstall() {
@@ -213,6 +230,10 @@ function onInstall() {
 .install-mini.is-installed {
   background: var(--mint, #10b981);
   border-color: var(--mint, #10b981);
+}
+.install-mini.is-upgradable {
+  background: #F59E0B;
+  border-color: #F59E0B;
 }
 .install-mini.is-error {
   background: #fff;

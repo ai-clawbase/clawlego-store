@@ -72,30 +72,38 @@
               <pre v-if="targetPath" class="codeblock">{{ targetPath }}</pre>
               <button
                 class="btn btn-primary install-btn"
-                :class="`is-${installStatus}`"
-                :disabled="installStatus === 'installing' || installStatus === 'installed'"
+                :class="`is-${installAction}`"
+                :disabled="installAction === 'installing' || installAction === 'installed'"
                 @click="onInstall"
               >
                 <Icon
-                  v-if="installStatus === 'installed'"
+                  v-if="installAction === 'installed'"
                   icon="material-symbols:check-circle"
                   width="18"
                 />
                 <Icon
-                  v-else-if="installStatus === 'installing'"
+                  v-else-if="installAction === 'installing'"
                   icon="material-symbols:progress-activity"
                   width="17"
                   class="spin"
                 />
                 <Icon
-                  v-else-if="installStatus === 'error'"
+                  v-else-if="installAction === 'upgradable'"
+                  icon="material-symbols:arrow-circle-up"
+                  width="18"
+                />
+                <Icon
+                  v-else-if="installAction === 'error'"
                   icon="material-symbols:refresh"
                   width="17"
                 />
                 {{ installLabel }}
               </button>
-              <p v-if="installStatus === 'error' && state.message" class="install-foot err">
-                {{ state.message }}
+              <p v-if="installAction === 'error' && view.message" class="install-foot err">
+                {{ view.message }}
+              </p>
+              <p v-else-if="installAction === 'upgradable'" class="install-foot">
+                升级会用新版本覆盖当前实例里的同名文件。
               </p>
               <p v-else class="install-foot">直接装入当前实例，无需离开本页。</p>
             </div>
@@ -150,7 +158,7 @@ import SiteHeader from '../components/SiteHeader.vue'
 import SiteFooter from '../components/SiteFooter.vue'
 import type { StoreItem } from '../types'
 import { KIND_LABEL, CATEGORY_LABEL, ASSET_LABEL } from '../types'
-import { canInstall, installState, requestInstall } from '../install'
+import { canInstall, installState, requestInstall, type InstallView } from '../install'
 
 const route = useRoute()
 const embedded = canInstall()
@@ -209,23 +217,28 @@ const sizeText = computed(() => {
   return b < 1024 ? `${b} B` : `${(b / 1024).toFixed(1)} KB`
 })
 
-const state = computed(() =>
-  item.value ? installState(item.value.kind, item.value.id) : { status: 'idle' as const },
+const view = computed<InstallView>(() =>
+  item.value ? installState(item.value) : { action: 'idle' },
 )
-const installStatus = computed(() => state.value.status)
+const installAction = computed(() => view.value.action)
 
-const installLead = computed(() =>
-  item.value?.source === 'reference'
+const installLead = computed(() => {
+  if (installAction.value === 'upgradable') {
+    return `当前实例已安装 v${view.value.installedVersion}，可升级到 v${item.value?.version}：`
+  }
+  return item.value?.source === 'reference'
     ? 'ClawLego 会从上游仓库拉取本条目到当前实例：'
-    : '源文件会解压进当前实例的文件树：',
-)
+    : '源文件会解压进当前实例的文件树：'
+})
 
 const installLabel = computed(() => {
-  switch (installStatus.value) {
+  switch (installAction.value) {
     case 'installing':
       return '安装中…'
     case 'installed':
       return '已安装'
+    case 'upgradable':
+      return `升级到 v${item.value?.version}`
     case 'error':
       return '安装失败 · 重试'
     default:
@@ -410,6 +423,10 @@ function onInstall() {
 }
 .install-btn.is-installed:disabled {
   opacity: 1;
+}
+.install-btn.is-upgradable {
+  background: #F59E0B;
+  border-color: transparent;
 }
 .install-btn .spin {
   animation: install-spin 0.8s linear infinite;

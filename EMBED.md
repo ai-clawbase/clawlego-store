@@ -1,6 +1,6 @@
 # 嵌入协议 · clawlego-store ⇄ 宿主桌面 App
 
-商店站点（`store.clawlego.com`）可被 ClawLego / StarClaw3 桌面 App 以 iframe
+商店站点（`store.clawlego.com`）可被 ClawLego 桌面 App 以 iframe
 方式内嵌。内嵌时，前端通过 `window.postMessage` 与宿主双向通信，把「浏览 →
 **一键安装**」这条链路闭合在商店页里，而不是让用户回到客户端自己识别、查找、
 再安装。
