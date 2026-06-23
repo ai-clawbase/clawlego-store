@@ -139,7 +139,7 @@
             </div>
 
             <a class="manifest-link mono" :href="item.detailUrl" target="_blank" rel="noreferrer">
-              claw.json 清单 ↗
+              clawasset.json 清单 ↗
             </a>
           </aside>
         </div>
@@ -172,7 +172,7 @@ async function load() {
   item.value = null
   const { kind, id } = route.params
   try {
-    const res = await fetch(`/store/${kind}/${id}/claw.json`, { cache: 'no-cache' })
+    const res = await fetch(`/store/${kind}/${id}/clawasset.json`, { cache: 'no-cache' })
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     item.value = await res.json()
   } catch (e) {
@@ -292,10 +292,11 @@ function onInstall() {
 }
 .kind-tpl { background: var(--primary-soft); color: var(--primary-ink); }
 .kind-mod { background: var(--mint-soft); color: #0B7355; }
+.kind-brick { background: #FCE7F3; color: #BE185D; }
 .kind-prompt { background: #FCE7F3; color: #BE185D; }
 .kind-skill { background: #EDE9FE; color: #6D28D9; }
-.kind-smartfolder { background: #E0EAFF; color: #3538CD; }
-.kind-biztpl { background: #FEF0C7; color: #B54708; }
+.kind-smartspace { background: #E0EAFF; color: #3538CD; }
+.kind-projtpl { background: #FEF0C7; color: #B54708; }
 .src-tag {
   display: inline-flex;
   align-items: center;

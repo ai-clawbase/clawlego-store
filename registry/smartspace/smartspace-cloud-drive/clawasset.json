@@ -1,0 +1,34 @@
+{
+  "id": "smartspace-cloud-drive",
+  "kind": "smartspace",
+  "source": "hosted",
+  "name": "云盘空间",
+  "tagline": "同步型存储连接器的本地镜像，自动提升成可检索的智能文件夹",
+  "summary": "同步型存储连接器（百度网盘等）的本地镜像目录自动提升成的智能文件夹。internal kind——只能由连接器实例化，带 /index /search /recent 三条只读命令。需配合同步型存储连接器使用。",
+  "version": "1.0.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_cloud_drive",
+    "type": "clawmod"
+  },
+  "category": "general",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:cloud",
+  "accent": "#3B82F6",
+  "tags": [
+    "智能文件夹",
+    "云盘",
+    "百度网盘",
+    "镜像",
+    "连接器"
+  ],
+  "updated": "2026-06-24",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_cloud_drive/1.0.0/mod_cloud_drive-1.0.0.clawmod"
+  }
+}

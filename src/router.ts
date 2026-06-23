@@ -10,7 +10,10 @@ export const router = createRouter({
     { path: '/item/:kind/:id', name: 'item', component: ItemView },
     { path: '/:catchAll(.*)', redirect: '/' },
   ],
-  scrollBehavior() {
+  scrollBehavior(to) {
+    if (to.hash) {
+      return { el: to.hash, top: 88, behavior: 'smooth' }
+    }
     return { top: 0 }
   },
 })

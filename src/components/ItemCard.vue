@@ -146,10 +146,11 @@ function onInstall() {
 }
 .kind-tpl { background: var(--primary-soft); color: var(--primary-ink); }
 .kind-mod { background: var(--mint-soft); color: #0B7355; }
+.kind-brick { background: #FCE7F3; color: #BE185D; }
 .kind-prompt { background: #FCE7F3; color: #BE185D; }
 .kind-skill { background: #EDE9FE; color: #6D28D9; }
-.kind-smartfolder { background: #E0EAFF; color: #3538CD; }
-.kind-biztpl { background: #FEF0C7; color: #B54708; }
+.kind-smartspace { background: #E0EAFF; color: #3538CD; }
+.kind-projtpl { background: #FEF0C7; color: #B54708; }
 .badges {
   display: flex;
   flex-direction: column;

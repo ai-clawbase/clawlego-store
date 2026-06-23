@@ -3,11 +3,11 @@
 //
 // Beyond the four-tier granularity ladder we surface two purpose-typed
 // catalogs that users browse by name rather than by granularity:
-//   - `smartfolder` —— 智能文件夹模板 (a SmartSpace kind pack: drops a
+//   - `smartspace` —— 智能文件夹模板 (a SmartSpace kind pack: drops a
 //     system/smartspace/kinds/<kind>/ tree into the workspace).
-//   - `biztpl`      —— 业务模板 (declarative behavior templates: goals /
+//   - `projtpl`      —— 项目模板 (declarative behavior templates: goals /
 //     workflows / research scaffolds under business/).
-export type ItemKind = 'brick' | 'mod' | 'tpl' | 'pkg' | 'smartfolder' | 'biztpl'
+export type ItemKind = 'brick' | 'mod' | 'tpl' | 'pkg' | 'smartspace' | 'projtpl'
 
 export interface ItemAuthor {
   name: string
@@ -56,21 +56,21 @@ export interface StoreIndex {
 }
 
 export const KIND_LABEL: Record<ItemKind, string> = {
-  brick: 'ClawBrick 智能原子',
+  brick: 'ClawBit 智能原子',
   mod: 'ClawMod 智能组件',
   tpl: 'ClawTpl 智能体模板',
   pkg: 'ClawPkg 智能体包',
-  smartfolder: '智能文件夹',
-  biztpl: '业务模板',
+  smartspace: '智能文件夹',
+  projtpl: '项目模板',
 }
 
 export const KIND_SHORT: Record<ItemKind, string> = {
-  brick: '原子',
+  brick: 'ClawBit',
   mod: '组件',
   tpl: '模板',
   pkg: '智能体',
-  smartfolder: '文件夹',
-  biztpl: '业务',
+  smartspace: '文件夹',
+  projtpl: '业务',
 }
 
 export const CATEGORY_LABEL: Record<string, string> = {

@@ -1,0 +1,33 @@
+{
+  "id": "smartspace-doc-vault",
+  "kind": "smartspace",
+  "source": "hosted",
+  "name": "文档管家",
+  "tagline": "合同、票据、证件、说明书的智能档案库，带到期提醒",
+  "summary": "把一个文档目录变成可检索的智能档案库：每份文档都识别出类型、关键信息和到期日期，再也不用翻文件夹。证件到期、合同续签会主动提醒。落盘即真实文件。",
+  "version": "2.0.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_doc_vault",
+    "type": "clawmod"
+  },
+  "category": "service",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:document",
+  "accent": "#F59E0B",
+  "tags": [
+    "智能文件夹",
+    "文档",
+    "档案",
+    "到期提醒"
+  ],
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_doc_vault/2.0.0/mod_doc_vault-2.0.0.clawmod"
+  },
+  "updated": "2026-06-12"
+}

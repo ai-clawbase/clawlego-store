@@ -1,5 +1,0 @@
-# 派生层:可由 entities/poem 重建,不纳入备份/版本控制
-index/
-cache/
-# 导入的源数据备份
-data/poems/source/

@@ -1,5 +1,0 @@
-{
-  "display_name": "古诗词",
-  "menu": { "label": "古诗词", "icon": "carbon:book" },
-  "note": "本工作台是派生视图:agent 在 /index 后用最新数据重写 schema.json。可重建,真相永远在 entities/poem。"
-}

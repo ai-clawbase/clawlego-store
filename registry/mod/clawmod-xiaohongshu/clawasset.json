@@ -1,0 +1,33 @@
+{
+  "id": "clawmod-xiaohongshu",
+  "kind": "mod",
+  "source": "hosted",
+  "name": "小红书发布特化",
+  "tagline": "给创作型实例接上小红书半自动导出发布",
+  "summary": "tpl_creator 的小红书平台 ClawMod：提供 capture-xhs（URL→reference）、format-xhs（格式校验）、小红书适配 subagent，以及常用标题/开头/钩子公式库。橙线 mod，走 portal 半自动导出包路径，适配后产物由用户手动复制到小红书 App。",
+  "version": "1.2.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_xiaohongshu",
+    "type": "clawmod"
+  },
+  "category": "service",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "simple-icons:xiaohongshu",
+  "accent": "#FF2442",
+  "tags": [
+    "发布",
+    "小红书",
+    "创作",
+    "渠道"
+  ],
+  "updated": "2026-06-24",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_xiaohongshu/1.2.0/mod_xiaohongshu-1.2.0.clawmod"
+  }
+}

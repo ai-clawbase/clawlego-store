@@ -33,12 +33,12 @@ pnpm store:check  # 只校验 registry/ 是否合法
 ## 架构
 
 **契约优先。** 仓库与 ClawLego 软件之间的接口是 `/store/` 下的 JSON 与 tarball。
-改动 `claw.json` 字段、`build-store.mjs` 的输出结构、或 `index.json` 的形态时，
+改动 `clawasset.json` 字段、`build-store.mjs` 的输出结构、或 `index.json` 的形态时，
 就是在改这个契约——保持向后兼容，规范见 `registry/SCHEMA.md`。
 
 | 层 | 路径 | 职责 |
 |---|---|---|
-| 数据 | `registry/{tpl,mod,prompt,skill}/<id>/` | 条目源 —— `claw.json` + 可选 `README.md` + `files/` |
+| 数据 | `registry/{tpl,mod,prompt,skill}/<id>/` | 条目源 —— `clawasset.json` + 可选 `README.md` + `files/` |
 | 构建 | `scripts/build-store.mjs` | 扫描并校验 registry，输出 `<target>/store/` |
 | 前端 | `src/views/`、`src/components/` | 浏览站点，运行时 `fetch('/store/...')` |
 | 类型 | `src/types.ts` | 前端与 `index.json` 共用的形态定义 |

@@ -1,0 +1,33 @@
+{
+  "id": "clawmod-mastodon",
+  "kind": "mod",
+  "source": "hosted",
+  "name": "Mastodon 发布特化",
+  "tagline": "给创作型实例接上 Mastodon 绿线发布",
+  "summary": "tpl_creator 的 Mastodon 绿线发布 ClawMod：提供 Mastodon 内容适配 subagent，声明 publisher_connector=publisher-mastodon。配合创作型模板使用，使同一实例可向 Mastodon 发布。",
+  "version": "1.0.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_mastodon",
+    "type": "clawmod"
+  },
+  "category": "service",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "simple-icons:mastodon",
+  "accent": "#6364FF",
+  "tags": [
+    "发布",
+    "Mastodon",
+    "创作",
+    "渠道"
+  ],
+  "updated": "2026-06-24",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_mastodon/1.0.0/mod_mastodon-1.0.0.clawmod"
+  }
+}

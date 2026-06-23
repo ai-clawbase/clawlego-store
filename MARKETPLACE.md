@@ -48,7 +48,7 @@ Git 市场让**任何 git 仓库**都能成为一个 clawlego 市场：客户端
       "version": "1.0.0",
       "category": "general",
       "path": "registry/mod/clawmod-xxx",            // 条目目录（相对仓库根）
-      "manifest": "registry/mod/clawmod-xxx/claw.json",
+      "manifest": "registry/mod/clawmod-xxx/clawasset.json",
       "install": {
         "type": "files",                              // 从工作树直接装
         "files": "registry/mod/clawmod-xxx/files",    // 拷贝这个目录
@@ -82,7 +82,7 @@ Git 市场让**任何 git 仓库**都能成为一个 clawlego 市场：客户端
 
 ## 自建一个市场
 
-1. 建一个 git 仓库，按 `registry/<kind>/<id>/{claw.json, files/}` 放条目
+1. 建一个 git 仓库，按 `registry/<kind>/<id>/{clawasset.json, files/}` 放条目
    （规范见 [`registry/SCHEMA.md`](./registry/SCHEMA.md)）。
 2. 用本仓库的 `scripts/build-store.mjs --manifest` 生成 `.clawlego/marketplace.json`
    并提交。

@@ -8,7 +8,7 @@
 //
 // HTTP catalog (served at https://store.clawlego.com):
 //   /store/index.json              full catalog index (the app fetches this first)
-//   /store/<kind>/<id>/claw.json   per-item manifest
+//   /store/<kind>/<id>/clawasset.json   per-item manifest
 //   /store/<kind>/<id>/bundle.tgz  installable payload (hosted items only)
 //   /store/<kind>/<id>/README.md   long-form description (optional)
 //
@@ -20,7 +20,7 @@ import {
   readdirSync, readFileSync, writeFileSync, mkdirSync,
   existsSync, statSync, cpSync, rmSync,
 } from 'node:fs'
-import { dirname, join, resolve } from 'node:path'
+import { basename, dirname, join, resolve } from 'node:path'
 import { execFileSync } from 'node:child_process'
 
 const ROOT = resolve(import.meta.dirname, '..')
@@ -29,9 +29,9 @@ const REGISTRY = join(ROOT, 'registry')
 // `brick` (atomic prompt/skill) → `mod` (asset pack) → `tpl` (agent template)
 // → `pkg` (full agent clone, incl. knowledge/data).
 // Plus two purpose-typed catalogs browsed by name, not granularity:
-// `smartfolder` (智能文件夹 —— SmartSpace kind packs) and `biztpl`
-// (业务模板 —— goal/workflow/research behavior templates).
-const KINDS = ['pkg', 'tpl', 'mod', 'brick', 'smartfolder', 'biztpl']
+// `smartspace` (智能文件夹 —— SmartSpace kind packs) and `projtpl`
+// (项目模板 —— goal/workflow/research behavior templates).
+const KINDS = ['pkg', 'tpl', 'mod', 'brick', 'smartspace', 'projtpl']
 // Atomic-asset kinds: the kind names the asset type, so install target and the
 // `contents` count are derived from it.
 const ATOMIC_KINDS = ['brick']
@@ -71,20 +71,20 @@ for (const kind of KINDS) {
   for (const id of listDirs(join(REGISTRY, kind))) {
     const ref = `${kind}/${id}`
     const itemDir = join(REGISTRY, kind, id)
-    const manifestPath = join(itemDir, 'claw.json')
+    const manifestPath = join(itemDir, 'clawasset.json')
 
-    if (!existsSync(manifestPath)) { fail(ref, 'missing claw.json'); continue }
+    if (!existsSync(manifestPath)) { fail(ref, 'missing clawasset.json'); continue }
 
     let m
     try { m = JSON.parse(readFileSync(manifestPath, 'utf8')) }
-    catch (e) { fail(ref, `claw.json is not valid JSON — ${e.message}`); continue }
+    catch (e) { fail(ref, `clawasset.json is not valid JSON — ${e.message}`); continue }
 
     // --- validate the manifest contract ---
     for (const f of ['id', 'kind', 'source', 'name', 'tagline', 'version', 'category']) {
       if (!m[f]) fail(ref, `missing required field "${f}"`)
     }
-    if (m.id !== id) fail(ref, `claw.json id "${m.id}" does not match folder name`)
-    if (m.kind !== kind) fail(ref, `claw.json kind "${m.kind}" does not match folder "${kind}"`)
+    if (m.id !== id) fail(ref, `clawasset.json id "${m.id}" does not match folder name`)
+    if (m.kind !== kind) fail(ref, `clawasset.json kind "${m.kind}" does not match folder "${kind}"`)
     if (m.category && !CATEGORIES.includes(m.category)) {
       fail(ref, `unknown category "${m.category}" (allowed: ${CATEGORIES.join(', ')})`)
     }
@@ -95,7 +95,17 @@ for (const kind of KINDS) {
     }
 
     const filesDir = join(itemDir, 'files')
-    if (hosted && !existsSync(filesDir)) fail(ref, 'hosted item is missing a files/ directory')
+    // A hosted item is either repo-hosted (ships a files/ tree we tar) or
+    // R2-hosted (no files/ in the repo — the payload lives in object storage,
+    // referenced by an absolute https install.url on the download CDN). The
+    // latter keeps official resources out of the public git repo: the registry
+    // holds only metadata while the bundle/.clawmod sits on R2.
+    const r2Url = (m.install && typeof m.install.url === 'string' && /^https:\/\//.test(m.install.url)) ? m.install.url : ''
+    const repoHosted = hosted && existsSync(filesDir)
+    const r2Hosted = hosted && !repoHosted && !!r2Url
+    if (hosted && !repoHosted && !r2Hosted) {
+      fail(ref, 'hosted item needs a files/ directory or an absolute https install.url (R2-hosted)')
+    }
     if (!hosted) {
       const url = m.install && m.install.url
       if (!url) fail(ref, 'reference item must declare install.url')
@@ -110,6 +120,23 @@ for (const kind of KINDS) {
     const target =
       (ins.target || (ATOMIC_KINDS.includes(kind) ? `business/assets/${kind}s/{id}` : null))
     const relDir = `registry/${kind}/${id}`
+    const resolvedTarget = target ? target.replace('{id}', id) : null
+    let installEntry
+    if (r2Hosted) {
+      // R2-hosted: nothing to install from the cloned tree — point the
+      // marketplace entry at the same object-storage artifact the HTTP catalog uses.
+      installEntry = { type: ins.type || 'tarball', url: r2Url, target: resolvedTarget }
+    } else if (hosted) {
+      installEntry = { type: 'files', files: `${relDir}/files`, target: resolvedTarget }
+    } else {
+      installEntry = {
+        type: 'git',
+        url: ins.url || null,
+        ref: ins.ref || null,
+        subdir: ins.subdir || null,
+        target: resolvedTarget,
+      }
+    }
     const entry = {
       id, kind,
       source: m.source,
@@ -118,16 +145,8 @@ for (const kind of KINDS) {
       version: m.version,
       category: m.category,
       path: relDir,
-      manifest: `${relDir}/claw.json`,
-      install: hosted
-        ? { type: 'files', files: `${relDir}/files`, target: target ? target.replace('{id}', id) : null }
-        : {
-            type: 'git',
-            url: ins.url || null,
-            ref: ins.ref || null,
-            subdir: ins.subdir || null,
-            target: target ? target.replace('{id}', id) : null,
-          },
+      manifest: `${relDir}/clawasset.json`,
+      install: installEntry,
     }
     entries.push(entry)
 
@@ -138,9 +157,16 @@ for (const kind of KINDS) {
     const itemOut = join(OUT, kind, id)
     mkdirSync(itemOut, { recursive: true })
 
-    m.detailUrl = `/store/${kind}/${id}/claw.json`
+    m.detailUrl = `/store/${kind}/${id}/clawasset.json`
 
-    if (hosted) {
+    if (r2Hosted) {
+      // The payload already lives on R2; emit its absolute URL straight into the
+      // catalog (the app's toAbsolute() passes absolute URLs through unchanged,
+      // and the host accepts any *.clawlego.com download host). type is preserved
+      // so the host knows whether to unpack a tarball or install a .clawmod.
+      m.install = { ...(m.install || {}), type: ins.type || 'tarball', artifact: basename(r2Url) }
+      m.downloadUrl = r2Url
+    } else if (hosted) {
       const tgz = join(itemOut, 'bundle.tgz')
       // COPYFILE_DISABLE keeps macOS from injecting AppleDouble (._*) entries.
       execFileSync('tar', ['-czf', tgz, '-C', filesDir, '.'], {
@@ -162,7 +188,7 @@ for (const kind of KINDS) {
     const readmePath = join(itemDir, 'README.md')
     if (existsSync(readmePath)) cpSync(readmePath, join(itemOut, 'README.md'))
 
-    writeFileSync(join(itemOut, 'claw.json'), JSON.stringify(m, null, 2) + '\n')
+    writeFileSync(join(itemOut, 'clawasset.json'), JSON.stringify(m, null, 2) + '\n')
 
     items.push({
       id: m.id,
@@ -240,9 +266,9 @@ const index = {
     pkg: 'ClawPkg 智能体包',
     tpl: 'ClawTpl 角色模版',
     mod: 'ClawMod 功能组件',
-    brick: 'ClawBrick 原子积木',
-    smartfolder: '智能文件夹',
-    biztpl: '业务模板',
+    brick: 'ClawBit 原子积木',
+    smartspace: '智能文件夹',
+    projtpl: '项目模板',
   },
   items,
 }

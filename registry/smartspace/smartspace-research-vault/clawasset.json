@@ -1,0 +1,34 @@
+{
+  "id": "smartspace-research-vault",
+  "kind": "smartspace",
+  "source": "hosted",
+  "name": "调研情报库",
+  "tagline": "把调研与竞品情报沉淀成可检索的情报库，一键把某主题综述成简报",
+  "summary": "把调研与竞品情报沉淀成一座可检索的情报库——这是谁说的、可信几分、抽出了什么发现、对我方有何含义，要做判断时一键把某主题综述成简报。带 /capture 收来源、/finding 补发现、/synthesize 主题综述、/search、/index、/panel 命令。",
+  "version": "1.0.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_research_vault",
+    "type": "clawmod"
+  },
+  "category": "general",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:search",
+  "accent": "#8B5CF6",
+  "tags": [
+    "智能文件夹",
+    "调研",
+    "情报",
+    "竞品",
+    "综述"
+  ],
+  "updated": "2026-06-24",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_research_vault/1.0.0/mod_research_vault-1.0.0.clawmod"
+  }
+}

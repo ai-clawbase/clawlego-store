@@ -11,8 +11,8 @@
       </router-link>
 
       <nav class="nav-links">
-        <router-link :to="{ path: '/', query: { kind: 'smartfolder' } }">智能文件夹</router-link>
-        <router-link :to="{ path: '/', query: { kind: 'biztpl' } }">业务模板</router-link>
+        <router-link :to="{ path: '/', hash: '#smartspaces' }">智能文件夹</router-link>
+        <router-link :to="{ path: '/', hash: '#business-templates' }">项目模板</router-link>
         <a href="https://clawlego.com" target="_blank" rel="noreferrer">官网</a>
         <a href="https://github.com/ai-clawbase/clawlego-store" target="_blank" rel="noreferrer">开源仓库</a>
       </nav>

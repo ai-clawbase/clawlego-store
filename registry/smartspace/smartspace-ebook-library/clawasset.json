@@ -1,0 +1,33 @@
+{
+  "id": "smartspace-ebook-library",
+  "kind": "smartspace",
+  "source": "hosted",
+  "name": "书库",
+  "tagline": "电子书目录变成可检索的书库",
+  "summary": "把电子书目录变成可检索的书库：自动识别书名作者、按主题上架、生成书单与读后摘记。书封图自动出封面（支持 calibre 结构）。带 /index /search /shelf 命令。",
+  "version": "2.0.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_ebook_library",
+    "type": "clawmod"
+  },
+  "category": "life",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:book",
+  "accent": "#8B5CF6",
+  "tags": [
+    "智能文件夹",
+    "电子书",
+    "阅读",
+    "书单"
+  ],
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_ebook_library/2.0.0/mod_ebook_library-2.0.0.clawmod"
+  },
+  "updated": "2026-06-20"
+}

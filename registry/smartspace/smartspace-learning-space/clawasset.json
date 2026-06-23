@@ -1,0 +1,33 @@
+{
+  "id": "smartspace-learning-space",
+  "kind": "smartspace",
+  "source": "hosted",
+  "name": "学习空间",
+  "tagline": "把一堆学习材料变成会陪你学的空间",
+  "summary": "把一堆学习材料（PDF / 笔记 / 文章 / 课件）变成一个会陪你学的空间：消化成笔记、生成大纲、出题，按遗忘曲线安排复习。抽认卡作为持久学习资产落盘。带 /digest /outline /quiz /review 命令。",
+  "version": "2.0.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_learning_space",
+    "type": "clawmod"
+  },
+  "category": "life",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:education",
+  "accent": "#22C55E",
+  "tags": [
+    "智能文件夹",
+    "学习",
+    "笔记",
+    "复习"
+  ],
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_learning_space/2.0.0/mod_learning_space-2.0.0.clawmod"
+  },
+  "updated": "2026-06-20"
+}

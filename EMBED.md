@@ -55,7 +55,7 @@
     "name": "示例组件",
     "version": "1.0.0",
     "downloadUrl": "https://store.clawlego.com/store/mod/clawmod-xxx/bundle.tgz",
-    "detailUrl": "https://store.clawlego.com/store/mod/clawmod-xxx/claw.json",
+    "detailUrl": "https://store.clawlego.com/store/mod/clawmod-xxx/clawasset.json",
     "homepage": null,
     "install": {
       "type": "tarball",

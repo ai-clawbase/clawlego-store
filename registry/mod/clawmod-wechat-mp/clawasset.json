@@ -1,0 +1,33 @@
+{
+  "id": "clawmod-wechat-mp",
+  "kind": "mod",
+  "source": "hosted",
+  "name": "公众号订阅号发布特化",
+  "tagline": "给创作型实例接上微信公众号订阅号发布（Wechatsync 桥）",
+  "summary": "tpl_creator 的微信公众号订阅号 ClawMod：发布走 Wechatsync 桥接，把全内联 HTML 以 content-only 直接写进公众号草稿箱（等同本人在浏览器点「保存草稿」），不走已被回收权限的官方 API。配合创作型模板使用。",
+  "version": "0.2.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_wechat_mp",
+    "type": "clawmod"
+  },
+  "category": "service",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "simple-icons:wechat",
+  "accent": "#07C160",
+  "tags": [
+    "发布",
+    "公众号",
+    "微信",
+    "创作"
+  ],
+  "updated": "2026-06-24",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_wechat_mp/0.2.0/mod_wechat_mp-0.2.0.clawmod"
+  }
+}

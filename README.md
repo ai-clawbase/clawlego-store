@@ -14,11 +14,11 @@
 
 | kind | 含义 |
 |---|---|
-| `smartfolder` | 智能文件夹 —— 给一个目录套上模板，使其可检索、可问答、可整理 |
+| `smartspace` | 智能文件夹 —— 给一个目录套上模板，使其可检索、可问答、可整理 |
 | `pkg` | ClawPkg 智能体包 —— 开箱即用的完整实例 |
 | `tpl` | ClawTpl 智能体模板 —— 人格 + 默认资产配置 |
 | `mod` | ClawMod 智能组件 —— 多个资产的可整体安装单元 |
-| `biztpl` | 业务模板 —— 声明式的目标 / 工作流脚手架 |
+| `projtpl` | 项目模板 —— 声明式的目标 / 工作流脚手架 |
 | `brick` | ClawBrick 智能原子 —— 单件资产（提示词 / 技能 / 知识库等） |
 
 另有正交的 `source` 维度：条目源文件要么**托管在本仓库**（`hosted`），要么**从上游 Git 仓库拉取**（`reference`）。
@@ -29,12 +29,12 @@
 
 ```
 https://store.clawlego.com/store/index.json            全量目录索引（客户端首先拉取）
-https://store.clawlego.com/store/<kind>/<id>/claw.json   单条清单
+https://store.clawlego.com/store/<kind>/<id>/clawasset.json   单条清单
 https://store.clawlego.com/store/<kind>/<id>/bundle.tgz  可安装载荷（hosted 条目）
 ```
 
 - `hosted` 条目的可安装产物是 `bundle.tgz`，由其 `files/` 目录打包而来。
-- `reference` 条目在 `claw.json` 的 `install.url` 声明上游仓库。
+- `reference` 条目在 `clawasset.json` 的 `install.url` 声明上游仓库。
 - `/store/*` 开启了 CORS，可跨域读取。
 
 清单字段的完整规范见 [`registry/SCHEMA.md`](./registry/SCHEMA.md)。
@@ -53,7 +53,7 @@ https://store.clawlego.com/store/<kind>/<id>/bundle.tgz  可安装载荷（hoste
 clawlego-store/
 ├── registry/              商店数据（唯一事实来源，人手工编辑）
 │   ├── SCHEMA.md          条目规范
-│   └── <kind>/<id>/       claw.json + 可选 README.md + files/
+│   └── <kind>/<id>/       clawasset.json + 可选 README.md + files/
 ├── scripts/build-store.mjs  扫描 registry/ → 生成 /store/
 ├── src/                   Vue 3 浏览前端
 └── wrangler.jsonc         Cloudflare 部署配置
@@ -75,7 +75,7 @@ pnpm store:build  # 只重新生成 dist/store/
 ## 新增一个条目
 
 1. 在 `registry/<kind>/` 下新建文件夹，文件夹名即条目 `id`。
-2. 写 `claw.json`（字段见 `registry/SCHEMA.md`）。
+2. 写 `clawasset.json`（字段见 `registry/SCHEMA.md`）。
    - `hosted`：把要分发的源文件放进 `files/`。
    - `reference`：在 `install.url` 填上游仓库地址。
 3. `pnpm store:check` 本地校验。
@@ -91,4 +91,4 @@ npx wrangler deploy
 
 ## 许可
 
-MIT，见 [LICENSE](./LICENSE)。`registry/` 下的条目可在各自 `claw.json` 中声明独立许可；引用条目以上游仓库许可为准。
+MIT，见 [LICENSE](./LICENSE)。`registry/` 下的条目可在各自 `clawasset.json` 中声明独立许可；引用条目以上游仓库许可为准。
