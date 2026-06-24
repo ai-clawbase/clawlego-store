@@ -76,6 +76,29 @@ export const KIND_SHORT: Record<ItemKind, string> = {
   projtpl: '业务',
 }
 
+// Project templates (`projtpl`) are sub-typed by where they install under
+// business/: goals/ · research/ · workflows/. The card badge surfaces this
+// concrete class instead of the generic 业务 label.
+export type ProjtplClass = 'goal' | 'research' | 'workflow'
+
+export const PROJTPL_CLASS_LABEL: Record<ProjtplClass, string> = {
+  goal: '目标',
+  research: '研究',
+  workflow: '工作流',
+}
+
+export function projtplClass(item: StoreItem): ProjtplClass {
+  const target = item.install?.target ?? ''
+  if (/(^|\/)goals?(\/|$)/.test(target)) return 'goal'
+  if (/(^|\/)research(\/|$)/.test(target)) return 'research'
+  if (/(^|\/)workflows?(\/|$)/.test(target)) return 'workflow'
+  // Fall back to the human tags when no install target carries the class.
+  const tags = item.tags ?? []
+  if (tags.some((t) => /目标|goal/i.test(t))) return 'goal'
+  if (tags.some((t) => /研究|调研|research/i.test(t))) return 'research'
+  return 'workflow'
+}
+
 export const CATEGORY_LABEL: Record<string, string> = {
   design: '设计',
   life: '生活',

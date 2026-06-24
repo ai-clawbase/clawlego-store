@@ -41,12 +41,18 @@
 import { computed } from 'vue'
 import { Icon } from '@iconify/vue'
 import type { StoreItem } from '../types'
-import { KIND_SHORT, CATEGORY_LABEL, ASSET_LABEL } from '../types'
+import { KIND_SHORT, CATEGORY_LABEL, ASSET_LABEL, PROJTPL_CLASS_LABEL, projtplClass } from '../types'
 import { canInstall, installState, requestInstall } from '../install'
 
 const props = defineProps<{ item: StoreItem }>()
 
-const kindShort = computed(() => KIND_SHORT[props.item.kind])
+// Project templates show their concrete class (目标/研究/工作流) rather than the
+// generic 业务 label; everything else uses its tier short-name.
+const kindShort = computed(() =>
+  props.item.kind === 'projtpl'
+    ? PROJTPL_CLASS_LABEL[projtplClass(props.item)]
+    : KIND_SHORT[props.item.kind],
+)
 const categoryLabel = computed(() => CATEGORY_LABEL[props.item.category] || props.item.category)
 const tint = computed(() => props.item.accent + '1F')
 

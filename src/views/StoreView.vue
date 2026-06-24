@@ -14,21 +14,25 @@
             在 ClawLego 商店点一下，即刻落户你的本地实例。
           </p>
           <div class="hero-stats">
-            <button class="stat stat-btn primary" @click="scrollToFolders">
-              <strong>{{ counts.smartfolder }}</strong><span>智能文件夹</span>
-            </button>
-            <button class="stat stat-btn" @click="browse('pkg')">
-              <strong>{{ counts.pkg }}</strong><span>智能体包</span>
-            </button>
-            <button class="stat stat-btn" @click="browse('tpl')">
-              <strong>{{ counts.tpl }}</strong><span>智能体模板</span>
-            </button>
-            <button class="stat stat-btn" @click="browseComponentClass('all')">
-              <strong>{{ counts.component }}</strong><span>智能组件</span>
-            </button>
-            <button class="stat stat-btn" @click="scrollToBusinessTemplates">
-              <strong>{{ counts.projtpl }}</strong><span>项目模板</span>
-            </button>
+            <div class="stat-group lead">
+              <button class="stat stat-btn primary" @click="scrollToFolders">
+                <strong>{{ counts.smartfolder }}</strong><span>智能文件夹</span>
+              </button>
+              <button class="stat stat-btn primary" @click="scrollToBusinessTemplates">
+                <strong>{{ counts.projtpl }}</strong><span>项目模板</span>
+              </button>
+            </div>
+            <div class="stat-group blocks">
+              <button class="stat stat-btn" @click="browse('pkg')">
+                <strong>{{ counts.pkg }}</strong><span>智能体包</span>
+              </button>
+              <button class="stat stat-btn" @click="browse('tpl')">
+                <strong>{{ counts.tpl }}</strong><span>智能体模板</span>
+              </button>
+              <button class="stat stat-btn" @click="browseComponentClass('all')">
+                <strong>{{ counts.component }}</strong><span>智能组件</span>
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -55,9 +59,12 @@
 
         <p v-if="loading" class="state">正在加载智能文件夹…</p>
         <p v-else-if="error" class="state err">{{ error }}</p>
-        <div v-else class="grid">
-          <ItemCard v-for="it in featuredFolders" :key="`${it.kind}/${it.id}`" :item="it" />
-        </div>
+        <template v-else>
+          <div class="grid">
+            <ItemCard v-for="it in pagedFolders" :key="`${it.kind}/${it.id}`" :item="it" />
+          </div>
+          <Pager v-model:page="foldersPage" :page-count="foldersPageCount" />
+        </template>
       </section>
 
       <!-- Featured — 项目模板 -->
@@ -83,9 +90,12 @@
         <p v-if="loading" class="state">正在加载项目模板…</p>
         <p v-else-if="error" class="state err">{{ error }}</p>
         <p v-else-if="!businessTemplates.length" class="state">暂无项目模板。</p>
-        <div v-else class="grid">
-          <ItemCard v-for="it in businessTemplates" :key="`${it.kind}/${it.id}`" :item="it" />
-        </div>
+        <template v-else>
+          <div class="grid">
+            <ItemCard v-for="it in pagedBizTpls" :key="`${it.kind}/${it.id}`" :item="it" />
+          </div>
+          <Pager v-model:page="bizPage" :page-count="bizPageCount" />
+        </template>
       </section>
 
       <!-- Catalog — building blocks & everything else -->
@@ -137,9 +147,12 @@
         <p v-else-if="error" class="state err">{{ error }}</p>
         <p v-else-if="!filtered.length" class="state">没有匹配的资产。</p>
 
-        <div v-else class="grid">
-          <ItemCard v-for="it in filtered" :key="`${it.kind}/${it.id}`" :item="it" />
-        </div>
+        <template v-else>
+          <div class="grid">
+            <ItemCard v-for="it in pagedCatalog" :key="`${it.kind}/${it.id}`" :item="it" />
+          </div>
+          <Pager v-model:page="catalogPage" :page-count="catalogPageCount" />
+        </template>
       </section>
 
       <!-- Visual Hierarchy Diagram -->
@@ -215,8 +228,10 @@ import { Icon } from '@iconify/vue'
 import SiteHeader from '../components/SiteHeader.vue'
 import SiteFooter from '../components/SiteFooter.vue'
 import ItemCard from '../components/ItemCard.vue'
+import Pager from '../components/Pager.vue'
 import type { StoreIndex, StoreItem, ItemKind } from '../types'
 import { CATEGORY_LABEL } from '../types'
+import { usePagination } from '../usePagination'
 import { fetchLatestResources, withLatestResources } from '../services/updateService'
 
 const route = useRoute()
@@ -390,6 +405,19 @@ const filtered = computed(() => {
     return true
   })
 })
+
+// Each grid pages rather than rendering its whole set at once.
+const { paged: pagedFolders, page: foldersPage, pageCount: foldersPageCount } =
+  usePagination(featuredFolders, 8)
+const { paged: pagedBizTpls, page: bizPage, pageCount: bizPageCount } =
+  usePagination(businessTemplates, 8)
+const { paged: pagedCatalog, page: catalogPage, pageCount: catalogPageCount } =
+  usePagination(filtered, 12)
+
+// Any change to the catalog filters jumps back to its first page.
+watch([activeKind, activeComponentClass, activeCat, query], () => {
+  catalogPage.value = 1
+})
 </script>
 
 <style scoped>
@@ -416,10 +444,19 @@ const filtered = computed(() => {
 }
 .hero-stats {
   display: flex;
-  gap: 36px;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 28px 48px;
   margin-top: 34px;
   flex-wrap: wrap;
 }
+.stat-group {
+  display: flex;
+  gap: 36px;
+  flex-wrap: wrap;
+}
+/* Keep the building-block trio hugging the right edge even when wrapped. */
+.stat-group.blocks { margin-left: auto; }
 .stat { display: flex; align-items: baseline; gap: 8px; }
 .stat-btn {
   border: 0;
@@ -742,7 +779,9 @@ const filtered = computed(() => {
 @media (max-width: 680px) {
   .hero { padding: 52px 0 40px; }
   .hero-title { font-size: 38px; }
-  .hero-stats { gap: 22px; }
+  .hero-stats { gap: 22px 28px; justify-content: flex-start; }
+  .stat-group { gap: 22px 28px; }
+  .stat-group.blocks { margin-left: 0; }
   .featured-head { flex-direction: column; align-items: flex-start; }
   .search { flex: 1; min-width: 0; }
 }

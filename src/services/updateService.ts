@@ -18,7 +18,7 @@ import type { InstallSpec, StoreItem } from '../types'
 
 export const CLAWLEGO_RESOURCES_CHECK_URL =
   import.meta.env.VITE_CLAWLEGO_RESOURCES_CHECK_URL ||
-  'https://server.clawlego.com/update/check/clawlego-resources'
+  'https://update.clawlego.com/check/clawlego-resources'
 
 /** 更新服务单条组件记录（/update/check 返回的 components[] 元素）。 */
 interface UpdateComponent {
