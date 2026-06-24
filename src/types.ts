@@ -3,11 +3,14 @@
 //
 // Beyond the four-tier granularity ladder we surface two purpose-typed
 // catalogs that users browse by name rather than by granularity:
-//   - `smartspace` —— 智能文件夹模板 (a SmartSpace kind pack: drops a
-//     system/smartspace/kinds/<kind>/ tree into the workspace).
+//   - `smartfolder` —— 智能文件夹 (a SmartSpace kind pack: drops a
+//     system/smartspace/kinds/<kind>/ tree into the workspace). NB: the store
+//     item kind is `smartfolder` (user-facing 文件夹), distinct from the
+//     internal `smartspace` kind namespace — the host's install records and the
+//     install-status bridge key on `smartfolder` (see handlers_store.go).
 //   - `projtpl`      —— 项目模板 (declarative behavior templates: goals /
 //     workflows / research scaffolds under business/).
-export type ItemKind = 'brick' | 'mod' | 'tpl' | 'pkg' | 'smartspace' | 'projtpl'
+export type ItemKind = 'brick' | 'mod' | 'tpl' | 'pkg' | 'smartfolder' | 'projtpl'
 
 export interface ItemAuthor {
   name: string
@@ -60,7 +63,7 @@ export const KIND_LABEL: Record<ItemKind, string> = {
   mod: 'ClawMod 智能组件',
   tpl: 'ClawTpl 智能体模板',
   pkg: 'ClawPkg 智能体包',
-  smartspace: '智能文件夹',
+  smartfolder: '智能文件夹',
   projtpl: '项目模板',
 }
 
@@ -69,7 +72,7 @@ export const KIND_SHORT: Record<ItemKind, string> = {
   mod: '组件',
   tpl: '模板',
   pkg: '智能体',
-  smartspace: '文件夹',
+  smartfolder: '文件夹',
   projtpl: '业务',
 }
 

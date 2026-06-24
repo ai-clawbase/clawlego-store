@@ -31,7 +31,7 @@ const REGISTRY = join(ROOT, 'registry')
 // Plus two purpose-typed catalogs browsed by name, not granularity:
 // `smartspace` (智能文件夹 —— SmartSpace kind packs) and `projtpl`
 // (项目模板 —— goal/workflow/research behavior templates).
-const KINDS = ['pkg', 'tpl', 'mod', 'brick', 'smartspace', 'projtpl']
+const KINDS = ['pkg', 'tpl', 'mod', 'brick', 'smartfolder', 'projtpl']
 // Atomic-asset kinds: the kind names the asset type, so install target and the
 // `contents` count are derived from it.
 const ATOMIC_KINDS = ['brick']

@@ -149,7 +149,7 @@ function onInstall() {
 .kind-brick { background: #FCE7F3; color: #BE185D; }
 .kind-prompt { background: #FCE7F3; color: #BE185D; }
 .kind-skill { background: #EDE9FE; color: #6D28D9; }
-.kind-smartspace { background: #E0EAFF; color: #3538CD; }
+.kind-smartfolder { background: #E0EAFF; color: #3538CD; }
 .kind-projtpl { background: #FEF0C7; color: #B54708; }
 .badges {
   display: flex;

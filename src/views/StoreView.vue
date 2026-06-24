@@ -15,7 +15,7 @@
           </p>
           <div class="hero-stats">
             <button class="stat stat-btn primary" @click="scrollToFolders">
-              <strong>{{ counts.smartspace }}</strong><span>智能文件夹</span>
+              <strong>{{ counts.smartfolder }}</strong><span>智能文件夹</span>
             </button>
             <button class="stat stat-btn" @click="browse('pkg')">
               <strong>{{ counts.pkg }}</strong><span>智能体包</span>
@@ -44,7 +44,7 @@
               自动识别、检索、问答、整理、提醒。下面是 ClawLego 内置的智能文件夹，开箱即用。
             </p>
           </div>
-          <button class="ghost-btn" @click="browseComponentClass('smartspace')">浏览全部 →</button>
+          <button class="ghost-btn" @click="browseComponentClass('smartfolder')">浏览全部 →</button>
         </div>
 
         <ul class="feat-points">
@@ -222,7 +222,7 @@ import { fetchLatestResources, withLatestResources } from '../services/updateSer
 const route = useRoute()
 
 type CatalogKind = 'all' | 'pkg' | 'tpl' | 'mod'
-type ComponentClass = 'all' | 'mod' | 'smartspace' | 'projtpl' | 'brick'
+type ComponentClass = 'all' | 'mod' | 'smartfolder' | 'projtpl' | 'brick'
 
 const index = ref<StoreIndex | null>(null)
 const loading = ref(true)
@@ -237,7 +237,7 @@ const foldersEl = ref<HTMLElement | null>(null)
 const businessTemplatesEl = ref<HTMLElement | null>(null)
 const catalogEl = ref<HTMLElement | null>(null)
 
-const COMPONENT_KINDS: ItemKind[] = ['mod', 'smartspace', 'projtpl', 'brick']
+const COMPONENT_KINDS: ItemKind[] = ['mod', 'smartfolder', 'projtpl', 'brick']
 
 function isComponentKind(kind: ItemKind) {
   return COMPONENT_KINDS.includes(kind)
@@ -276,11 +276,13 @@ function browseComponentClass(kind: ComponentClass) {
 }
 
 // Deep-link the tab from the URL. ClawShell links here as
-// `/store?kind=smartspace` (and legacy `?category=smartspace` from earlier
-// builds) when the user clicks "去商店查找更多智能文件夹模板".
-const KNOWN_KINDS: ItemKind[] = ['brick', 'mod', 'tpl', 'pkg', 'smartspace', 'projtpl']
+// `/store?kind=smartfolder` (and legacy `?kind=smartspace` / `?category=smartspace`
+// from earlier builds) when the user clicks "去商店查找更多智能文件夹模板".
+const KNOWN_KINDS: ItemKind[] = ['brick', 'mod', 'tpl', 'pkg', 'smartfolder', 'projtpl']
 function syncFromRoute() {
-  const k = route.query.kind
+  // Legacy alias: the store item kind was renamed smartspace → smartfolder.
+  const rawKind = route.query.kind
+  const k = rawKind === 'smartspace' ? 'smartfolder' : rawKind
   if (typeof k === 'string' && (KNOWN_KINDS as string[]).includes(k)) {
     if (k === 'pkg' || k === 'tpl') {
       selectKind(k)
@@ -289,7 +291,7 @@ function syncFromRoute() {
       activeKind.value = 'mod'
       activeComponentClass.value = k as ComponentClass
       if (!route.hash) {
-        if (k === 'smartspace') scrollToFolders()
+        if (k === 'smartfolder') scrollToFolders()
         else if (k === 'projtpl') scrollToBusinessTemplates()
         else scrollToCatalog()
       }
@@ -298,7 +300,7 @@ function syncFromRoute() {
   // Legacy alias: ?category=smartspace → 智能文件夹 tab.
   if (route.query.category === 'smartspace') {
     activeKind.value = 'mod'
-    activeComponentClass.value = 'smartspace'
+    activeComponentClass.value = 'smartfolder'
     if (!route.hash) scrollToFolders()
   } else if (route.query.category === 'biz') {
     activeKind.value = 'mod'
@@ -337,12 +339,12 @@ const counts = computed(() => ({
   tpl: items.value.filter((i) => i.kind === 'tpl').length,
   mod: items.value.filter((i) => i.kind === 'mod').length,
   brick: items.value.filter((i) => i.kind === 'brick').length,
-  smartspace: items.value.filter((i) => i.kind === 'smartspace').length,
+  smartfolder: items.value.filter((i) => i.kind === 'smartfolder').length,
   projtpl: items.value.filter((i) => i.kind === 'projtpl').length,
   component: items.value.filter((i) => isComponentKind(i.kind)).length,
 }))
 
-const featuredFolders = computed(() => items.value.filter((i) => i.kind === 'smartspace'))
+const featuredFolders = computed(() => items.value.filter((i) => i.kind === 'smartfolder'))
 const businessTemplates = computed(() => items.value.filter((i) => i.kind === 'projtpl'))
 
 // Catalog tabs surface the packaging levels. Smart folders, business templates
@@ -357,7 +359,7 @@ const kindTabs = computed(() => [
 const componentClassTabs = computed(() => [
   { key: 'all' as const, label: '全部组件', count: counts.value.component },
   { key: 'mod' as const, label: '标准组件', count: counts.value.mod },
-  { key: 'smartspace' as const, label: '智能文件夹', count: counts.value.smartspace },
+  { key: 'smartfolder' as const, label: '智能文件夹', count: counts.value.smartfolder },
   { key: 'projtpl' as const, label: '项目模板', count: counts.value.projtpl },
   { key: 'brick' as const, label: 'ClawBit 单原子组件', count: counts.value.brick },
 ])

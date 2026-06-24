@@ -1,0 +1,33 @@
+{
+  "id": "smartfolder-album",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "智能相册",
+  "tagline": "把一个相册文件夹变成可检索的智能相册 App",
+  "summary": "把一个相册文件夹变成可检索的智能相册：每张图都自动配上说明、人物、地点、标签，可以按内容、时间、地点检索，自动出封面。落盘即真实图片文件，永远属于你。",
+  "version": "1.2.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_album",
+    "type": "clawmod"
+  },
+  "category": "life",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:image",
+  "accent": "#EC4899",
+  "tags": [
+    "智能文件夹",
+    "相册",
+    "图片",
+    "媒体"
+  ],
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_album/1.2.0/mod_album-1.2.0.clawmod"
+  },
+  "updated": "2026-06-12"
+}

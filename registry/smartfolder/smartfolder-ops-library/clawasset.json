@@ -1,0 +1,34 @@
+{
+  "id": "smartfolder-ops-library",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "运营手册库",
+  "tagline": "把 SOP、应急手册、制度沉淀成带版本与复审节奏的手册库",
+  "summary": "把团队的 SOP、应急手册、打法、制度沉淀成一座带版本、带复审节奏的手册库——这篇干什么用、谁负责、改过什么、什么时候该复审，新人上手一键汇编成册。带 /doc 建档、/change 记变更、/handbook 汇编、/search、/index、/panel 命令。",
+  "version": "1.0.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_ops_library",
+    "type": "clawmod"
+  },
+  "category": "service",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:document-multiple-01",
+  "accent": "#14B8A6",
+  "tags": [
+    "智能文件夹",
+    "运营",
+    "SOP",
+    "手册",
+    "制度"
+  ],
+  "updated": "2026-06-24",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_ops_library/1.0.0/mod_ops_library-1.0.0.clawmod"
+  }
+}

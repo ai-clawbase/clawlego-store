@@ -1,0 +1,33 @@
+{
+  "id": "smartfolder-meeting-notes",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "会议空间",
+  "tagline": "转写稿丢进来自动出纪要，行动项可追踪",
+  "summary": "把会议转写稿 / 速记丢进来，自动生成纪要；行动项落实到人、带期限、可追踪；跨会议检索谁在什么时候说过什么。带 /digest /actions /search 命令。",
+  "version": "2.0.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_meeting_notes",
+    "type": "clawmod"
+  },
+  "category": "service",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:group-presentation",
+  "accent": "#6366F1",
+  "tags": [
+    "智能文件夹",
+    "会议",
+    "纪要",
+    "行动项"
+  ],
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_meeting_notes/2.0.0/mod_meeting_notes-2.0.0.clawmod"
+  },
+  "updated": "2026-06-20"
+}
