@@ -36,6 +36,27 @@ const KINDS = ['pkg', 'tpl', 'mod', 'brick', 'smartfolder', 'projtpl']
 // `contents` count are derived from it.
 const ATOMIC_KINDS = ['brick']
 const CATEGORIES = ['design', 'life', 'engineering', 'service', 'general']
+const FILENAME_RULES = [
+  { prefix: 'clawtpl-',      asset: 'tpl',   ext: 'clawtpl' },
+  { prefix: 'clawmod-',      asset: 'mod',   ext: 'clawmod' },
+  { prefix: 'clawpkg-',      asset: 'pkg',   ext: 'clawpkg' },
+  { prefix: 'prompt-',       asset: 'prompt', ext: 'clawprompt' },
+  { prefix: 'skill-',        asset: 'skill',  ext: 'clawskill' },
+  { prefix: 'smartfolder-',  asset: 'space',  ext: 'clawspace' },
+  { prefix: 'projtpl-',      asset: 'proj',   ext: 'clawproj' },
+]
+
+/** 根据条目元数据推导其 bundle 的真实文件名（供前端下载时使用）。 */
+function computeArtifactFilename(m) {
+  if (m.artifact) return `${m.artifact.id}-${m.version}.${m.artifact.type}`
+  for (const r of FILENAME_RULES) {
+    if (m.id.startsWith(r.prefix)) {
+      return `${r.asset}_${m.id.slice(r.prefix.length)}-${m.version}.${r.ext}`
+    }
+  }
+  return 'bundle.tgz'
+}
+
 const SITE = 'https://store.clawlego.com'
 const REPO_URL = 'https://github.com/ai-clawbase/clawlego-store.git'
 const REPO_REF = 'main'
@@ -172,7 +193,7 @@ for (const kind of KINDS) {
       execFileSync('tar', ['-czf', tgz, '-C', filesDir, '.'], {
         env: { ...process.env, COPYFILE_DISABLE: '1' },
       })
-      m.install = { ...(m.install || {}), type: 'tarball', artifact: 'bundle.tgz' }
+      m.install = { ...(m.install || {}), type: 'tarball', artifact: computeArtifactFilename(m) }
       m.bundleBytes = statSync(tgz).size
       m.downloadUrl = `/store/${kind}/${id}/bundle.tgz`
     }

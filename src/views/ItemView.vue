@@ -116,8 +116,8 @@
                 源文件会解压进你实例的文件树：
               </p>
               <pre class="codeblock">{{ targetPath }}</pre>
-              <a v-if="item.downloadUrl" class="btn btn-primary install-btn" :href="item.downloadUrl" download>
-                下载 bundle.tgz
+              <a v-if="item.downloadUrl" class="btn btn-primary install-btn" :href="item.downloadUrl" :download="filename">
+                下载 {{ filename }}
                 <span v-if="sizeText" class="size">{{ sizeText }}</span>
               </a>
               <p class="install-foot">手动下载用于查看内容；一键安装请在 ClawLego 桌面 App 内完成。</p>
@@ -219,6 +219,10 @@ const sizeText = computed(() => {
   const b = item.value?.bundleBytes
   if (!b) return ''
   return b < 1024 ? `${b} B` : `${(b / 1024).toFixed(1)} KB`
+})
+
+const filename = computed(() => {
+  return item.value?.install?.artifact || 'bundle.tgz'
 })
 
 const view = computed<InstallView>(() =>
