@@ -217,6 +217,7 @@ import SiteFooter from '../components/SiteFooter.vue'
 import ItemCard from '../components/ItemCard.vue'
 import type { StoreIndex, StoreItem, ItemKind } from '../types'
 import { CATEGORY_LABEL } from '../types'
+import { fetchLatestResources, withLatestResources } from '../services/updateService'
 
 const route = useRoute()
 
@@ -316,7 +317,12 @@ onMounted(async () => {
   try {
     const res = await fetch('/store/index.json', { cache: 'no-cache' })
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
-    index.value = await res.json()
+    const idx = (await res.json()) as StoreIndex
+    // 运行时把更新服务里每个 clawmod 组件的「最新版」覆盖到目录条目上，
+    // 这样发新版后无需重建商店即可关联到最新 R2 下载地址（失败则沿用静态版本）。
+    const latest = await fetchLatestResources()
+    idx.items = withLatestResources(idx.items, latest)
+    index.value = idx
   } catch (e) {
     error.value = '无法加载商店目录：' + (e instanceof Error ? e.message : String(e))
   } finally {

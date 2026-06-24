@@ -159,6 +159,7 @@ import SiteFooter from '../components/SiteFooter.vue'
 import type { StoreItem } from '../types'
 import { KIND_LABEL, CATEGORY_LABEL, ASSET_LABEL } from '../types'
 import { canInstall, installState, requestInstall, type InstallView } from '../install'
+import { fetchLatestResources, withLatestResource } from '../services/updateService'
 
 const route = useRoute()
 const embedded = canInstall()
@@ -174,7 +175,10 @@ async function load() {
   try {
     const res = await fetch(`/store/${kind}/${id}/clawasset.json`, { cache: 'no-cache' })
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
-    item.value = await res.json()
+    const loaded = (await res.json()) as StoreItem
+    // 关联更新服务里的最新版（与列表页同源），发新版后无需重建商店。
+    const latest = await fetchLatestResources()
+    item.value = withLatestResource(loaded, latest)
   } catch (e) {
     error.value = '无法加载该条目：' + (e instanceof Error ? e.message : String(e))
   } finally {
