@@ -12,7 +12,7 @@
     "url": "https://github.com/ai-clawbase/clawlego-store.git",
     "ref": "main"
   },
-  "count": 33,
+  "count": 40,
   "entries": [
     {
       "id": "prompt-commit-message",
@@ -529,6 +529,118 @@
       "install": {
         "type": "clawmod",
         "url": "https://download.clawlego.com/mods/mod_research_vault/1.0.0/mod_research_vault-1.0.0.clawmod",
+        "target": null
+      }
+    },
+    {
+      "id": "clawtpl-analyst",
+      "kind": "tpl",
+      "source": "hosted",
+      "name": "分析型",
+      "tagline": "数据分析与决策支持的理性思维者",
+      "version": "1.0.1",
+      "category": "general",
+      "path": "registry/tpl/clawtpl-analyst",
+      "manifest": "registry/tpl/clawtpl-analyst/clawasset.json",
+      "install": {
+        "type": "clawtpl",
+        "url": "https://download.clawlego.com/tpls/tpl_analyst/1.0.1/tpl_analyst-1.0.1.clawtpl",
+        "target": null
+      }
+    },
+    {
+      "id": "clawtpl-coach",
+      "kind": "tpl",
+      "source": "hosted",
+      "name": "教练型",
+      "tagline": "苏格拉底式的成长催化剂",
+      "version": "1.0.1",
+      "category": "life",
+      "path": "registry/tpl/clawtpl-coach",
+      "manifest": "registry/tpl/clawtpl-coach/clawasset.json",
+      "install": {
+        "type": "clawtpl",
+        "url": "https://download.clawlego.com/tpls/tpl_coach/1.0.1/tpl_coach-1.0.1.clawtpl",
+        "target": null
+      }
+    },
+    {
+      "id": "clawtpl-companion",
+      "kind": "tpl",
+      "source": "hosted",
+      "name": "陪伴型",
+      "tagline": "温暖共情的倾听者",
+      "version": "1.0.1",
+      "category": "life",
+      "path": "registry/tpl/clawtpl-companion",
+      "manifest": "registry/tpl/clawtpl-companion/clawasset.json",
+      "install": {
+        "type": "clawtpl",
+        "url": "https://download.clawlego.com/tpls/tpl_companion/1.0.1/tpl_companion-1.0.1.clawtpl",
+        "target": null
+      }
+    },
+    {
+      "id": "clawtpl-company",
+      "kind": "tpl",
+      "source": "hosted",
+      "name": "公司数字本体",
+      "tagline": "拥有公司全量 context 的单一数字实体",
+      "version": "0.1.1",
+      "category": "service",
+      "path": "registry/tpl/clawtpl-company",
+      "manifest": "registry/tpl/clawtpl-company/clawasset.json",
+      "install": {
+        "type": "clawtpl",
+        "url": "https://download.clawlego.com/tpls/tpl_company/0.1.1/tpl_company-0.1.1.clawtpl",
+        "target": null
+      }
+    },
+    {
+      "id": "clawtpl-creator",
+      "kind": "tpl",
+      "source": "hosted",
+      "name": "创作型",
+      "tagline": "内容创作全流程闭环的工作基质",
+      "version": "3.2.0",
+      "category": "design",
+      "path": "registry/tpl/clawtpl-creator",
+      "manifest": "registry/tpl/clawtpl-creator/clawasset.json",
+      "install": {
+        "type": "clawtpl",
+        "url": "https://download.clawlego.com/tpls/tpl_creator/3.2.0/tpl_creator-3.2.0.clawtpl",
+        "target": null
+      }
+    },
+    {
+      "id": "clawtpl-developer",
+      "kind": "tpl",
+      "source": "hosted",
+      "name": "开发工程师",
+      "tagline": "工程师思维的代码专家",
+      "version": "1.0.1",
+      "category": "engineering",
+      "path": "registry/tpl/clawtpl-developer",
+      "manifest": "registry/tpl/clawtpl-developer/clawasset.json",
+      "install": {
+        "type": "clawtpl",
+        "url": "https://download.clawlego.com/tpls/tpl_developer/1.0.1/tpl_developer-1.0.1.clawtpl",
+        "target": null
+      }
+    },
+    {
+      "id": "clawtpl-researcher",
+      "kind": "tpl",
+      "source": "hosted",
+      "name": "研究型",
+      "tagline": "严谨好奇的知识探索者",
+      "version": "1.0.1",
+      "category": "general",
+      "path": "registry/tpl/clawtpl-researcher",
+      "manifest": "registry/tpl/clawtpl-researcher/clawasset.json",
+      "install": {
+        "type": "clawtpl",
+        "url": "https://download.clawlego.com/tpls/tpl_researcher/1.0.1/tpl_researcher-1.0.1.clawtpl",
         "target": null
       }
     },

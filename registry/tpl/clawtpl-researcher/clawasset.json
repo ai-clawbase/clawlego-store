@@ -1,0 +1,27 @@
+{
+  "id": "clawtpl-researcher",
+  "kind": "tpl",
+  "source": "hosted",
+  "name": "研究型",
+  "tagline": "严谨好奇的知识探索者",
+  "summary": "严谨好奇的知识探索者，专注于信息收集、文献整理与深度分析。",
+  "version": "1.0.1",
+  "category": "general",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "material-symbols:science-outline",
+  "accent": "#06AED4",
+  "tags": [
+    "研究",
+    "文献",
+    "分析"
+  ],
+  "install": {
+    "type": "clawtpl",
+    "url": "https://download.clawlego.com/tpls/tpl_researcher/1.0.1/tpl_researcher-1.0.1.clawtpl"
+  },
+  "updated": "2026-06-24"
+}

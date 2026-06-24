@@ -1,0 +1,27 @@
+{
+  "id": "clawtpl-companion",
+  "kind": "tpl",
+  "source": "hosted",
+  "name": "陪伴型",
+  "tagline": "温暖共情的倾听者",
+  "summary": "温暖共情的倾听者，擅长情感陪伴、心理支持与生活分享。",
+  "version": "1.0.1",
+  "category": "life",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "material-symbols:favorite-outline",
+  "accent": "#F670C7",
+  "tags": [
+    "陪伴",
+    "情感",
+    "倾听"
+  ],
+  "install": {
+    "type": "clawtpl",
+    "url": "https://download.clawlego.com/tpls/tpl_companion/1.0.1/tpl_companion-1.0.1.clawtpl"
+  },
+  "updated": "2026-06-24"
+}

@@ -1,0 +1,27 @@
+{
+  "id": "clawtpl-analyst",
+  "kind": "tpl",
+  "source": "hosted",
+  "name": "分析型",
+  "tagline": "数据分析与决策支持的理性思维者",
+  "summary": "理性结构化的思维者，专注于数据分析、商业洞察与决策支持。",
+  "version": "1.0.1",
+  "category": "general",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "material-symbols:insights",
+  "accent": "#2E90FA",
+  "tags": [
+    "分析",
+    "商业洞察",
+    "决策"
+  ],
+  "install": {
+    "type": "clawtpl",
+    "url": "https://download.clawlego.com/tpls/tpl_analyst/1.0.1/tpl_analyst-1.0.1.clawtpl"
+  },
+  "updated": "2026-06-24"
+}

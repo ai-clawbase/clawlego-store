@@ -1,0 +1,27 @@
+{
+  "id": "clawtpl-company",
+  "kind": "tpl",
+  "source": "hosted",
+  "name": "公司数字本体",
+  "tagline": "拥有公司全量 context 的单一数字实体",
+  "summary": "公司的数字本体：拥有公司全量 context、主动维系一致性的单一实体；CEO/CFO/红队等是它借用的角色镜头、共享同一份记忆。装载组织 OS 的不变量与对象-关系数据契约 + 受控自治边界；真实公司 context 在实例上随运营长入。",
+  "version": "0.1.1",
+  "category": "service",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "material-symbols:corporate-fare",
+  "accent": "#7A5AF8",
+  "tags": [
+    "公司",
+    "组织",
+    "本体"
+  ],
+  "install": {
+    "type": "clawtpl",
+    "url": "https://download.clawlego.com/tpls/tpl_company/0.1.1/tpl_company-0.1.1.clawtpl"
+  },
+  "updated": "2026-06-24"
+}

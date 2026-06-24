@@ -56,16 +56,21 @@ function versionFromFilename(filename: string, family: string): string {
   return m ? m[1] : ''
 }
 
-/** 从 R2 地址 / 安装地址里抽出 `mods/<family>/` 的 family 段。 */
+/** 托管资源包的 R2 路径前缀（与 publish-resources.sh 的落盘布局一致）。 */
+const RESOURCE_PATH_RE = /\/(?:mods|tpls|bricks|pkgs)\/([^/]+)\//
+/** 走更新服务关联「最新版」的 hosted 包安装类型。 */
+const PACKAGE_INSTALL_TYPES = new Set(['clawmod', 'clawtpl', 'clawbrick', 'clawpkg'])
+
+/** 从 R2 地址 / 安装地址里抽出 `mods|tpls|bricks|pkgs/<family>/` 的 family 段。 */
 export function familyFromUrl(url: string | null | undefined): string {
   if (!url) return ''
-  const m = url.match(/\/mods\/([^/]+)\//)
+  const m = url.match(RESOURCE_PATH_RE)
   return m ? m[1] : ''
 }
 
-/** 商店条目对应的资源 family（hosted clawmod 才有意义）。 */
+/** 商店条目对应的资源 family（hosted clawmod/clawtpl/… 才有意义）。 */
 export function familyOfItem(item: Pick<StoreItem, 'install' | 'downloadUrl'>): string {
-  if (item.install?.type !== 'clawmod') return ''
+  if (!item.install?.type || !PACKAGE_INSTALL_TYPES.has(item.install.type)) return ''
   return familyFromUrl(item.install?.url) || familyFromUrl(item.downloadUrl)
 }
 
