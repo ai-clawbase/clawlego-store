@@ -1,0 +1,34 @@
+{
+  "id": "smartfolder-llm-wiki",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "LLM Wiki",
+  "tagline": "把资料增量沉淀成一座活的、互相链接的知识维基",
+  "summary": "受 Andrej Karpathy 的 LLM Wiki 启发：不是每次现查现答（RAG），而是把喂进来的资料逐条融进既有词条——写摘要页、更新实体/概念页、维护 [[交叉引用]]、标记矛盾。维基是纯 Markdown，永远属于你、带得走；/index 确定性重建目录与孤立页/断链健康检查。带 /ingest 喂来源、/ask 问维基、/lint 体检、/page 手写词条、/index、/panel 命令。",
+  "version": "1.0.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_llm_wiki",
+    "type": "clawmod"
+  },
+  "category": "general",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:network-3",
+  "accent": "#0EA5E9",
+  "tags": [
+    "智能文件夹",
+    "知识库",
+    "维基",
+    "Karpathy",
+    "笔记"
+  ],
+  "updated": "2026-06-26",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_llm_wiki/1.0.0/mod_llm_wiki-1.0.0.clawmod"
+  }
+}
