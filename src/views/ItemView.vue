@@ -137,10 +137,6 @@
                 落地路径：<code>{{ targetPath }}</code>
               </p>
             </div>
-
-            <a class="manifest-link mono" :href="item.detailUrl" target="_blank" rel="noreferrer">
-              clawasset.json 清单 ↗
-            </a>
           </aside>
         </div>
       </template>
@@ -460,15 +456,6 @@ function onInstall() {
   padding: 1px 5px;
   border-radius: 5px;
 }
-.manifest-link {
-  display: block;
-  margin-top: 14px;
-  text-align: center;
-  font-size: 12.5px;
-  color: var(--ink-4);
-}
-.manifest-link:hover { color: var(--primary); }
-
 @media (max-width: 820px) {
   .layout { grid-template-columns: 1fr; gap: 8px; }
   .col-side { position: static; }

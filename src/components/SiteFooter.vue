@@ -3,7 +3,7 @@
     <div class="wrap foot-inner">
       <div class="foot-brand">
         <strong>ClawLego 商店</strong>
-        <p>像拼乐高一样建设你的智能体：从原子积木到功能组件，再到完整的角色模版与智能体包，让 AI 资产开箱即用。</p>
+        <p>分层组装你的智能体，让AI资产开箱即用</p>
       </div>
       <div class="foot-cols">
         <div class="foot-col">
