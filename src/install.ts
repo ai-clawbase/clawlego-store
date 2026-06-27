@@ -50,8 +50,39 @@ const installedVersions = reactive<Record<string, string>>({})
 /** 发起安装时记下请求的版本，宿主回传不带 version 时用它兜底（非响应式）。 */
 const pendingVersions: Record<string, string> = {}
 
+/**
+ * 「安装中」态的客户端兜底超时。后端安装是异步的：商店发出 install 后即乐观置
+ * installing，由宿主在成功/失败时回 install-status 收尾。但若那条收尾消息丢失或
+ * 宿主异常，按钮不能永远停在「安装中…」——超时后翻成「失败 · 重试」，用户至少能
+ * 重来。取值略大于宿主侧的处理上限（starclaw3 store worker 轮询 ~8min、
+ * storeInstallStaleAfter=10min），避免误伤真正在跑的长安装。
+ */
+const STUCK_INSTALL_TIMEOUT_MS = 10 * 60_000
+const watchdogs: Record<string, ReturnType<typeof setTimeout>> = {}
+
 function keyOf(kind: string, id: string): string {
   return `${kind}/${id}`
+}
+
+function clearWatchdog(key: string): void {
+  const t = watchdogs[key]
+  if (t !== undefined) {
+    clearTimeout(t)
+    delete watchdogs[key]
+  }
+}
+
+/** 置「安装中」并（重新）武装兜底超时。每次收到 installing（首发或宿主握手回传）
+ *  都刷新计时，使页面返回后续跑的安装重新获得完整超时窗口。 */
+function armInstalling(key: string): void {
+  transient[key] = { status: 'installing' }
+  clearWatchdog(key)
+  watchdogs[key] = setTimeout(() => {
+    delete watchdogs[key]
+    if (transient[key]?.status === 'installing') {
+      transient[key] = { status: 'error', message: '安装超时，请重试' }
+    }
+  }, STUCK_INSTALL_TIMEOUT_MS)
 }
 
 /**
@@ -133,7 +164,7 @@ export function requestInstall(item: StoreItem): boolean {
   if (action === 'installing' || action === 'installed') return false
 
   pendingVersions[key] = item.version
-  transient[key] = { status: 'installing' }
+  armInstalling(key)
 
   window.parent.postMessage(
     {
@@ -162,6 +193,7 @@ function markInstalled(kind: string, id: string, version: string): void {
   const key = keyOf(kind, id)
   installedVersions[key] = version
   delete transient[key]
+  clearWatchdog(key)
 }
 
 /**
@@ -185,13 +217,15 @@ export function initInstallBridge(): void {
           markInstalled(kind, id, String(data.version ?? pendingVersions[key] ?? ''))
           break
         case 'installing':
-          transient[key] = { status: 'installing' }
+          armInstalling(key)
           break
         case 'error':
           transient[key] = { status: 'error', message: data.message }
+          clearWatchdog(key)
           break
         case 'idle':
           delete transient[key]
+          clearWatchdog(key)
           break
       }
       return

@@ -103,5 +103,15 @@
 
 `status` 取值：`installing` | `installed` | `error` | `idle`。
 
-> 商店发起 `install` 时会先本地乐观置为 `installing`；宿主**应当**在成功或
-> 失败时回一条 `install-status`，否则按钮会一直停在「安装中…」。
+> **异步安装**：宿主侧安装是后台任务——收到 `install` 后应立刻持久化「安装中」
+> 并尽快回一条 `install-status: installing`，安装真正完成/失败时再回
+> `installed` / `error`。状态由宿主**持久化**（而非绑定本次请求），这样商店页被
+> 关闭再打开时，宿主可在 `ready` 握手里对仍在安装的条目补发一条
+> `install-status: installing`，按钮便能恢复「安装中…」而不是退回「安装」。
+>
+> 商店发起 `install` 时会先本地乐观置为 `installing`。宿主**应当**在成功或失败
+> 时回一条 `install-status` 收尾；万一那条消息丢失，商店内置了 10 分钟兜底超时，
+> 会把卡死的「安装中…」翻成「失败 · 重试」，按钮不会永远转圈。
+
+> `installed` 清单只列**真正已安装**的条目；仍在安装中的条目不要放进来（否则会
+> 抢先显示「已安装」），改用 `install-status: installing` 表达。
