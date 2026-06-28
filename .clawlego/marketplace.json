@@ -12,7 +12,7 @@
     "url": "https://github.com/ai-clawbase/clawlego-store.git",
     "ref": "main"
   },
-  "count": 41,
+  "count": 42,
   "entries": [
     {
       "id": "prompt-commit-message",
@@ -545,6 +545,22 @@
       "install": {
         "type": "clawmod",
         "url": "https://download.clawlego.com/mods/mod_research_vault/1.0.0/mod_research_vault-1.0.0.clawmod",
+        "target": null
+      }
+    },
+    {
+      "id": "smartfolder-storybook",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "绘本工作室",
+      "tagline": "讲几句想法，为孩子做一本会翻页、有动画、能朗读的个性化绘本",
+      "version": "1.0.0",
+      "category": "general",
+      "path": "registry/smartfolder/smartfolder-storybook",
+      "manifest": "registry/smartfolder/smartfolder-storybook/clawasset.json",
+      "install": {
+        "type": "clawmod",
+        "url": "https://download.clawlego.com/mods/mod_storybook/1.0.0/mod_storybook-1.0.0.clawmod",
         "target": null
       }
     },

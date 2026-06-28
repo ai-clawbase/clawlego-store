@@ -1,0 +1,34 @@
+{
+  "id": "smartfolder-storybook",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "绘本工作室",
+  "tagline": "讲几句想法，为孩子做一本会翻页、有动画、能朗读的个性化绘本",
+  "summary": "亲子陪伴的绘本工作室：家长只讲关键因素（孩子名字、年龄、想要的故事/场合/要教的道理），就产出一本真正的绘本——对开翻页 + 入场动画、桌面/手机自适应、按翻页逐句同步的端侧朗读、内联 SVG 插画。难的部分（动画/翻页/朗读/自适应）固化在播放器里，成书是单文件 HTML，发布成可分享的托管页（/pub），永远属于家长、带得走。每本登记进 storybook 实体、常用角色进 character 实体（跨书形象一致），/index 确定性重建书架（封面网格，点封面即读）。带 /new 做新书、/character 维护角色、/revise 修改、/index、/panel 命令。插画默认内联 SVG 零依赖，可选接入 nano banana / Imagen 升级为 AI 插画。",
+  "version": "1.0.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_storybook",
+    "type": "clawmod"
+  },
+  "category": "general",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:book",
+  "accent": "#C46AA6",
+  "tags": [
+    "智能文件夹",
+    "绘本",
+    "亲子",
+    "睡前故事",
+    "朗读"
+  ],
+  "updated": "2026-06-28",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_storybook/1.0.0/mod_storybook-1.0.0.clawmod"
+  }
+}
