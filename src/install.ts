@@ -147,7 +147,15 @@ function toAbsolute(url: string | null): string | null {
 function resolveInstall(item: StoreItem): InstallSpec | null {
   const ins = item.install
   if (!ins) return null
-  return ins.target ? { ...ins, target: ins.target.replace('{id}', item.id) } : ins
+  // Store items live inside Vue refs, so nested objects such as `install` are
+  // reactive proxies. postMessage uses the structured-clone algorithm, which
+  // cannot clone a Proxy and throws DataCloneError before the host sees the
+  // request. Always materialise a plain object, including for specs without a
+  // target (notably clawmod-backed smart folders).
+  return {
+    ...ins,
+    target: ins.target?.replace('{id}', item.id),
+  }
 }
 
 let seq = 0
@@ -166,25 +174,33 @@ export function requestInstall(item: StoreItem): boolean {
   pendingVersions[key] = item.version
   armInstalling(key)
 
-  window.parent.postMessage(
-    {
-      source: MESSAGE_SOURCE,
-      type: 'install',
-      requestId: `${Date.now()}-${++seq}`,
-      item: {
-        id: item.id,
-        kind: item.kind,
-        source: item.source,
-        name: item.name,
-        version: item.version,
-        downloadUrl: toAbsolute(item.downloadUrl),
-        detailUrl: toAbsolute(item.detailUrl),
-        homepage: item.homepage,
-        install: resolveInstall(item),
+  try {
+    window.parent.postMessage(
+      {
+        source: MESSAGE_SOURCE,
+        type: 'install',
+        requestId: `${Date.now()}-${++seq}`,
+        item: {
+          id: item.id,
+          kind: item.kind,
+          source: item.source,
+          name: item.name,
+          version: item.version,
+          downloadUrl: toAbsolute(item.downloadUrl),
+          detailUrl: toAbsolute(item.detailUrl),
+          homepage: item.homepage,
+          install: resolveInstall(item),
+        },
       },
-    },
-    '*',
-  )
+      '*',
+    )
+  } catch {
+    // Do not leave the optimistic state stuck at 安装中 when the browser rejects
+    // the message before it reaches the desktop host.
+    transient[key] = { status: 'error', message: '无法向桌面宿主发送安装请求，请重试' }
+    clearWatchdog(key)
+    return false
+  }
   return true
 }
 
