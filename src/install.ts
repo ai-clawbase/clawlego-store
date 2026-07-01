@@ -4,14 +4,15 @@
  * 商店被宿主桌面 App（ClawLego）以 iframe 嵌入时，条目页与卡片
  * 上的「安装」按钮不再只是「告诉用户去客户端里自己找、自己识别」，而是把
  * 安装意图直接 postMessage 给宿主——由宿主把资产解压（hosted）或从上游拉取
- * （reference）进当前实例的文件树。这才是真正的一键安装。
+ * （reference）交给宿主安装。组件进入当前实例，ClawTpl 进入软件级模板
+ * 库，ClawPkg 则创建一个全新的实例。
  *
  * 普通浏览器环境（store.clawlego.com）下没有宿主，安装按钮回退为原有的手动
  * 下载 bundle.tgz / 打开上游仓库；本模块完全不介入。
  *
  * ── 三态按钮（安装 / 已安装 / 升级）─────────────────────────────────────
- * 嵌入时，宿主在握手（ready）回传当前实例「已安装清单」——每条带 `version`，
- * 即已落地到文件树里的那份智能文件夹 / 资产的版本元数据。商店据此把按钮渲染成：
+ * 嵌入时，宿主在握手（ready）按资源作用域回传「已安装清单」——组件状态
+ * 来自当前实例，模板与智能体包状态来自 ClawLego 软件级记录。商店据此渲染：
  *   - 未装             → 安装
  *   - 已装且版本 ≥ 商店 → 已安装（不可点）
  *   - 已装但版本 < 商店 → 升级（可点，再次安装即覆盖升级）
@@ -38,14 +39,14 @@ export type InstallAction = 'idle' | 'installing' | 'installed' | 'upgradable' |
 
 export interface InstallView {
   action: InstallAction
-  /** 当前实例里已安装的版本（已安装 / 可升级时存在）。 */
+  /** 对应安装作用域内已安装的版本（已安装 / 可升级时存在）。 */
   installedVersion?: string
   message?: string
 }
 
 /** 瞬时动作状态（安装中 / 失败），按 `${kind}/${id}` 索引；reactive 驱动 UI。 */
 const transient = reactive<Record<string, { status: 'installing' | 'error'; message?: string }>>({})
-/** 当前实例已安装版本，按 `${kind}/${id}` 索引；来自宿主握手或本次安装成功。 */
+/** 各安装作用域已安装版本，按 `${kind}/${id}` 索引。 */
 const installedVersions = reactive<Record<string, string>>({})
 /** 发起安装时记下请求的版本，宿主回传不带 version 时用它兜底（非响应式）。 */
 const pendingVersions: Record<string, string> = {}
@@ -115,7 +116,7 @@ function isUpgrade(installed: string, current: string): boolean {
   return compareVersions(installed, current) < 0
 }
 
-/** 响应式读取某条目相对当前实例的安装视图（未嵌入 / 未知条目即 idle）。 */
+/** 响应式读取条目在其安装作用域内的状态（未嵌入 / 未知条目即 idle）。 */
 export function installState(item: StoreItem): InstallView {
   const key = keyOf(item.kind, item.id)
   const t = transient[key]

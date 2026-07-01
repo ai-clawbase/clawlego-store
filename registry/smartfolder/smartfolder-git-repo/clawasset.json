@@ -3,9 +3,9 @@
   "kind": "smartfolder",
   "source": "hosted",
   "name": "Git 仓库",
-  "tagline": "可 clone 和操作 Git 工作树的智能文件夹",
-  "summary": "把一个 Git 工作树变成可对话操作的智能文件夹：clone、查看状态与 diff、管理分支、提交、拉取、推送、远端管理。粘贴一条 git clone 地址即可自动识别仓库名与地址。带 /clone /status /diff /branch /commit /sync /remote 命令。",
-  "version": "2.0.0",
+  "tagline": "Git 工作流与代码理解一体化的智能文件夹",
+  "summary": "统一管理代码仓库：clone、状态、diff、分支、提交、同步与可视化面板，并提供 /map /search /explain /review 完成代码索引、检索、解释和评审。",
+  "version": "2.1.0",
   "artifact": {
     "asset": "mod",
     "id": "mod_git_repo",
@@ -23,11 +23,13 @@
     "智能文件夹",
     "Git",
     "版本控制",
+    "代码检索",
+    "代码评审",
     "工程"
   ],
   "install": {
     "type": "clawmod",
-    "url": "https://download.clawlego.com/mods/mod_git_repo/2.0.0/mod_git_repo-2.0.0.clawmod"
+    "url": "https://download.clawlego.com/mods/mod_git_repo/2.1.0/mod_git_repo-2.1.0.clawmod"
   },
-  "updated": "2026-06-20"
+  "updated": "2026-06-30"
 }

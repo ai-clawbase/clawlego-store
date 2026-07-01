@@ -13,7 +13,5 @@
   "accent": "#4F5BFF",
   "tags": ["智能体", "开箱即用", "新手"],
   "updated": "2026-05-20",
-  "install": {
-    "target": "business/instances/{id}"
-  }
+  "install": {}
 }

@@ -69,7 +69,7 @@
             <div v-if="embedded" class="install">
               <h3><Icon icon="material-symbols:download" width="18" /> 一键安装</h3>
               <p class="install-lead">{{ installLead }}</p>
-              <pre v-if="targetPath" class="codeblock">{{ targetPath }}</pre>
+              <pre v-if="scope === 'instance' && targetPath" class="codeblock">{{ targetPath }}</pre>
               <button
                 class="btn btn-primary install-btn"
                 :class="`is-${installAction}`"
@@ -102,20 +102,17 @@
               <p v-if="installAction === 'error' && view.message" class="install-foot err">
                 {{ view.message }}
               </p>
-              <p v-else-if="installAction === 'upgradable'" class="install-foot">
-                升级会用新版本覆盖当前实例里的同名文件。
-              </p>
-              <p v-else class="install-foot">直接装入当前实例，无需离开本页。</p>
+              <p v-else-if="installAction === 'upgradable'" class="install-foot">{{ upgradeFoot }}</p>
+              <p v-else class="install-foot">{{ installFoot }}</p>
             </div>
 
             <!-- Plain browser, hosted: manual download fallback. -->
             <div v-else-if="item.source === 'hosted'" class="install">
               <h3><Icon icon="material-symbols:download" width="18" /> 一键安装</h3>
               <p class="install-lead">
-                在 ClawLego 桌面 App 的「商店」里打开本条目，点「安装」即可一键装入实例。
-                源文件会解压进你实例的文件树：
+                {{ browserInstallLead }}
               </p>
-              <pre class="codeblock">{{ targetPath }}</pre>
+              <pre v-if="scope === 'instance' && targetPath" class="codeblock">{{ targetPath }}</pre>
               <a v-if="item.downloadUrl" class="btn btn-primary install-btn" :href="item.downloadUrl" :download="filename">
                 下载 {{ filename }}
                 <span v-if="sizeText" class="size">{{ sizeText }}</span>
@@ -153,7 +150,7 @@ import { Icon } from '@iconify/vue'
 import SiteHeader from '../components/SiteHeader.vue'
 import SiteFooter from '../components/SiteFooter.vue'
 import type { StoreItem } from '../types'
-import { KIND_LABEL, CATEGORY_LABEL, ASSET_LABEL } from '../types'
+import { KIND_LABEL, CATEGORY_LABEL, ASSET_LABEL, installScopeOf } from '../types'
 import { canInstall, installState, requestInstall, type InstallView } from '../install'
 import { fetchLatestResources, withLatestResource } from '../services/updateService'
 
@@ -225,10 +222,23 @@ const view = computed<InstallView>(() =>
   item.value ? installState(item.value) : { action: 'idle' },
 )
 const installAction = computed(() => view.value.action)
+const scope = computed(() => item.value ? installScopeOf(item.value.kind) : 'instance')
 
 const installLead = computed(() => {
   if (installAction.value === 'upgradable') {
+    if (scope.value === 'template-library') {
+      return `模板库已安装 v${view.value.installedVersion}，可升级到 v${item.value?.version}。`
+    }
+    if (scope.value === 'new-instance') {
+      return `已用 v${view.value.installedVersion} 创建过实例，可使用 v${item.value?.version} 再创建一个新实例。`
+    }
     return `当前实例已安装 v${view.value.installedVersion}，可升级到 v${item.value?.version}：`
+  }
+  if (scope.value === 'template-library') {
+    return '安装后会加入 ClawLego 的新建实例模板库：'
+  }
+  if (scope.value === 'new-instance') {
+    return '安装后会自动创建一个全新的 ClawLego 实例：'
   }
   return item.value?.source === 'reference'
     ? 'ClawLego 会从上游仓库拉取本条目到当前实例：'
@@ -238,16 +248,34 @@ const installLead = computed(() => {
 const installLabel = computed(() => {
   switch (installAction.value) {
     case 'installing':
-      return '安装中…'
+      return scope.value === 'new-instance' ? '正在创建实例…' : scope.value === 'template-library' ? '正在添加模板…' : '安装中…'
     case 'installed':
-      return '已安装'
+      return scope.value === 'new-instance' ? '已创建新实例' : scope.value === 'template-library' ? '已加入模板库' : '已安装'
     case 'upgradable':
-      return `升级到 v${item.value?.version}`
+      return scope.value === 'new-instance' ? `用 v${item.value?.version} 创建新实例` : `升级到 v${item.value?.version}`
     case 'error':
-      return '安装失败 · 重试'
+      return scope.value === 'new-instance' ? '创建失败 · 重试' : '安装失败 · 重试'
     default:
-      return '安装到当前实例'
+      return scope.value === 'new-instance' ? '安装并创建新实例' : scope.value === 'template-library' ? '添加到模板库' : '安装到当前实例'
   }
+})
+
+const installFoot = computed(() => {
+  if (scope.value === 'new-instance') return '创建独立实例，不会修改当前实例。'
+  if (scope.value === 'template-library') return '安装后可在“新建实例”的模板列表中选择。'
+  return '直接装入当前实例，无需离开本页。'
+})
+
+const upgradeFoot = computed(() => {
+  if (scope.value === 'new-instance') return '新版本会创建另一个独立实例，已有实例不受影响。'
+  if (scope.value === 'template-library') return '升级只更新软件模板库，不修改已创建实例。'
+  return '升级会用新版本覆盖当前实例里的同名文件。'
+})
+
+const browserInstallLead = computed(() => {
+  if (scope.value === 'new-instance') return '请在 ClawLego 桌面 App 中安装；完成后会自动创建一个新实例。'
+  if (scope.value === 'template-library') return '请在 ClawLego 桌面 App 中安装；完成后会加入新建实例模板库。'
+  return '在 ClawLego 桌面 App 的“商店”里打开本条目，即可一键安装到当前实例。'
 })
 
 function onInstall() {

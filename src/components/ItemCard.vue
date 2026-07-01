@@ -41,7 +41,7 @@
 import { computed } from 'vue'
 import { Icon } from '@iconify/vue'
 import type { StoreItem } from '../types'
-import { KIND_SHORT, CATEGORY_LABEL, ASSET_LABEL, PROJTPL_CLASS_LABEL, projtplClass } from '../types'
+import { KIND_SHORT, CATEGORY_LABEL, ASSET_LABEL, PROJTPL_CLASS_LABEL, installScopeOf, projtplClass } from '../types'
 import { canInstall, installState, requestInstall } from '../install'
 
 const props = defineProps<{ item: StoreItem }>()
@@ -68,6 +68,7 @@ const contentBits = computed(() => {
 const embedded = canInstall()
 const view = computed(() => installState(props.item))
 const installAction = computed(() => view.value.action)
+const scope = computed(() => installScopeOf(props.item.kind))
 
 const miniIcon = computed(() => {
   switch (installAction.value) {
@@ -87,25 +88,33 @@ const miniIcon = computed(() => {
 const miniLabel = computed(() => {
   switch (installAction.value) {
     case 'installing':
-      return '安装中'
+      return scope.value === 'new-instance' ? '创建中' : scope.value === 'template-library' ? '添加中' : '安装中'
     case 'installed':
-      return '已安装'
+      return scope.value === 'new-instance' ? '已创建' : scope.value === 'template-library' ? '已添加' : '已安装'
     case 'upgradable':
-      return '升级'
+      return scope.value === 'new-instance' ? '创建' : '升级'
     case 'error':
       return '重试'
     default:
-      return '安装'
+      return scope.value === 'new-instance' ? '创建' : scope.value === 'template-library' ? '添加' : '安装'
   }
 })
 
 // Hover hint surfaces the installed → store version delta on an upgrade.
 const installTitle = computed(() => {
   if (installAction.value === 'upgradable') {
+    if (scope.value === 'new-instance') {
+      return `已用 v${view.value.installedVersion} 创建实例 · 可用 v${props.item.version} 再创建一个`
+    }
+    if (scope.value === 'template-library') {
+      return `模板库已安装 v${view.value.installedVersion} · 可升级到 v${props.item.version}`
+    }
     return `已安装 v${view.value.installedVersion} · 可升级到 v${props.item.version}`
   }
   if (installAction.value === 'installed') {
-    return `已安装 v${view.value.installedVersion || props.item.version}`
+    if (scope.value === 'new-instance') return `已用 v${view.value.installedVersion || props.item.version} 创建实例`
+    if (scope.value === 'template-library') return `模板库已安装 v${view.value.installedVersion || props.item.version}`
+    return `当前实例已安装 v${view.value.installedVersion || props.item.version}`
   }
   return ''
 })

@@ -12,6 +12,14 @@
 //     workflows / research scaffolds under business/).
 export type ItemKind = 'brick' | 'mod' | 'tpl' | 'pkg' | 'smartfolder' | 'projtpl'
 
+export type InstallScope = 'instance' | 'template-library' | 'new-instance'
+
+export function installScopeOf(kind: ItemKind): InstallScope {
+  if (kind === 'tpl') return 'template-library'
+  if (kind === 'pkg') return 'new-instance'
+  return 'instance'
+}
+
 export interface ItemAuthor {
   name: string
   url?: string
@@ -108,7 +116,7 @@ export const CATEGORY_LABEL: Record<string, string> = {
 }
 
 export const ASSET_LABEL: Record<string, string> = {
-  brick: '积木',
+  brick: '智能原子',
   prompt: '提示词',
   skill: '技能',
   mcp: 'MCP',

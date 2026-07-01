@@ -18,9 +18,10 @@
 
 import {
   readdirSync, readFileSync, writeFileSync, mkdirSync,
-  existsSync, statSync, cpSync, rmSync,
+  existsSync, statSync, cpSync, mkdtempSync, rmSync,
 } from 'node:fs'
 import { basename, dirname, join, resolve } from 'node:path'
+import { tmpdir } from 'node:os'
 import { execFileSync } from 'node:child_process'
 
 const ROOT = resolve(import.meta.dirname, '..')
@@ -55,6 +56,46 @@ function computeArtifactFilename(m) {
     }
   }
   return 'bundle.tgz'
+}
+
+// Repo-hosted software assets must still be real ClawTpl/ClawPkg archives;
+// serving their files/ tree as bundle.tgz would make the host treat them as a
+// current-instance component. Legacy templates are wrapped as snapshot-style
+// ClawTpls, while packages are wrapped with the agent-workspace/ prefix the
+// importer requires.
+function buildRepoHostedSoftwareArtifact(kind, m, filesDir, itemOut, target) {
+  const artifact = computeArtifactFilename(m)
+  const artifactPath = join(itemOut, artifact)
+  const staging = mkdtempSync(join(tmpdir(), 'clawlego-store-'))
+  try {
+    if (kind === 'pkg') {
+      cpSync(filesDir, join(staging, 'agent-workspace'), { recursive: true })
+    } else {
+      if (!target || target.startsWith('/') || target.split('/').includes('..')) {
+        throw new Error(`${m.id}: repo-hosted tpl needs a safe install.target`)
+      }
+      const localID = m.id.replace(/^clawtpl-/, 'tpl_')
+      const meta = {
+        id: localID,
+        version: m.version,
+        name: m.name,
+        description: m.summary || m.tagline || '',
+        category: m.category,
+        tags: m.tags || [],
+        kind: 'snapshot',
+        vendor: 'community',
+      }
+      writeFileSync(join(staging, 'tpl.json'), JSON.stringify(meta, null, 2) + '\n')
+      cpSync(filesDir, join(staging, target), { recursive: true })
+    }
+    execFileSync('zip', ['-qr', artifactPath, '.'], {
+      cwd: staging,
+      env: { ...process.env, COPYFILE_DISABLE: '1' },
+    })
+  } finally {
+    rmSync(staging, { recursive: true, force: true })
+  }
+  return { artifact, artifactPath }
 }
 
 const SITE = 'https://store.clawlego.com'
@@ -122,14 +163,21 @@ for (const kind of KINDS) {
     // latter keeps official resources out of the public git repo: the registry
     // holds only metadata while the bundle/.clawmod sits on R2.
     const r2Url = (m.install && typeof m.install.url === 'string' && /^https:\/\//.test(m.install.url)) ? m.install.url : ''
-    const repoHosted = hosted && existsSync(filesDir)
-    const r2Hosted = hosted && !repoHosted && !!r2Url
+    const r2Hosted = hosted && !!r2Url
+    const repoHosted = hosted && existsSync(filesDir) && !r2Hosted
     if (hosted && !repoHosted && !r2Hosted) {
       fail(ref, 'hosted item needs a files/ directory or an absolute https install.url (R2-hosted)')
     }
     if (!hosted) {
       const url = m.install && m.install.url
       if (!url) fail(ref, 'reference item must declare install.url')
+    }
+    const softwareArtifactType = kind === 'tpl' ? 'clawtpl' : kind === 'pkg' ? 'clawpkg' : ''
+    if (softwareArtifactType && r2Hosted && m.install?.type !== softwareArtifactType) {
+      fail(ref, `${kind} R2 artifact must use install.type=${softwareArtifactType}`)
+    }
+    if (kind === 'tpl' && repoHosted && !m.install?.target) {
+      fail(ref, 'repo-hosted tpl needs install.target for its snapshot payload')
     }
 
     // --- git-marketplace entry (collected in every mode) ---
@@ -143,7 +191,14 @@ for (const kind of KINDS) {
     const relDir = `registry/${kind}/${id}`
     const resolvedTarget = target ? target.replace('{id}', id) : null
     let installEntry
-    if (r2Hosted) {
+    if (repoHosted && softwareArtifactType) {
+      const artifact = computeArtifactFilename(m)
+      installEntry = {
+        type: softwareArtifactType,
+        url: `${SITE}/store/${kind}/${id}/${artifact}`,
+        target: null,
+      }
+    } else if (r2Hosted) {
       // R2-hosted: nothing to install from the cloned tree — point the
       // marketplace entry at the same object-storage artifact the HTTP catalog uses.
       installEntry = { type: ins.type || 'tarball', url: r2Url, target: resolvedTarget }
@@ -187,6 +242,11 @@ for (const kind of KINDS) {
       // so the host knows whether to unpack a tarball or install a .clawmod.
       m.install = { ...(m.install || {}), type: ins.type || 'tarball', artifact: basename(r2Url) }
       m.downloadUrl = r2Url
+    } else if (repoHosted && softwareArtifactType) {
+      const built = buildRepoHostedSoftwareArtifact(kind, m, filesDir, itemOut, resolvedTarget)
+      m.install = { type: softwareArtifactType, artifact: built.artifact }
+      m.bundleBytes = statSync(built.artifactPath).size
+      m.downloadUrl = `/store/${kind}/${id}/${built.artifact}`
     } else if (hosted) {
       const tgz = join(itemOut, 'bundle.tgz')
       // COPYFILE_DISABLE keeps macOS from injecting AppleDouble (._*) entries.
@@ -285,10 +345,10 @@ const index = {
   count: items.length,
   kinds: {
     pkg: 'ClawPkg 智能体包',
-    tpl: 'ClawTpl 角色模版',
-    mod: 'ClawMod 功能组件',
-    brick: 'ClawBit 原子积木',
-    smartspace: '智能文件夹',
+    tpl: 'ClawTpl 智能体模板',
+    mod: 'ClawMod 智能组件',
+    brick: 'ClawBit 智能原子',
+    smartfolder: '智能文件夹',
     projtpl: '项目模板',
   },
   items,

@@ -66,11 +66,12 @@
 }
 ```
 
-宿主据此安装到当前实例的文件树：
+宿主必须按 `kind` 区分安装作用域：
 
-- `source: "hosted"` → 下载 `downloadUrl` 的 tarball，解压到 `install.target`。
-- `source: "reference"` → 按 `install.{url,ref,subdir}` 从上游仓库拉取到
-  `install.target`。
+- `kind: "tpl"` → 安装 `.clawtpl` 到 ClawLego 软件级模板库，扩充“新建实例”的模板选择。
+- `kind: "pkg"` → 导入 `.clawpkg` 并自动创建一个新实例，不修改当前实例。
+- 其他组件：`hosted` 下载并安装到当前实例；`reference` 按
+  `install.{url,ref,subdir}` 拉取到当前实例的 `install.target`。
 
 ## host → store
 
