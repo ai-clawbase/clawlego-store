@@ -1,0 +1,53 @@
+# history.risor — 一个月的打卡记录：每天几次，每项当月几次。
+#
+# 「记录」页要画一张月历，日历格子的排布交给前端（它有 Date，算星期比这里方便）。
+# 这里只回答后端才知道的事：哪一天有几次。
+#
+# 日期推进用 time 模块，别手算月末：沙箱里 time 对象有 .add_date(y,m,d) 和
+# .format(layout)。天数循环到月份前缀变了就停，这样 28/29/30/31 天都不用判断。
+
+month := ctx.params.get("month", "")
+if month == nil || month == "" { month = ctx.now()[:7] }
+month = string(month)
+if len(month) != 7 {
+  ctx.fail("月份要写成 2026-08 这样")
+} else {
+  by_day := {}
+  by_item := {}
+  total := 0
+  for i, l := range ctx.entity.query("checkin") {
+    d := l.get("date", "")
+    it := l.get("item", "")
+    if d == nil || it == nil || d == "" || it == "" { continue }
+    d = string(d)
+    it = string(it)
+    if len(d) < 7 || d[:7] != month { continue }
+    by_day[d] = by_day.get(d, 0) + 1
+    by_item[it] = by_item.get(it, 0) + 1
+    total = total + 1
+  }
+
+  days := []
+  cursor := time.parse("2006-01-02", month + "-01")
+  for j := 0; j < 31; j++ {
+    ds := cursor.format("2006-01-02")
+    if ds[:7] != month { break }
+    days.append({"date": ds, "n": by_day.get(ds, 0)})
+    cursor = cursor.add_date(0, 0, 1)
+  }
+
+  items := []
+  for i, it := range ctx.entity.query("checkin_item") {
+    id := it.get("id", "")
+    if id == nil || id == "" { continue }
+    title := it.get("title", "")
+    if title == nil || title == "" { title = "（未命名）" }
+    act := it.get("active", true)
+    if act == nil { act = true }
+    items.append({"id": id, "title": title, "active": act, "count": by_item.get(id, 0)})
+  }
+
+  ctx.ok(sprintf("%s：%d 次", month, total), {
+    "month": month, "days": days, "items": items, "total": total,
+  })
+}

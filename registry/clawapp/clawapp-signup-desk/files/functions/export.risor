@@ -1,0 +1,29 @@
+# export.risor — 导出签到表 CSV，落到应用自己的 files/ 目录。
+#
+# 不在公网白名单里：外人可以报名，但不能把整份名单导走。
+
+func cell(v) {
+  s := v == nil ? "" : string(v)
+  if strings.contains(s, ",") || strings.contains(s, "\"") || strings.contains(s, "\n") {
+    return "\"" + strings.replace_all(s, "\"", "\"\"") + "\""
+  }
+  return s
+}
+
+rows := []
+for i, s := range ctx.entity.query("signup") {
+  ci := s.get("checked_in", false)
+  if ci == nil { ci = false }
+  rows.append(strings.join([
+    cell(s.get("campaign", "")), cell(s.get("name", "")),
+    cell(s.get("contact", "")), cell(s.get("date", "")), ci ? "已签到" : "",
+  ], ","))
+}
+rows = sorted(rows)
+
+lines := ["场次,姓名,联系方式,报名日期,签到"]
+for i, r := range rows { lines.append(r) }
+# BOM 打头，否则 Excel 打开中文 CSV 是乱码。
+path := "files/签到表-" + ctx.now()[:10] + ".csv"
+ctx.space.write(path, "﻿" + strings.join(lines, "\n") + "\n")
+ctx.ok(sprintf("已导出 %d 人 → %s", len(rows), path), {"path": path, "count": len(rows)})

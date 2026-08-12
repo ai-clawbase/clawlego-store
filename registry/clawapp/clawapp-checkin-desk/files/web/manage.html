@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>管理 · 打卡台</title>
+<!--
+  第三页：管理。加新项、归档不再坚持的、把归档的恢复回来。
+
+  归档不是删除：打卡历史是用户攒了几个月的东西。所以这一页也是「记录」那页
+  仍然数得到已归档项的原因 —— 同一份数据，两种看法。
+-->
+<link rel="stylesheet" href="app.css">
+<script src="/clawapp.js"></script>
+<script src="app.js"></script>
+</head>
+<body>
+<header class="head">
+  <h1>管理</h1>
+  <p class="sub" id="sub">加载中…</p>
+</header>
+
+<ul class="list" id="list"></ul>
+<p class="empty" id="empty" hidden>还没有要坚持的事。在下面加一项。</p>
+
+<div class="add">
+  <input id="title" placeholder="每天读书 30 分钟" maxlength="40">
+  <button id="add">加入</button>
+</div>
+
+<script type="module">
+await clawapp.ready()
+
+async function refresh() {
+  const { data } = await clawapp.call('items')
+  const rows = data?.rows || []
+  $('sub').textContent = rows.length
+    ? `${data.active} 项在坚持${data.total > data.active ? ` · ${data.total - data.active} 项已归档` : ''}`
+    : '一件都还没加'
+  $('empty').hidden = rows.length > 0
+
+  const list = $('list')
+  list.textContent = ''
+  // 在坚持的排前面，归档的沉底 —— 归档过的东西不该继续占着视线。
+  for (const r of rows.sort((a, b) => (b.active ? 1 : 0) - (a.active ? 1 : 0))) {
+    const li = document.createElement('li')
+    if (!r.active) li.className = 'off'
+    const what = document.createElement('div')
+    what.className = 'what'
+    const b = document.createElement('b')
+    b.textContent = r.title
+    const s = document.createElement('span')
+    s.textContent = [
+      r.active ? null : '已归档',
+      `累计 ${r.count} 次`,
+      r.last ? `最近 ${r.last}` : null,
+    ].filter(Boolean).join(' · ')
+    what.append(b, s)
+
+    const btn = document.createElement('button')
+    btn.className = 'chip' + (r.active ? ' warn' : '')
+    btn.textContent = r.active ? '归档' : '恢复'
+    btn.onclick = async () => {
+      btn.disabled = true
+      try {
+        const res = await clawapp.call('archive', { item: r.id })
+        toast(res.text || '已更新')
+        await refresh()
+      } catch (e) { toast(String(e.message || e)); btn.disabled = false }
+    }
+
+    li.append(what, btn)
+    list.append(li)
+  }
+}
+
+$('add').onclick = async () => {
+  const title = $('title').value.trim()
+  if (!title) { $('title').focus(); return }
+  $('add').disabled = true
+  try {
+    const res = await clawapp.call('add', { title })
+    toast(res.text || '已加入')
+    $('title').value = ''
+    await refresh()
+  } catch (e) { toast(String(e.message || e)) } finally { $('add').disabled = false }
+}
+$('title').addEventListener('keydown', e => { if (e.key === 'Enter') $('add').click() })
+
+await refresh()
+</script>
+</body>
+</html>

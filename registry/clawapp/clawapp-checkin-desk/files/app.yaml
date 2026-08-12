@@ -1,0 +1,49 @@
+apiVersion: app.clawlego.com/v1
+kind: LightApp
+metadata:
+  name: checkin_desk
+  version: 2.1.0
+
+# 内置轻应用之二。报名台示范「对外收表单」，这一个示范「私有工具」：
+# 完全不对外，全部动作零 token，前端自己管交互。
+spec:
+  display:
+    name: 打卡台
+    icon: carbon:checkbox-checked
+    description: 每天要坚持的事列在这儿，点一下就打卡。连续天数和完成率现算，全程零 token
+    color: "#10b981"
+  category: life
+
+  entities:
+    - { name: checkin_item, schema: entities/checkin_item.json }
+    - { name: checkin,      schema: entities/checkin.json }
+
+  functions:
+    - { name: add,     script: functions/add.risor,     summary: 加一项要坚持的事 }
+    - { name: toggle,  script: functions/toggle.risor,  summary: 打卡/撤销今天这一项 }
+    - { name: board,   script: functions/board.risor,   summary: 今日看板与连续天数 }
+    - { name: history, script: functions/history.risor, summary: 某个月的打卡记录 }
+    - { name: items,   script: functions/items.risor,   summary: 全部打卡项（含已归档） }
+    - { name: archive, script: functions/archive.risor, summary: 归档或恢复一项 }
+
+  web: { entry: web/index.html }
+
+  # 三个页面，各是 web/ 下的一份真 HTML。没有前端路由：换页就是换文档，
+  # 底部导航栏由宿主（clawapp.js）按下面的声明画出来。
+  pages:
+    - { name: today,   path: index.html,   title: 今日 }
+    - { name: history, path: history.html, title: 记录 }
+    - { name: manage,  path: manage.html,  title: 管理 }
+
+  tabbar:
+    selected_color: "#10b981"
+    items:
+      - { page: today,   label: 今日, icon: check }
+      - { page: history, label: 记录, icon: calendar }
+      - { page: manage,  label: 管理, icon: settings }
+
+  target: mobile
+
+  public:
+    # 打卡记录是私事，默认不对外。应用照常在实例内可用。
+    enabled: false

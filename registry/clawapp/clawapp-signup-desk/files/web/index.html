@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>报名 · 报名台</title>
+<!--
+  报名台的第一页。真的 HTML/JS —— 不是 ClawUI 的声明式 JSON。
+
+  这个应用有三页：报名（这一页）、名单、数据。换页就是换文档，每一页都是
+  web/ 下一份能单独打开的 HTML；底部那条导航栏不在任何一页的代码里，是宿主
+  按 app.yaml 的 tabbar 段画的。所以三页看起来是同一个程序，而不是三张网页。
+
+  名单和数据在清单里标了 visibility: owner。外人从公开链接进来时，导航栏里
+  只剩这一页，于是宿主干脆不画那条栏 —— 陌生人看到的就是一张干净的表单，
+  作者没有为此写过一行判断。
+
+  数据只经 window.clawapp 走。前端拿不到实例的 /api —— 那是主人的控制面。
+-->
+<link rel="stylesheet" href="app.css">
+<script src="/clawapp.js"></script>
+<script src="app.js"></script>
+</head>
+<body>
+<header class="head">
+  <h1>报名台</h1>
+  <p class="sub" id="sub">加载中…</p>
+</header>
+
+<section class="card">
+  <h2>登记一位</h2>
+  <label for="f-name">姓名</label>
+  <input id="f-name" autocomplete="name" placeholder="张三" maxlength="40">
+  <label for="f-contact">联系方式</label>
+  <input id="f-contact" autocomplete="tel" placeholder="手机号 / 微信" maxlength="60">
+  <label for="f-campaign">场次</label>
+  <input id="f-campaign" placeholder="周六场" maxlength="40">
+  <button id="submit">提交报名</button>
+</section>
+
+<!-- 报完之后给一句回执。主人还能顺手跳到名单去，这就是有导航之后多出来的东西。 -->
+<section class="card" id="recent" hidden>
+  <h2>刚刚登记</h2>
+  <ul class="list" id="recentList"></ul>
+  <button class="ghost" id="toRoster">去名单看看</button>
+</section>
+
+<script type="module">
+await clawapp.ready()
+const owner = clawapp.env.mode === 'owner'
+
+$('sub').textContent = owner ? '收报名 · 查名单 · 导出签到表' : '填一下就报上名了'
+$('f-campaign').value = new URLSearchParams(location.search).get('campaign') || ''
+
+// 主人看得见「名单」这个 tab，就在上面挂个今天的人数。角标是每页自己画的：
+// 页面加载时问一次，问的是它自己这一屏需要的数。
+async function badgeToday() {
+  if (!owner) return
+  const rows = await clawapp.entity.query('signup')
+  const today = new Date().toISOString().slice(0, 10)
+  const n = rows.filter(r => r.date === today).length
+  clawapp.tabbar.setBadge('roster', n || null)
+}
+
+const justNow = []
+function renderRecent() {
+  $('recent').hidden = justNow.length === 0
+  const list = $('recentList')
+  list.textContent = ''
+  for (const r of justNow) {
+    const li = document.createElement('li')
+    const who = document.createElement('div')
+    who.className = 'who'
+    const b = document.createElement('b')
+    b.textContent = r.name
+    const s = document.createElement('span')
+    s.textContent = [r.campaign, r.contact].filter(Boolean).join(' · ') || '已登记'
+    who.append(b, s)
+    li.append(who)
+    list.append(li)
+  }
+}
+
+$('toRoster').onclick = () => clawapp.nav.switchTab('roster')
+
+$('submit').onclick = async () => {
+  const name = $('f-name').value.trim()
+  if (!name) { toast('请填姓名'); $('f-name').focus(); return }
+  const btn = $('submit')
+  btn.disabled = true
+  try {
+    // 走声明过的动作，不是裸的实体写入：外人在对外页填表打的是同一个函数，
+    // 校验和限流因此只有一份，长在函数上。
+    const res = await clawapp.call('signup', {
+      name,
+      contact: $('f-contact').value.trim(),
+      campaign: $('f-campaign').value.trim(),
+    })
+    toast(res.text || '已登记')
+    justNow.unshift({ name, contact: $('f-contact').value.trim(), campaign: $('f-campaign').value.trim() })
+    justNow.splice(3)
+    renderRecent()
+    $('f-name').value = ''
+    $('f-contact').value = ''
+    $('f-name').focus()
+    await badgeToday()
+  } catch (e) {
+    toast(String(e.message || e))
+  } finally {
+    btn.disabled = false
+  }
+}
+
+await badgeToday()
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+# archive.risor — 归档一项，或把它恢复回来。
+#
+# 不删。打卡历史是用户攒了几个月的东西，一次误触不该让它消失；归档只是
+# 让它从「今日」列表里退场，统计和记录都还在，随时能恢复。
+
+item := ctx.params.get("item", "")
+if item == nil { item = "" }
+item = string(item)
+cur := item == "" ? nil : ctx.entity.find("checkin_item", item)
+if cur == nil {
+  ctx.fail("没有这个打卡项：" + item)
+} else {
+  act := cur.get("active", true)
+  if act == nil { act = true }
+  next := !act
+  title := cur.get("title", "")
+  if title == nil { title = "" }
+  created := cur.get("created_at", "")
+  if created == nil { created = "" }
+  # upsert 是整条替换，所以要把留着的字段一起写回去。
+  ctx.entity.upsert("checkin_item", [{
+    "id": item, "title": title, "active": next, "created_at": created,
+  }])
+  ctx.ok(next ? "已恢复：" + string(title) : "已归档：" + string(title), {"item": item, "active": next})
+}

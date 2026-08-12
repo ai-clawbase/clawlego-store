@@ -29,10 +29,9 @@ const REGISTRY = join(ROOT, 'registry')
 // The four aggregation tiers, from atoms to whole agents:
 // `brick` (atomic prompt/skill) → `mod` (asset pack) → `tpl` (agent template)
 // → `pkg` (full agent clone, incl. knowledge/data).
-// Plus two purpose-typed catalogs browsed by name, not granularity:
-// `smartspace` (智能文件夹 —— SmartSpace kind packs) and `projtpl`
-// (项目模板 —— goal/workflow/research behavior templates).
-const KINDS = ['pkg', 'tpl', 'mod', 'brick', 'smartfolder', 'projtpl']
+// Plus three software-asset catalogs browsed by what users can run/create:
+// smart folders, project templates and independent ClawApps.
+const KINDS = ['pkg', 'tpl', 'mod', 'brick', 'smartfolder', 'projtpl', 'clawapp']
 // Atomic-asset kinds: the kind names the asset type, so install target and the
 // `contents` count are derived from it.
 const ATOMIC_KINDS = ['brick']
@@ -45,6 +44,7 @@ const FILENAME_RULES = [
   { prefix: 'skill-',        asset: 'skill',  ext: 'clawskill' },
   { prefix: 'smartfolder-',  asset: 'space',  ext: 'clawspace' },
   { prefix: 'projtpl-',      asset: 'proj',   ext: 'clawproj' },
+  { prefix: 'clawapp-',      asset: 'app',    ext: 'clawapp' },
 ]
 
 /** 根据条目元数据推导其 bundle 的真实文件名（供前端下载时使用）。 */
@@ -58,7 +58,7 @@ function computeArtifactFilename(m) {
   return 'bundle.tgz'
 }
 
-// Repo-hosted software assets must still be real ClawTpl/ClawPkg archives;
+// Repo-hosted software assets must still be real ClawTpl/ClawPkg/ClawApp archives;
 // serving their files/ tree as bundle.tgz would make the host treat them as a
 // current-instance component. Legacy templates are wrapped as snapshot-style
 // ClawTpls, while packages are wrapped with the agent-workspace/ prefix the
@@ -70,6 +70,10 @@ function buildRepoHostedSoftwareArtifact(kind, m, filesDir, itemOut, target) {
   try {
     if (kind === 'pkg') {
       cpSync(filesDir, join(staging, 'agent-workspace'), { recursive: true })
+    } else if (kind === 'clawapp') {
+      // A .clawapp is a ZIP whose root is app.yaml + web/functions/entities.
+      // Runtime data/files are intentionally never part of a store artifact.
+      cpSync(filesDir, staging, { recursive: true })
     } else {
       if (!target || target.startsWith('/') || target.split('/').includes('..')) {
         throw new Error(`${m.id}: repo-hosted tpl needs a safe install.target`)
@@ -124,6 +128,23 @@ function fail(id, msg) {
   errors.push(`${id}: ${msg}`)
 }
 
+function validateClawAppFiles(ref, root) {
+  const pending = [{ abs: root, rel: '' }]
+  while (pending.length) {
+    const current = pending.pop()
+    for (const entry of readdirSync(current.abs, { withFileTypes: true })) {
+      const rel = current.rel ? `${current.rel}/${entry.name}` : entry.name
+      if (entry.name.startsWith('.')) fail(ref, `clawapp may not contain hidden path ${rel}`)
+      if (entry.isSymbolicLink()) fail(ref, `clawapp may not contain symlink ${rel}`)
+      const top = rel.split('/')[0]
+      if (['data', 'files', 'app.json'].includes(top)) {
+        fail(ref, `clawapp may not ship mutable path ${top}`)
+      }
+      if (entry.isDirectory()) pending.push({ abs: join(current.abs, entry.name), rel })
+    }
+  }
+}
+
 if (writeStore) {
   rmSync(OUT, { recursive: true, force: true })
   mkdirSync(OUT, { recursive: true })
@@ -172,12 +193,27 @@ for (const kind of KINDS) {
       const url = m.install && m.install.url
       if (!url) fail(ref, 'reference item must declare install.url')
     }
-    const softwareArtifactType = kind === 'tpl' ? 'clawtpl' : kind === 'pkg' ? 'clawpkg' : ''
+    const softwareArtifactType = kind === 'tpl'
+      ? 'clawtpl'
+      : kind === 'pkg'
+        ? 'clawpkg'
+        : kind === 'clawapp'
+          ? 'clawapp'
+          : ''
     if (softwareArtifactType && r2Hosted && m.install?.type !== softwareArtifactType) {
       fail(ref, `${kind} R2 artifact must use install.type=${softwareArtifactType}`)
     }
     if (kind === 'tpl' && repoHosted && !m.install?.target) {
       fail(ref, 'repo-hosted tpl needs install.target for its snapshot payload')
+    }
+    if (kind === 'clawapp') {
+      if (!m.app || !m.app.name || !['mobile', 'web', 'responsive'].includes(m.app.target)) {
+        fail(ref, 'clawapp needs app.name and app.target (mobile|web|responsive)')
+      }
+      if (repoHosted && !existsSync(join(filesDir, 'app.yaml'))) {
+        fail(ref, 'repo-hosted clawapp needs files/app.yaml at the package root')
+      }
+      if (repoHosted) validateClawAppFiles(ref, filesDir)
     }
 
     // --- git-marketplace entry (collected in every mode) ---
@@ -224,6 +260,7 @@ for (const kind of KINDS) {
       manifest: `${relDir}/clawasset.json`,
       install: installEntry,
     }
+    if (m.app) entry.app = m.app
     entries.push(entry)
 
     if (!writeStore) continue
@@ -292,6 +329,7 @@ for (const kind of KINDS) {
       bundleBytes: m.bundleBytes || null,
       homepage: m.homepage || null,
       install: m.install || null,
+      app: m.app || null,
     })
   }
 }
@@ -350,6 +388,7 @@ const index = {
     brick: 'ClawBit 智能原子',
     smartfolder: '智能文件夹',
     projtpl: '项目模板',
+    clawapp: 'ClawApp 轻应用',
   },
   items,
 }

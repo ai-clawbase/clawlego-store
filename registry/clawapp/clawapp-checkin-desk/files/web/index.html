@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>今日 · 打卡台</title>
+<!--
+  打卡台的第一页。和报名台一样是手写 HTML/JS，示范的是另一半：一个完全私有的
+  工具，所有动作都是零 token 的函数调用，交互全在前端自己手里。
+
+  三页：今日（这一页）/ 记录 / 管理。底部导航栏由宿主按 app.yaml 的 tabbar
+  段画出来，页面自己不管它 —— 换页就是换文档，导航栏在每一页都在那儿。
+-->
+<link rel="stylesheet" href="app.css">
+<script src="/clawapp.js"></script>
+<script src="app.js"></script>
+</head>
+<body>
+<header class="head">
+  <h1>今日</h1>
+  <p class="sub" id="sub">加载中…</p>
+</header>
+
+<section class="ring" id="ring" hidden>
+  <svg width="56" height="56" viewBox="0 0 56 56">
+    <circle cx="28" cy="28" r="24" fill="none" stroke="rgba(128,128,128,.22)" stroke-width="6"/>
+    <circle id="arc" cx="28" cy="28" r="24" fill="none" stroke="var(--brand)" stroke-width="6"
+            stroke-linecap="round" stroke-dasharray="151" stroke-dashoffset="151"
+            transform="rotate(-90 28 28)" style="transition:stroke-dashoffset .4s"/>
+  </svg>
+  <div>
+    <b id="ratio">0/0</b>
+    <span id="meta">本月 0 次 · 最长连续 0 天</span>
+  </div>
+</section>
+
+<ul class="list" id="list"></ul>
+<p class="empty" id="empty" hidden>还没有要坚持的事。去「管理」加一项。</p>
+
+<script type="module">
+await clawapp.ready()
+$('sub').textContent = '点一下就打卡 · 连续天数现算'
+
+async function refresh() {
+  const { data } = await clawapp.call('board')
+  const rows = data?.rows || []
+  $('ring').hidden = rows.length === 0
+  $('empty').hidden = rows.length > 0
+  $('ratio').textContent = `${data.today_done}/${data.total}`
+  $('meta').textContent = `本月 ${data.month} 次 · 最长连续 ${data.best} 天`
+  const pct = data.total ? data.today_done / data.total : 0
+  $('arc').setAttribute('stroke-dashoffset', String(151 - 151 * pct))
+
+  // 今天还没打的项数挂在「今日」这个 tab 上 —— 打完就没了，这是角标该有的样子。
+  clawapp.tabbar.setBadge('today', data.total - data.today_done || null)
+
+  const list = $('list')
+  list.textContent = ''
+  for (const r of rows) {
+    const li = document.createElement('li')
+    const box = document.createElement('button')
+    box.className = 'box' + (r.done ? ' on' : '')
+    box.textContent = '✓'
+    box.setAttribute('aria-label', r.done ? '撤销打卡' : '打卡')
+    box.onclick = async () => {
+      box.disabled = true
+      // Optimistic: the tick is the whole interaction, so it must feel
+      // instant. The refresh below corrects it if the write failed.
+      box.classList.toggle('on')
+      try { await clawapp.call('toggle', { item: r.id }) }
+      catch (e) { toast(String(e.message || e)) }
+      finally { box.disabled = false; await refresh() }
+    }
+    const what = document.createElement('div')
+    what.className = 'what' + (r.done ? ' done' : '')
+    const b = document.createElement('b')
+    b.textContent = r.title
+    const s = document.createElement('span')
+    s.textContent = r.streak > 0 ? `连续 ${r.streak} 天` : '还没开始'
+    what.append(b, s)
+    li.append(box, what)
+    list.append(li)
+  }
+}
+
+await refresh()
+</script>
+</body>
+</html>

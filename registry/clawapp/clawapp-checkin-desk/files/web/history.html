@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>记录 · 打卡台</title>
+<!--
+  第二页：记录。一张月历热力图 + 当月每项的次数。
+
+  这一页存在的理由，正是「加个底部导航」真正换来的东西：没有第二页的时候，
+  这些内容只能挤进首页，或者干脆不做。日历、色阶、翻月都是自己写的 ——
+  应用的前端是真前端，想要什么组件不用等宿主。
+-->
+<link rel="stylesheet" href="app.css">
+<script src="/clawapp.js"></script>
+<script src="app.js"></script>
+</head>
+<body>
+<header class="head">
+  <h1>记录</h1>
+  <p class="sub" id="sub">加载中…</p>
+</header>
+
+<section class="month">
+  <div class="month-bar">
+    <b id="label">—</b>
+    <div class="month-nav">
+      <button id="prev" aria-label="上个月">‹</button>
+      <button id="next" aria-label="下个月">›</button>
+    </div>
+  </div>
+  <div class="grid" id="dows"></div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<ul class="list" id="items"></ul>
+<p class="empty" id="empty" hidden>这个月还没有记录。</p>
+
+<script type="module">
+await clawapp.ready()
+
+const TODAY = new Date().toISOString().slice(0, 10)
+const THIS_MONTH = TODAY.slice(0, 7)
+let month = new URLSearchParams(location.search).get('month') || THIS_MONTH
+
+for (const d of ['一', '二', '三', '四', '五', '六', '日']) {
+  const el = document.createElement('div')
+  el.className = 'dow'
+  el.textContent = d
+  $('dows').append(el)
+}
+
+function shift(m, by) {
+  const [y, mo] = m.split('-').map(Number)
+  const d = new Date(Date.UTC(y, mo - 1 + by, 1))
+  return d.toISOString().slice(0, 7)
+}
+
+async function load() {
+  const { data } = await clawapp.call('history', { month })
+  const days = data?.days || []
+  const items = (data?.items || []).filter(i => i.count > 0 || i.active)
+
+  $('label').textContent = `${month.slice(0, 4)} 年 ${Number(month.slice(5))} 月`
+  $('sub').textContent = data.total ? `这个月打了 ${data.total} 次` : '这个月还没打过卡'
+  $('next').disabled = month >= THIS_MONTH
+
+  const top = Math.max(1, ...days.map(d => d.n))
+  const grid = $('grid')
+  grid.textContent = ''
+  // 周一开头：JS 的 getUTCDay() 周日是 0，挪成 6。
+  const lead = (new Date(days[0].date + 'T00:00:00Z').getUTCDay() + 6) % 7
+  for (let i = 0; i < lead; i++) {
+    const pad = document.createElement('div')
+    pad.className = 'cell pad'
+    grid.append(pad)
+  }
+  for (const d of days) {
+    const cell = document.createElement('div')
+    cell.className = 'cell' + (d.n ? ' hit' : '') + (d.date === TODAY ? ' today' : '')
+    if (d.n) {
+      // 一档一档地深：满格才是最深的绿，看一眼就知道哪天偷懒了。
+      cell.style.background = `color-mix(in srgb, var(--brand) ${25 + Math.round(75 * d.n / top)}%, transparent)`
+    }
+    cell.textContent = Number(d.date.slice(8))
+    cell.title = `${d.date} · ${d.n} 次`
+    grid.append(cell)
+  }
+
+  const list = $('items')
+  list.textContent = ''
+  $('empty').hidden = items.length > 0
+  for (const it of items.sort((a, b) => b.count - a.count)) {
+    const li = document.createElement('li')
+    if (!it.active) li.className = 'off'
+    const what = document.createElement('div')
+    what.className = 'what'
+    const b = document.createElement('b')
+    b.textContent = it.title
+    const s = document.createElement('span')
+    s.textContent = it.active ? `本月 ${it.count} 次` : `已归档 · 本月 ${it.count} 次`
+    what.append(b, s)
+    li.append(what)
+    list.append(li)
+  }
+}
+
+$('prev').onclick = () => { month = shift(month, -1); load() }
+$('next').onclick = () => { if (month < THIS_MONTH) { month = shift(month, 1); load() } }
+
+await load()
+</script>
+</body>
+</html>

@@ -4,8 +4,9 @@
  * 商店被宿主桌面 App（ClawLego）以 iframe 嵌入时，条目页与卡片
  * 上的「安装」按钮不再只是「告诉用户去客户端里自己找、自己识别」，而是把
  * 安装意图直接 postMessage 给宿主——由宿主把资产解压（hosted）或从上游拉取
- * （reference）交给宿主安装。组件进入当前实例，ClawTpl 进入软件级模板
- * 库，ClawPkg 则创建一个全新的实例。
+ * （reference）交给宿主安装。组件和 ClawApp 进入当前实例，ClawTpl 进入
+ * 软件级模板库，ClawPkg 则创建一个全新的实例。ClawApp 由包内 name 决定
+ * 首装或原子升级，不走 SmartFolder / clawmod 路径。
  *
  * 普通浏览器环境（store.clawlego.com）下没有宿主，安装按钮回退为原有的手动
  * 下载 bundle.tgz / 打开上游仓库；本模块完全不介入。

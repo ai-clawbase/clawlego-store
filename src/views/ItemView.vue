@@ -46,6 +46,16 @@
               <p class="summary">{{ item.summary }}</p>
             </section>
 
+            <section v-if="item.kind === 'clawapp' && item.app" class="block">
+              <h2>轻应用能力</h2>
+              <div class="app-contract">
+                <span><b>形态</b>{{ item.app.target === 'mobile' ? '手机版' : 'Web版' }}</span>
+                <span><b>应用 ID</b><code>{{ item.app.name }}</code></span>
+                <span><b>对外入口</b>{{ item.app.public ? '支持（由安装者开启/关闭）' : '默认关闭' }}</span>
+                <span><b>公开动作</b>{{ item.app.actions?.length ? item.app.actions.join('、') : '无' }}</span>
+              </div>
+            </section>
+
             <section v-if="contentBits.length" class="block">
               <h2>包含的智能资产</h2>
               <div class="assets">
@@ -227,18 +237,24 @@ const scope = computed(() => item.value ? installScopeOf(item.value.kind) : 'ins
 const installLead = computed(() => {
   if (installAction.value === 'upgradable') {
     if (scope.value === 'template-library') {
-      return `模板库已安装 v${view.value.installedVersion}，可升级到 v${item.value?.version}。`
+      return `模板库已添加 v${view.value.installedVersion}，可升级到 v${item.value?.version}。`
     }
     if (scope.value === 'new-instance') {
       return `已用 v${view.value.installedVersion} 创建过实例，可使用 v${item.value?.version} 再创建一个新实例。`
     }
+    if (item.value?.kind === 'clawapp') {
+      return `当前实例已安装 v${view.value.installedVersion}，可原子升级到 v${item.value?.version}（应用数据保留）：`
+    }
     return `当前实例已安装 v${view.value.installedVersion}，可升级到 v${item.value?.version}：`
   }
   if (scope.value === 'template-library') {
-    return '安装后会加入 ClawLego 的新建实例模板库：'
+    return '添加后会加入 ClawLego 的新建实例模板库：'
   }
   if (scope.value === 'new-instance') {
     return '安装后会自动创建一个全新的 ClawLego 实例：'
+  }
+  if (item.value?.kind === 'clawapp') {
+    return '安装后会立即出现在当前实例的“轻应用”列表：'
   }
   return item.value?.source === 'reference'
     ? 'ClawLego 会从上游仓库拉取本条目到当前实例：'
@@ -248,33 +264,36 @@ const installLead = computed(() => {
 const installLabel = computed(() => {
   switch (installAction.value) {
     case 'installing':
-      return scope.value === 'new-instance' ? '正在创建实例…' : scope.value === 'template-library' ? '正在添加模板…' : '安装中…'
+      return scope.value === 'new-instance' ? '正在创建实例…' : scope.value === 'template-library' ? '添加中…' : '安装中…'
     case 'installed':
-      return scope.value === 'new-instance' ? '已创建新实例' : scope.value === 'template-library' ? '已加入模板库' : '已安装'
+      return scope.value === 'new-instance' ? '已创建新实例' : scope.value === 'template-library' ? '已添加' : '已安装'
     case 'upgradable':
-      return scope.value === 'new-instance' ? `用 v${item.value?.version} 创建新实例` : `升级到 v${item.value?.version}`
+      return scope.value === 'new-instance' ? `用 v${item.value?.version} 创建新实例` : scope.value === 'template-library' ? '升级' : `升级到 v${item.value?.version}`
     case 'error':
-      return scope.value === 'new-instance' ? '创建失败 · 重试' : '安装失败 · 重试'
+      return scope.value === 'new-instance' ? '创建失败 · 重试' : scope.value === 'template-library' ? '添加失败 · 重试' : '安装失败 · 重试'
     default:
-      return scope.value === 'new-instance' ? '安装并创建新实例' : scope.value === 'template-library' ? '添加到模板库' : '安装到当前实例'
+      return scope.value === 'new-instance' ? '安装并创建新实例' : scope.value === 'template-library' ? '添加' : '安装到当前实例'
   }
 })
 
 const installFoot = computed(() => {
   if (scope.value === 'new-instance') return '创建独立实例，不会修改当前实例。'
-  if (scope.value === 'template-library') return '安装后可在“新建实例”的模板列表中选择。'
+  if (scope.value === 'template-library') return '添加后可在“新建实例”的模板列表中选择。'
+  if (item.value?.kind === 'clawapp') return '校验 .clawapp 后装入当前实例，完成即可打开。'
   return '直接装入当前实例，无需离开本页。'
 })
 
 const upgradeFoot = computed(() => {
   if (scope.value === 'new-instance') return '新版本会创建另一个独立实例，已有实例不受影响。'
   if (scope.value === 'template-library') return '升级只更新软件模板库，不修改已创建实例。'
+  if (item.value?.kind === 'clawapp') return '升级会迁移并校验暂存数据，成功后原子切换；失败保持旧版本。'
   return '升级会用新版本覆盖当前实例里的同名文件。'
 })
 
 const browserInstallLead = computed(() => {
   if (scope.value === 'new-instance') return '请在 ClawLego 桌面 App 中安装；完成后会自动创建一个新实例。'
-  if (scope.value === 'template-library') return '请在 ClawLego 桌面 App 中安装；完成后会加入新建实例模板库。'
+  if (scope.value === 'template-library') return '请在 ClawLego 桌面 App 中添加；完成后会加入新建实例模板库。'
+  if (item.value?.kind === 'clawapp') return '可下载 .clawapp 分发包；在 ClawLego 桌面 App 内可一键安装并打开。'
   return '在 ClawLego 桌面 App 的“商店”里打开本条目，即可一键安装到当前实例。'
 })
 
@@ -329,6 +348,7 @@ function onInstall() {
 .kind-skill { background: #EDE9FE; color: #6D28D9; }
 .kind-smartfolder { background: #E0EAFF; color: #3538CD; }
 .kind-projtpl { background: #FEF0C7; color: #B54708; }
+.kind-clawapp { background: #EDE9FE; color: #6D28D9; }
 .src-tag {
   display: inline-flex;
   align-items: center;
@@ -380,6 +400,22 @@ function onInstall() {
   line-height: 1.72;
   color: var(--ink-2);
 }
+.app-contract {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 10px;
+}
+.app-contract span {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 13px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  color: var(--ink-2);
+  font-size: 13.5px;
+}
+.app-contract b { color: var(--ink-4); font-size: 11.5px; }
 .assets {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));

@@ -9,8 +9,8 @@
 
 - **`kind`（粒度 / 类型）** —— 由细到粗的四级聚合阶梯：
   `brick`（原子积木）→ `mod`（功能组件）→ `tpl`（角色模版）→ `pkg`（智能体包）；
-  外加两个**按用途浏览**的目录（不在阶梯上，用户按名字找而非按粒度）：
-  `smartspace`（智能文件夹）与 `projtpl`（项目模板）。
+  外加并列的「软件资产」目录：`smartfolder`（智能文件夹）、`projtpl`
+  （项目模板）与 `clawapp`（独立轻应用）。
 - **`source`（来源）** —— 源文件托管在哪：`hosted`（本仓库托管）或
   `reference`（从上游 Git 仓库拉取）。
 
@@ -22,13 +22,14 @@ registry/
 ├── mod/<id>/          ClawMod —— 功能组件（多个积木的有机组合）
 ├── tpl/<id>/          ClawTpl —— 角色模版（人格声明 + 默认资产配置）
 ├── pkg/<id>/          ClawPkg —— 智能体包（开箱即用的完整工作空间，含数据与流程）
-├── smartspace/<id>/  智能文件夹 —— 一个 SmartSpace kind 包（system/smartspace/kinds/<kind>/ 目录树）
-└── projtpl/<id>/       项目模板 —— 声明式行为模板（目标 / 工作流 / 研究脚手架，落在 business/ 下）
+├── smartfolder/<id>/   智能文件夹 —— 一个 SmartSpace kind 包
+├── projtpl/<id>/       项目模板 —— 声明式项目模板
+└── clawapp/<id>/       轻应用 —— 独立 app.yaml + web/functions/entities 包
 ```
 
 - `<id>` 即文件夹名，必须与 `clawasset.json` 里的 `id` 一致。
 - 约定前缀：`prompt-*` / `skill-*` / `clawmod-*` / `clawtpl-*` / `clawpkg-*` /
-  `smartspace-*` / `projtpl-*`。
+  `smartfolder-*` / `projtpl-*` / `clawapp-*`。
 
 ## 每个条目的结构
 
@@ -51,6 +52,8 @@ registry/
   - `projtpl` —— 一个行为模板目录的内容：工作流 `WORKFLOW.md`，或目标
     `GOAL.md` + `success.md` + `example_plan.md`。`install.target` 写
     `business/workflows/<slug>` 或 `business/goals/<slug>`。
+  - `clawapp` —— `.clawapp` 包根的内容：`app.yaml`、`web/`、`functions/`、
+    `entities/` 和可选 `migrations/`；禁止携带 `data/`、`files/`、`app.json`。
 - `reference` 条目不带 `files/`，改在 `install` 里声明上游 Git 仓库。
 
 ## `clawasset.json` 字段
@@ -58,7 +61,7 @@ registry/
 | 字段 | 必需 | 说明 |
 |---|:--:|---|
 | `id` | ✓ | 与文件夹同名 |
-| `kind` | ✓ | `brick` \| `mod` \| `tpl` \| `pkg` \| `smartspace` \| `projtpl` |
+| `kind` | ✓ | `brick` \| `mod` \| `tpl` \| `pkg` \| `smartfolder` \| `projtpl` \| `clawapp` |
 | `source` | ✓ | `hosted` \| `reference` |
 | `name` | ✓ | 显示名 |
 | `tagline` | ✓ | 一句话副标题 |
@@ -72,6 +75,7 @@ registry/
 | `license` |  | 许可 |
 | `contents` |  | 资产计数 `{ prompt, skill, mcp, subagent, knowledge, tool }`；`brick` 条目通常省略 |
 | `install` |  | 安装信息，见下 |
+| `app` | `clawapp` 必需 | `{name,target,public,actions,requires,screenshots}`；用于下载前展示应用形态和对外能力 |
 | `artifact` |  | R2-hosted 官方条目的 clawasset 绑定 `{ asset, id, type }`，见「`artifact` 绑定」 |
 | `updated` |  | `YYYY-MM-DD`，用于排序 |
 
@@ -83,6 +87,8 @@ registry/
 - `brick`：可省略 `install`——构建脚本会把 `target` 自动推导为 `business/assets/bricks/{id}`。
 - `mod` / `tpl` / `pkg`：通常需要显式写 `target`，例如：
   - `pkg` 的 target 通常是 `business/instances/{id}`。
+- `clawapp`：`install.type` 固定为 `clawapp`，不写 target；构建器把 `files/`
+  根打成真实 `.clawapp` ZIP，宿主根据包内 `metadata.name` 安装或升级。
 
 **`source: reference`** —— 必须声明上游 Git 仓库：
 
@@ -150,7 +156,7 @@ starclaw3 的桥接脚本 `scripts/bridge-store-metadata.py` 读取每个带 `ar
 ```
 /store/index.json                全量目录索引 —— ClawLego 首先拉取这个
 /store/<kind>/<id>/clawasset.json      补全后的单条清单
-/store/<kind>/<id>/bundle.tgz     可安装载荷（仅 repo-hosted 条目；R2-hosted 无此文件，
+/store/<kind>/<id>/bundle.tgz 或专用制品  可安装载荷（ClawApp 为 `.clawapp`；R2-hosted 无本地文件，
                                   downloadUrl 直指 download.clawlego.com 上的 R2 制品）
 /store/<kind>/<id>/README.md      长描述（如有）
 ```

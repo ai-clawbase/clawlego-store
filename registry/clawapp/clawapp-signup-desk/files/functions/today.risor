@@ -1,0 +1,17 @@
+# today.risor — 今天报名的人（可传 date=YYYY-MM-DD 查任意一天）。
+
+day := ctx.params.get("date", "")
+if day == nil || day == "" { day = ctx.now()[:10] }
+
+rows := []
+for i, s := range ctx.entity.query("signup") {
+  d := s.get("date", "")
+  if d == nil { d = "" }
+  if d != day { continue }
+  n := s.get("name", "")
+  if n == nil || n == "" { n = "（未填姓名）" }
+  ci := s.get("checked_in", false)
+  if ci == nil { ci = false }
+  rows.append({"id": s.get("id", ""), "name": n, "campaign": s.get("campaign", ""), "checked_in": ci})
+}
+ctx.ok(sprintf("%s：%d 人", day, len(rows)), {"date": day, "rows": rows, "count": len(rows)})

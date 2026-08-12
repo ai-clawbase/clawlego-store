@@ -1,0 +1,25 @@
+# toggle.risor — 给某一项打今天的卡，或撤销。
+#
+# id 是 <item>@<date>：同一天连点多少次都是覆盖。按钮会被连点、请求会被重试，
+# 幂等是底线。撤销不删记录，只把日期置空——打卡历史是用户的数据。
+
+item := ctx.params.get("item", "")
+if item == nil { item = "" }
+item = string(item)
+if item == "" {
+  ctx.fail("要打哪一项？")
+} else if ctx.entity.find("checkin_item", item) == nil {
+  ctx.fail("没有这个打卡项：" + item)
+} else {
+  day := ctx.now()[:10]
+  key := item + "@" + day
+  existing := ctx.entity.find("checkin", key)
+  done := existing != nil && existing.get("date", "") == day
+  if done {
+    ctx.entity.upsert("checkin", [{"id": key, "item": item, "date": "", "voided_from": day}])
+    ctx.ok("已撤销今天的打卡", {"item": item, "done": false})
+  } else {
+    ctx.entity.upsert("checkin", [{"id": key, "item": item, "date": day}])
+    ctx.ok("打卡完成", {"item": item, "done": true})
+  }
+}

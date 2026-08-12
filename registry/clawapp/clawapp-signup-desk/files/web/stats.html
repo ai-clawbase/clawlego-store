@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>数据 · 报名台</title>
+<!-- 第三页：数据。也是 owner 页。导出走 export 函数，它不在公网白名单里 ——
+     外人可以报名，但不能把整份名单导走。 -->
+<link rel="stylesheet" href="app.css">
+<script src="/clawapp.js"></script>
+<script src="app.js"></script>
+</head>
+<body>
+<header class="head">
+  <h1>数据</h1>
+  <p class="sub" id="sub">加载中…</p>
+</header>
+
+<section class="stats">
+  <div class="stat"><b id="nTotal">0</b><span>报名总数</span></div>
+  <div class="stat"><b id="nToday">0</b><span>今天新增</span></div>
+  <div class="stat"><b id="nIn">0</b><span>已签到</span></div>
+</section>
+
+<section class="card">
+  <h2>最近 7 天</h2>
+  <div class="bars" id="week"></div>
+</section>
+
+<section class="card">
+  <h2>各场次</h2>
+  <div class="bars" id="camps"></div>
+  <p class="empty" id="campsEmpty" hidden>还没有人报名。</p>
+</section>
+
+<section class="card">
+  <button class="ghost" id="export">导出签到表 CSV</button>
+  <p class="empty" id="exported" hidden></p>
+</section>
+
+<script type="module">
+await clawapp.ready()
+if (ownerOnly('数据')) {
+  const rows = await clawapp.entity.query('signup')
+  const today = new Date().toISOString().slice(0, 10)
+
+  $('nTotal').textContent = rows.length
+  $('nToday').textContent = rows.filter(r => r.date === today).length
+  $('nIn').textContent = rows.filter(r => r.checked_in).length
+  $('sub').textContent = rows.length ? `共 ${rows.length} 条报名记录` : '还没有数据'
+
+  function bars(host, entries) {
+    const top = Math.max(1, ...entries.map(e => e[1]))
+    host.textContent = ''
+    for (const [label, n] of entries) {
+      const row = document.createElement('div')
+      row.className = 'bar-row'
+      const head = document.createElement('div')
+      head.className = 'bar-top'
+      const a = document.createElement('span')
+      a.textContent = label
+      const b = document.createElement('span')
+      b.textContent = n
+      head.append(a, b)
+      const track = document.createElement('div')
+      track.className = 'bar-track'
+      const fill = document.createElement('div')
+      fill.className = 'bar-fill'
+      fill.style.width = (n / top * 100) + '%'
+      track.append(fill)
+      row.append(head, track)
+      host.append(row)
+    }
+  }
+
+  const week = []
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(Date.now() - i * 86400000).toISOString().slice(0, 10)
+    week.push([i === 0 ? '今天' : d.slice(5), rows.filter(r => r.date === d).length])
+  }
+  bars($('week'), week)
+
+  const byCamp = new Map()
+  for (const r of rows) {
+    const k = r.campaign || '默认场次'
+    byCamp.set(k, (byCamp.get(k) || 0) + 1)
+  }
+  const camps = [...byCamp.entries()].sort((a, b) => b[1] - a[1])
+  $('campsEmpty').hidden = camps.length > 0
+  bars($('camps'), camps)
+
+  $('export').onclick = async () => {
+    const btn = $('export')
+    btn.disabled = true
+    try {
+      const res = await clawapp.call('export')
+      toast(res.text || '已导出')
+      // 产物落在应用自己的 files/ 里，说清楚落在哪比只说「成功」有用。
+      $('exported').hidden = false
+      $('exported').textContent = res.data?.path ? `已写入 ${res.data.path}` : (res.text || '已导出')
+    } catch (e) {
+      toast(String(e.message || e))
+    } finally {
+      btn.disabled = false
+    }
+  }
+}
+</script>
+</body>
+</html>

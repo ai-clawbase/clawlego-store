@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>名单 · 报名台</title>
+<!--
+  第二页：名单。清单里标了 visibility: owner，所以外人的导航里没有它。
+  文件本身仍然是能被访问到的静态资源，但对外那一面根本没有「读记录」这个
+  方法 —— 拦住数据的是服务端，这里只是把话说清楚。
+-->
+<link rel="stylesheet" href="app.css">
+<script src="/clawapp.js"></script>
+<script src="app.js"></script>
+</head>
+<body>
+<header class="head">
+  <h1>名单</h1>
+  <p class="sub" id="sub">加载中…</p>
+</header>
+
+<input id="q" placeholder="搜姓名 / 联系方式 / 场次" autocomplete="off">
+
+<div class="seg" id="seg">
+  <button data-f="all" class="on">全部</button>
+  <button data-f="in">已签到</button>
+  <button data-f="out">未签到</button>
+</div>
+
+<section class="card">
+  <ul class="list" id="roster"></ul>
+  <p class="empty" id="empty" hidden>还没有人报名。</p>
+</section>
+
+<script type="module">
+await clawapp.ready()
+if (ownerOnly('名单')) {
+  let rows = []
+  let filter = 'all'
+
+  for (const b of $('seg').querySelectorAll('button')) {
+    b.onclick = () => {
+      filter = b.dataset.f
+      for (const o of $('seg').querySelectorAll('button')) o.classList.toggle('on', o === b)
+      render()
+    }
+  }
+  $('q').addEventListener('input', render)
+
+  function visible() {
+    const q = $('q').value.trim().toLowerCase()
+    return rows.filter(r => {
+      if (filter === 'in' && !r.checked_in) return false
+      if (filter === 'out' && r.checked_in) return false
+      if (!q) return true
+      return [r.name, r.contact, r.campaign].some(v => String(v || '').toLowerCase().includes(q))
+    })
+  }
+
+  function render() {
+    const shown = visible()
+    const list = $('roster')
+    list.textContent = ''
+    $('empty').hidden = shown.length > 0
+    $('empty').textContent = rows.length ? '没有符合条件的。' : '还没有人报名。'
+    $('sub').textContent = `${rows.length} 人报名 · ${rows.filter(r => r.checked_in).length} 人已签到`
+
+    for (const r of shown) {
+      const li = document.createElement('li')
+      const who = document.createElement('div')
+      who.className = 'who'
+      const b = document.createElement('b')
+      b.textContent = r.name || '（未填姓名）'
+      const s = document.createElement('span')
+      s.textContent = [r.campaign, r.contact, r.date].filter(Boolean).join(' · ')
+      who.append(b, s)
+
+      const tick = document.createElement('button')
+      tick.className = 'tick' + (r.checked_in ? ' on' : '')
+      tick.textContent = '✓'
+      tick.title = r.checked_in ? '取消签到' : '签到'
+      tick.onclick = async () => {
+        tick.disabled = true
+        // 先动，再校对：签到台上按钮要跟手，写失败了下面的 reload 会纠回来。
+        r.checked_in = !r.checked_in
+        render()
+        try {
+          await clawapp.entity.update('signup', r.id, { checked_in: r.checked_in })
+        } catch (e) {
+          toast(String(e.message || e))
+          await reload()
+        }
+      }
+      li.append(who, tick)
+      list.append(li)
+    }
+  }
+
+  async function reload() {
+    rows = await clawapp.entity.query('signup')
+    rows.sort((a, b) => String(b.date).localeCompare(String(a.date)))
+    const today = new Date().toISOString().slice(0, 10)
+    clawapp.tabbar.setBadge('roster', rows.filter(r => r.date === today).length || null)
+    render()
+  }
+
+  await reload()
+}
+</script>
+</body>
+</html>

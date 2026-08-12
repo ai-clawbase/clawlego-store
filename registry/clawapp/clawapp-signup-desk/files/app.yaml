@@ -1,0 +1,53 @@
+apiVersion: app.clawlego.com/v1
+kind: LightApp
+metadata:
+  name: signup_desk
+  version: 2.1.0
+
+# 内置轻应用之一，同时是一份能读完的范例。
+# 它是一个独立的程序：自己的清单、自己的 data/、自己的 web/ 前端。
+# 和智能文件夹没有任何关系——没有 .llm，扫描器看不见它。
+spec:
+  display:
+    name: 报名台
+    icon: carbon:events
+    description: 收报名、查今天来了谁、导出签到表。发条链接给别人，他们能直接在上面报名
+    color: "#6366f1"
+  category: work
+
+  entities:
+    - { name: signup, schema: entities/signup.json }
+
+  functions:
+    - { name: signup, script: functions/signup.risor, summary: 登记一位报名者 }
+    - { name: today,  script: functions/today.risor,  summary: 今天报名的人 }
+    - { name: export, script: functions/export.risor, summary: 导出签到表 CSV }
+
+  # 前端是一份自带的静态站点，宿主原样交付。手写 HTML/JS——不需要构建，
+  # 但换成 React/Vue 打出来的 dist 也是一样放这里。
+  web: { entry: web/index.html }
+
+  # 三个页面，各是 web/ 下的一份真 HTML。visibility 决定这一页是给谁的：
+  # 名单和数据只对主人存在，外人的底部导航里根本不会出现它们——
+  # 而且只剩一个页面时导航栏自己就不画了，对外那一面于是干干净净只有一张表。
+  pages:
+    - { name: signup, path: index.html,  title: 报名 }
+    - { name: roster, path: roster.html, title: 名单, visibility: owner }
+    - { name: stats,  path: stats.html,  title: 数据, visibility: owner }
+
+  tabbar:
+    selected_color: "#6366f1"
+    items:
+      - { page: signup, label: 报名, icon: edit }
+      - { page: roster, label: 名单, icon: list }
+      - { page: stats,  label: 数据, icon: chart }
+
+  # 这是一个手机形态的应用：桌面端会把它放进手机画布里显示。
+  target: mobile
+
+  public:
+    enabled: true
+    # 公网可调用的白名单。注意 export 不在里面——外人可以报名，
+    # 但不能把整份名单导走。
+    actions:
+      - { name: signup, rate: "10/min" }

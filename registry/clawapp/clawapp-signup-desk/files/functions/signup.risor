@@ -1,0 +1,34 @@
+# signup.risor — 登记一位报名者。
+#
+# 这个函数是白名单里唯一对公网开放的动作：外人在对外页填表，打的就是它。
+# 所以它必须自己把关，不能假设调用方是善意的前端。
+
+name := ctx.params.get("name", "")
+if name == nil { name = "" }
+name = strings.trim_space(string(name))
+if name == "" {
+  ctx.fail("请填姓名")
+} else if len(name) > 40 {
+  ctx.fail("姓名太长了")
+} else {
+  contact := ctx.params.get("contact", "")
+  if contact == nil { contact = "" }
+  contact = strings.trim_space(string(contact))
+  campaign := ctx.params.get("campaign", "")
+  if campaign == nil || campaign == "" { campaign = "默认场次" }
+  note := ctx.params.get("note", "")
+  if note == nil { note = "" }
+
+  # id 按 姓名+联系方式 取哈希：同一个人再报一次是覆盖，不会变成两条。
+  id := "s_" + ctx.hash(name + "|" + string(contact))[:12]
+  ctx.entity.upsert("signup", [{
+    "id": id,
+    "name": name,
+    "contact": len(string(contact)) > 60 ? string(contact)[:60] : string(contact),
+    "campaign": string(campaign),
+    "note": len(string(note)) > 200 ? string(note)[:200] : string(note),
+    "date": ctx.now()[:10],
+    "checked_in": false,
+  }])
+  ctx.ok("已登记：" + name, {"id": id, "name": name})
+}

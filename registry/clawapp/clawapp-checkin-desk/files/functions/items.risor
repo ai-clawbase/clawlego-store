@@ -1,0 +1,36 @@
+# items.risor — 全部打卡项，含已归档的。
+#
+# 「今日」页用 board（只要还在坚持的），「管理」页用这个（要看得见归档的，
+# 否则归档等于删除，用户会以为数据没了）。
+
+counts := {}
+last := {}
+for i, l := range ctx.entity.query("checkin") {
+  it := l.get("item", "")
+  d := l.get("date", "")
+  if it == nil || d == nil || it == "" || d == "" { continue }
+  it = string(it)
+  d = string(d)
+  counts[it] = counts.get(it, 0) + 1
+  if d > last.get(it, "") { last[it] = d }
+}
+
+rows := []
+n_active := 0
+for i, it := range ctx.entity.query("checkin_item") {
+  id := it.get("id", "")
+  if id == nil || id == "" { continue }
+  title := it.get("title", "")
+  if title == nil || title == "" { title = "（未命名）" }
+  act := it.get("active", true)
+  if act == nil { act = true }
+  if act { n_active = n_active + 1 }
+  rows.append({
+    "id": id, "title": title, "active": act,
+    "count": counts.get(id, 0), "last": last.get(id, ""),
+  })
+}
+
+ctx.ok(sprintf("%d 项在坚持，共 %d 项", n_active, len(rows)), {
+  "rows": rows, "active": n_active, "total": len(rows),
+})

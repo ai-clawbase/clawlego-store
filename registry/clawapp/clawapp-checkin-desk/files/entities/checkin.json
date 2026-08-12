@@ -1,0 +1,7 @@
+{
+  "schema_version": "1",
+  "name": "checkin",
+  "display_name": "打卡记录",
+  "description": "某一天给某一项打的卡。id = <item>@<date>，所以同一天重复点是覆盖，不会打出两条。",
+  "fields": []
+}

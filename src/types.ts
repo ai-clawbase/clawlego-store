@@ -10,7 +10,8 @@
 //     install-status bridge key on `smartfolder` (see handlers_store.go).
 //   - `projtpl`      —— 项目模板 (declarative behavior templates: goals /
 //     workflows / research scaffolds under business/).
-export type ItemKind = 'brick' | 'mod' | 'tpl' | 'pkg' | 'smartfolder' | 'projtpl'
+//   - `clawapp`      —— 独立轻应用（.clawapp，不是 SmartFolder kind）。
+export type ItemKind = 'brick' | 'mod' | 'tpl' | 'pkg' | 'smartfolder' | 'projtpl' | 'clawapp'
 
 export type InstallScope = 'instance' | 'template-library' | 'new-instance'
 
@@ -55,6 +56,14 @@ export interface StoreItem {
   bundleBytes: number | null
   homepage: string | null
   install: InstallSpec | null
+  app?: {
+    name: string
+    target: 'mobile' | 'web' | 'responsive'
+    public?: boolean
+    actions?: string[]
+    requires?: { connectors?: string[]; engines?: string[] }
+    screenshots?: string[]
+  } | null
 }
 
 export interface StoreIndex {
@@ -73,6 +82,7 @@ export const KIND_LABEL: Record<ItemKind, string> = {
   pkg: 'ClawPkg 智能体包',
   smartfolder: '智能文件夹',
   projtpl: '项目模板',
+  clawapp: 'ClawApp 轻应用',
 }
 
 export const KIND_SHORT: Record<ItemKind, string> = {
@@ -82,6 +92,7 @@ export const KIND_SHORT: Record<ItemKind, string> = {
   pkg: '智能体',
   smartfolder: '文件夹',
   projtpl: '业务',
+  clawapp: '轻应用',
 }
 
 // Project templates (`projtpl`) are sub-typed by where they install under
@@ -123,4 +134,7 @@ export const ASSET_LABEL: Record<string, string> = {
   subagent: '子智能体',
   knowledge: '知识库',
   tool: '工具',
+  entity: '业务实体',
+  function: '函数',
+  page: '页面',
 }

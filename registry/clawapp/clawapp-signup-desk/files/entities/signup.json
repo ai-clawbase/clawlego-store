@@ -1,0 +1,7 @@
+{
+  "schema_version": "1",
+  "name": "signup",
+  "display_name": "报名",
+  "description": "一位报名者。id = s_+短哈希(姓名|联系方式)，所以同一个人重复报名是覆盖而不是两条。",
+  "fields": []
+}

@@ -1,0 +1,7 @@
+{
+  "schema_version": "1",
+  "name": "checkin_item",
+  "display_name": "打卡项",
+  "description": "一件要坚持的事。active=false 表示归档：不再出现在今日列表，历史统计仍在。",
+  "fields": []
+}

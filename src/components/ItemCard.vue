@@ -6,6 +6,9 @@
       </span>
       <span class="badges">
         <span class="kind" :class="`kind-${item.kind}`">{{ kindShort }}</span>
+        <span v-if="item.kind === 'clawapp'" class="target-badge">
+          {{ item.app?.target === 'mobile' ? '手机版' : 'Web版' }}
+        </span>
         <span v-if="item.source === 'reference'" class="src">
           <Icon icon="material-symbols:link" width="12" /> 外部源
         </span>
@@ -107,13 +110,13 @@ const installTitle = computed(() => {
       return `已用 v${view.value.installedVersion} 创建实例 · 可用 v${props.item.version} 再创建一个`
     }
     if (scope.value === 'template-library') {
-      return `模板库已安装 v${view.value.installedVersion} · 可升级到 v${props.item.version}`
+      return `模板库已添加 v${view.value.installedVersion} · 可升级到 v${props.item.version}`
     }
     return `已安装 v${view.value.installedVersion} · 可升级到 v${props.item.version}`
   }
   if (installAction.value === 'installed') {
     if (scope.value === 'new-instance') return `已用 v${view.value.installedVersion || props.item.version} 创建实例`
-    if (scope.value === 'template-library') return `模板库已安装 v${view.value.installedVersion || props.item.version}`
+    if (scope.value === 'template-library') return `模板库已添加 v${view.value.installedVersion || props.item.version}`
     return `当前实例已安装 v${view.value.installedVersion || props.item.version}`
   }
   return ''
@@ -166,6 +169,15 @@ function onInstall() {
 .kind-skill { background: #EDE9FE; color: #6D28D9; }
 .kind-smartfolder { background: #E0EAFF; color: #3538CD; }
 .kind-projtpl { background: #FEF0C7; color: #B54708; }
+.kind-clawapp { background: #EDE9FE; color: #6D28D9; }
+.target-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 999px;
+  color: #475467;
+  background: #F2F4F7;
+}
 .badges {
   display: flex;
   flex-direction: column;

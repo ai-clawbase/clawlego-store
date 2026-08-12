@@ -1,0 +1,15 @@
+# add.risor — 加一项要坚持的事。
+title := ctx.params.get("title", "")
+if title == nil { title = "" }
+title = strings.trim_space(string(title))
+if title == "" {
+  ctx.fail("请填事项名称")
+} else if len(title) > 40 {
+  ctx.fail("名称太长了")
+} else {
+  id := "i_" + ctx.hash(title)[:10]
+  ctx.entity.upsert("checkin_item", [{
+    "id": id, "title": title, "active": true, "created_at": ctx.now()[:10],
+  }])
+  ctx.ok("已加入：" + title, {"id": id})
+}

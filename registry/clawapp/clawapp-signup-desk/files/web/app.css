@@ -1,0 +1,92 @@
+/* 报名台的样式，三个页面共用一份。
+ *
+ * 多页应用的好处之一就在这儿：样式写一次，每页 <link> 进来，页面本身只剩
+ * 它自己的那点结构。web/ 下的任何文件宿主都原样交付，css/js/图片都一样。
+ *
+ * 底部导航栏不在这里 —— 那是宿主画的（clawapp.js），应用只需要知道它占了
+ * 多高：--clawapp-tabbar-height 是运行时量好写上去的，浮层照着它躲开就行。
+ */
+:root {
+  color-scheme: light dark;
+  --bg: #f4f5f9; --card: #fff; --ink: #1f2430; --muted: #8a90a2;
+  --line: rgba(20, 30, 60, .10); --brand: #6366f1; --ok: #10b981;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg:#0f1116; --card:#181b22; --ink:#e8eaf0; --muted:#8b91a4; --line:rgba(255,255,255,.10); }
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
+  padding: 16px 14px 20px;
+}
+
+.head { margin: 0 0 14px; }
+.head h1 { font-size: 20px; margin: 0 0 2px; }
+.head .sub { color: var(--muted); font-size: 13px; margin: 0; }
+
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0 0 12px; }
+.stat { background: var(--card); border-radius: 14px; padding: 10px 12px; }
+.stat b { display: block; font-size: 20px; font-weight: 700; }
+.stat span { color: var(--muted); font-size: 12px; }
+
+.card { background: var(--card); border-radius: 16px; padding: 14px; margin: 0 0 12px; }
+.card h2 { font-size: 14px; margin: 0 0 10px; }
+
+label { display: block; font-size: 12px; color: var(--muted); margin: 0 0 4px; }
+input, select {
+  width: 100%; padding: 11px 12px; margin: 0 0 10px; font: inherit;
+  border: 1px solid var(--line); border-radius: 11px;
+  background: transparent; color: var(--ink);
+}
+input:focus, select:focus { outline: 2px solid var(--brand); outline-offset: -1px; }
+
+button {
+  width: 100%; padding: 12px; font: inherit; font-weight: 650;
+  border: 0; border-radius: 11px; background: var(--brand); color: #fff; cursor: pointer;
+}
+button:disabled { opacity: .55; }
+button.ghost { background: transparent; color: var(--brand); border: 1px solid var(--line); }
+
+.seg { display: flex; gap: 6px; margin: 0 0 12px; }
+.seg button {
+  flex: 1; padding: 7px 4px; font-size: 12px; font-weight: 600; border-radius: 999px;
+  background: var(--card); color: var(--muted); border: 1px solid transparent;
+}
+.seg button.on { background: var(--brand); color: #fff; }
+
+.list { list-style: none; margin: 0; padding: 0; }
+.list li {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 2px; border-bottom: 1px solid var(--line);
+}
+.list li:last-child { border-bottom: 0; }
+.who { flex: 1; min-width: 0; }
+.who b { display: block; font-weight: 600; }
+.who span { color: var(--muted); font-size: 12px; }
+.tick {
+  width: 30px; height: 30px; flex: none; border-radius: 50%; border: 1px solid var(--line);
+  background: transparent; color: var(--muted); font-size: 15px; padding: 0;
+}
+.tick.on { background: var(--ok); border-color: var(--ok); color: #fff; }
+
+/* 场次分布：纯 CSS 的条，不为一张图引一个库。 */
+.bars { display: flex; flex-direction: column; gap: 9px; }
+.bar-row { font-size: 12px; }
+.bar-top { display: flex; justify-content: space-between; margin: 0 0 4px; }
+.bar-top span:last-child { color: var(--muted); }
+.bar-track { height: 7px; border-radius: 999px; background: var(--line); overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 999px; background: var(--brand); transition: width .35s ease; }
+
+.empty { color: var(--muted); font-size: 13px; text-align: center; padding: 18px 0; }
+
+.toast {
+  position: fixed; left: 50%;
+  /* 导航栏占多高由运行时量出来；没有导航栏时躲开的是设备的安全区。 */
+  bottom: calc(16px + max(var(--clawapp-tabbar-height, 0px), env(safe-area-inset-bottom)));
+  transform: translateX(-50%); background: #1f2430; color: #fff;
+  padding: 9px 16px; border-radius: 999px; font-size: 13px;
+  opacity: 0; transition: opacity .2s; pointer-events: none; max-width: 86%; z-index: 10;
+}
+.toast.show { opacity: .95; }

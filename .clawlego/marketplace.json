@@ -12,7 +12,7 @@
     "url": "https://github.com/ai-clawbase/clawlego-store.git",
     "ref": "main"
   },
-  "count": 42,
+  "count": 44,
   "entries": [
     {
       "id": "prompt-commit-message",
@@ -44,6 +44,62 @@
         "type": "files",
         "files": "registry/brick/skill-meeting-notes/files",
         "target": "business/assets/bricks/skill-meeting-notes"
+      }
+    },
+    {
+      "id": "clawapp-checkin-desk",
+      "kind": "clawapp",
+      "source": "hosted",
+      "name": "打卡台",
+      "tagline": "列出每天要坚持的事，点一下打卡，连续天数和完成率自动计算",
+      "version": "2.1.0",
+      "category": "life",
+      "path": "registry/clawapp/clawapp-checkin-desk",
+      "manifest": "registry/clawapp/clawapp-checkin-desk/clawasset.json",
+      "install": {
+        "type": "clawapp",
+        "url": "https://store.clawlego.com/store/clawapp/clawapp-checkin-desk/app_checkin-desk-2.1.0.clawapp",
+        "target": null
+      },
+      "app": {
+        "name": "checkin_desk",
+        "target": "mobile",
+        "public": false,
+        "actions": [],
+        "requires": {
+          "connectors": [],
+          "engines": []
+        },
+        "screenshots": []
+      }
+    },
+    {
+      "id": "clawapp-signup-desk",
+      "kind": "clawapp",
+      "source": "hosted",
+      "name": "报名台",
+      "tagline": "收报名、查名单、导出签到表；发一条链接就能让别人填写",
+      "version": "2.1.0",
+      "category": "service",
+      "path": "registry/clawapp/clawapp-signup-desk",
+      "manifest": "registry/clawapp/clawapp-signup-desk/clawasset.json",
+      "install": {
+        "type": "clawapp",
+        "url": "https://store.clawlego.com/store/clawapp/clawapp-signup-desk/app_signup-desk-2.1.0.clawapp",
+        "target": null
+      },
+      "app": {
+        "name": "signup_desk",
+        "target": "mobile",
+        "public": true,
+        "actions": [
+          "signup"
+        ],
+        "requires": {
+          "connectors": [],
+          "engines": []
+        },
+        "screenshots": []
       }
     },
     {
@@ -185,14 +241,14 @@
       "kind": "pkg",
       "source": "hosted",
       "name": "新手开箱即用包",
-      "tagline": "集成基础知识库与工程流程的完整智能体环境",
-      "version": "1.0.0",
+      "tagline": "带入门指南与两项基础技能的轻量智能体环境",
+      "version": "1.1.0",
       "category": "general",
       "path": "registry/pkg/clawpkg-starter",
       "manifest": "registry/pkg/clawpkg-starter/clawasset.json",
       "install": {
         "type": "clawpkg",
-        "url": "https://store.clawlego.com/store/pkg/clawpkg-starter/pkg_starter-1.0.0.clawpkg",
+        "url": "https://store.clawlego.com/store/pkg/clawpkg-starter/pkg_starter-1.1.0.clawpkg",
         "target": null
       }
     },

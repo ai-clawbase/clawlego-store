@@ -1,0 +1,56 @@
+# board.risor — 今日看板：每项的今日状态与连续天数。
+#
+# 连续天数从今天往回数，断了就停；今天还没打不算断（今天才刚开始）。
+# 日期回退用 time 模块，别手算闰年月末。沙箱里 time 对象有 .add_date(y,m,d)
+# 和 .format(layout)，没有 .add()。
+
+func day_before(day, n) {
+  return time.parse("2006-01-02", day).add_date(0, 0, -n).format("2006-01-02")
+}
+
+today := ctx.now()[:10]
+month := ctx.now()[:7]
+
+done_by_item := {}
+month_n := 0
+for i, l := range ctx.entity.query("checkin") {
+  it := l.get("item", "")
+  d := l.get("date", "")
+  if it == nil || d == nil || it == "" || d == "" { continue }
+  cur := done_by_item.get(it, {})
+  cur[d] = true
+  done_by_item[it] = cur
+  if len(d) >= 7 && d[:7] == month { month_n = month_n + 1 }
+}
+
+rows := []
+today_done := 0
+best := 0
+for i, it := range ctx.entity.query("checkin_item") {
+  active := it.get("active", true)
+  if active == nil { active = true }
+  if !active { continue }
+  id := it.get("id", "")
+  if id == nil { id = "" }
+  title := it.get("title", "")
+  if title == nil || title == "" { title = "（未命名）" }
+  days := done_by_item.get(id, {})
+
+  hit := days.get(today, false)
+  if hit { today_done = today_done + 1 }
+
+  streak := 0
+  cursor := hit ? today : day_before(today, 1)
+  for j := 0; j < 400; j++ {
+    if !days.get(cursor, false) { break }
+    streak = streak + 1
+    cursor = day_before(cursor, 1)
+  }
+  if streak > best { best = streak }
+  rows.append({"id": id, "title": title, "done": hit, "streak": streak})
+}
+
+ctx.ok(sprintf("今天 %d/%d", today_done, len(rows)), {
+  "date": today, "rows": rows, "today_done": today_done,
+  "total": len(rows), "month": month_n, "best": best,
+})
