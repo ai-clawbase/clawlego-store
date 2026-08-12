@@ -1,0 +1,6 @@
+Carbon Design System Icons
+Copyright IBM Corp. 2017, 2026
+Licensed under the Apache License, Version 2.0.
+https://github.com/carbon-design-system/carbon
+
+This package includes a reduced set of Carbon icon path data in icons.js.

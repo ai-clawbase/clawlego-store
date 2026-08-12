@@ -1,0 +1,36 @@
+apiVersion: app.clawlego.com/v1
+kind: LightApp
+metadata:
+  name: praise_diary
+  version: 1.0.0
+
+spec:
+  display:
+    name: 夸夸日记
+    icon: carbon:star-filled
+    description: 用文字、语音、图片和视频，收藏亲子相处中值得被看见的每一个闪光时刻
+    color: "#556FD1"
+  category: life
+
+  entities:
+    - { name: praise_entry, schema: entities/praise_entry.json }
+    - { name: family_member, schema: entities/family_member.json }
+
+  web: { entry: web/index.html }
+  pages:
+    - { name: glow, path: index.html, title: 星光 }
+    - { name: memories, path: memories.html, title: 时光 }
+    - { name: family, path: family.html, title: 家人 }
+  tabbar:
+    background: "#FFFFFF"
+    color: "#667085"
+    selected_color: "#556FD1"
+    items:
+      - { page: glow, label: 星光, icon: star }
+      - { page: memories, label: 时光, icon: calendar }
+      - { page: family, label: 家人, icon: user }
+
+  # 手机上全屏，桌面和 Web 页面由应用自己的断点扩展为常规双栏宽度。
+  target: responsive
+  data_version: 1
+  public: { enabled: false, actions: [] }

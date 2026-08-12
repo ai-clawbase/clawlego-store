@@ -1,0 +1,26 @@
+{
+  "id": "clawapp-praise-diary",
+  "kind": "clawapp",
+  "source": "hosted",
+  "name": "夸夸日记",
+  "tagline": "把孩子和家人的每一次努力，用文字、声音、照片和视频收进星星罐",
+  "summary": "默认私有的亲子日记 ClawApp，同时适配 Mobile 与 Web。包含星光、时光和家人三屏，支持文字、宿主安全录音、图片与短视频；记录与媒体都保存在当前 ClawLego 实例，升级保留数据。",
+  "version": "1.0.0",
+  "category": "life",
+  "author": { "name": "ClawLego", "url": "https://clawlego.com" },
+  "license": "MIT",
+  "icon": "carbon:star-filled",
+  "accent": "#556FD1",
+  "tags": ["轻应用", "Mobile", "Web", "亲子", "日记", "语音", "图片", "视频", "私有工具"],
+  "contents": { "entity": 2, "function": 0, "page": 3 },
+  "install": { "type": "clawapp" },
+  "app": {
+    "name": "praise_diary",
+    "target": "responsive",
+    "public": false,
+    "actions": [],
+    "requires": { "connectors": [], "engines": [] },
+    "screenshots": []
+  },
+  "updated": "2026-08-13"
+}

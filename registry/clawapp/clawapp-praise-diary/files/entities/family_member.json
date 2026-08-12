@@ -1,0 +1,15 @@
+{
+  "schema_version": "1",
+  "name": "family_member",
+  "display_name": "家人",
+  "description": "夸夸日记中的家庭成员。",
+  "fields": [
+    { "name": "name", "type": "string", "required": true },
+    { "name": "role", "type": "select", "required": true },
+    { "name": "relation", "type": "string" },
+    { "name": "birthday", "type": "date" },
+    { "name": "color", "type": "string" },
+    { "name": "avatar_media_id", "type": "string" }
+  ],
+  "indexes": ["role"]
+}
