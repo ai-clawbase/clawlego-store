@@ -49,7 +49,7 @@
             <section v-if="item.kind === 'clawapp' && item.app" class="block">
               <h2>轻应用能力</h2>
               <div class="app-contract">
-                <span><b>形态</b>{{ item.app.target === 'mobile' ? '手机版' : 'Web版' }}</span>
+                <span><b>形态</b>{{ appTargetLabel }}</span>
                 <span><b>应用 ID</b><code>{{ item.app.name }}</code></span>
                 <span><b>对外入口</b>{{ item.app.public ? '支持（由安装者开启/关闭）' : '默认关闭' }}</span>
                 <span><b>公开动作</b>{{ item.app.actions?.length ? item.app.actions.join('、') : '无' }}</span>
@@ -196,6 +196,11 @@ const kindLabel = computed(() => (item.value ? KIND_LABEL[item.value.kind] : '')
 const categoryLabel = computed(() =>
   item.value ? CATEGORY_LABEL[item.value.category] || item.value.category : '',
 )
+const appTargetLabel = computed(() => {
+  if (item.value?.app?.target === 'mobile') return '手机版'
+  if (item.value?.app?.target === 'responsive') return '手机版 · Web版'
+  return 'Web版'
+})
 
 const contentBits = computed(() => {
   const c = item.value?.contents
