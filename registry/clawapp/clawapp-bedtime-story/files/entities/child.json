@@ -1,0 +1,7 @@
+{
+  "schema_version": "1",
+  "name": "child",
+  "display_name": "孩子",
+  "description": "谁在听故事。名字和年龄会进提示词，喜欢的东西用来挑主角。id = k_+名字短哈希。",
+  "fields": []
+}

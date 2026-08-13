@@ -1,0 +1,53 @@
+<!-- 字表 —— 学过的都在这，点一下读一遍。 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>字表 · 识字卡</title>
+<link rel="stylesheet" href="app.css">
+<script src="/clawapp.js"></script>
+
+<main>
+  <h1>字表</h1>
+  <p class="sub" id="sub">…</p>
+  <div id="list" class="list"></div>
+</main>
+
+<script src="app.js"></script>
+<script>
+// 盒子 1..5 = 记得越来越牢。展示成人话，不要让家长去理解 Leitner。
+const FIRMNESS = ['刚学', '有点印象', '记得住', '很熟', '不用复习了']
+
+async function load() {
+  let rows = []
+  try {
+    rows = await clawapp.entity.query('card')
+  } catch (e) {
+    $('#sub').textContent = ''
+    $('#list').innerHTML = `<div class="empty">读不出字表，稍后再试</div>`
+    return
+  }
+  if (!rows.length) {
+    $('#sub').textContent = ''
+    $('#list').innerHTML = `<div class="empty">还没有字。<br>去「加字」生成第一批。</div>`
+    return
+  }
+  // 新加的排前面。
+  rows.sort((a, b) => String(b.added_at || '').localeCompare(String(a.added_at || '')))
+  $('#sub').textContent = `一共 ${rows.length} 个字`
+  $('#list').innerHTML = rows.map(c => {
+    const box = Math.min(5, Math.max(1, Math.round(Number(c.box) || 1)))
+    return `<div class="item" data-say="${c.char}">
+      <div class="ch">${c.char}</div>
+      <div class="meta">
+        <b>${c.pinyin || ''}</b> ${c.word || ''}
+        <div>${c.meaning || ''}</div>
+      </div>
+      <div class="box">${FIRMNESS[box - 1]}</div>
+    </div>`
+  }).join('')
+  for (const el of document.querySelectorAll('.item')) {
+    el.onclick = () => say(el.dataset.say)
+  }
+}
+
+clawapp.ready().then(load)
+</script>

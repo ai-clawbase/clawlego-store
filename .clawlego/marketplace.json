@@ -12,7 +12,7 @@
     "url": "https://github.com/ai-clawbase/clawlego-store.git",
     "ref": "main"
   },
-  "count": 45,
+  "count": 48,
   "entries": [
     {
       "id": "prompt-commit-message",
@@ -47,6 +47,33 @@
       }
     },
     {
+      "id": "clawapp-bedtime-story",
+      "kind": "clawapp",
+      "source": "hosted",
+      "name": "哄睡故事机",
+      "tagline": "说一句今天发生了什么，马上生成一个对症的睡前故事，按页朗读",
+      "version": "1.0.0",
+      "category": "life",
+      "path": "registry/clawapp/clawapp-bedtime-story",
+      "manifest": "registry/clawapp/clawapp-bedtime-story/clawasset.json",
+      "install": {
+        "type": "clawapp",
+        "url": "https://store.clawlego.com/store/clawapp/clawapp-bedtime-story/app_bedtime-story-1.0.0.clawapp",
+        "target": null
+      },
+      "app": {
+        "name": "bedtime_story",
+        "target": "mobile",
+        "public": false,
+        "actions": [],
+        "requires": {
+          "connectors": [],
+          "engines": []
+        },
+        "screenshots": []
+      }
+    },
+    {
       "id": "clawapp-checkin-desk",
       "kind": "clawapp",
       "source": "hosted",
@@ -63,6 +90,60 @@
       },
       "app": {
         "name": "checkin_desk",
+        "target": "mobile",
+        "public": false,
+        "actions": [],
+        "requires": {
+          "connectors": [],
+          "engines": []
+        },
+        "screenshots": []
+      }
+    },
+    {
+      "id": "clawapp-homework-coach",
+      "kind": "clawapp",
+      "source": "hosted",
+      "name": "作业陪练",
+      "tagline": "拍下不会的那道题，它不给答案，只一层层给提示",
+      "version": "1.0.0",
+      "category": "life",
+      "path": "registry/clawapp/clawapp-homework-coach",
+      "manifest": "registry/clawapp/clawapp-homework-coach/clawasset.json",
+      "install": {
+        "type": "clawapp",
+        "url": "https://store.clawlego.com/store/clawapp/clawapp-homework-coach/app_homework-coach-1.0.0.clawapp",
+        "target": null
+      },
+      "app": {
+        "name": "homework_coach",
+        "target": "mobile",
+        "public": false,
+        "actions": [],
+        "requires": {
+          "connectors": [],
+          "engines": []
+        },
+        "screenshots": []
+      }
+    },
+    {
+      "id": "clawapp-literacy-cards",
+      "kind": "clawapp",
+      "source": "hosted",
+      "name": "识字卡",
+      "tagline": "按年龄生成汉字卡，点一下就朗读，答对答错自动排下次复习",
+      "version": "1.0.0",
+      "category": "life",
+      "path": "registry/clawapp/clawapp-literacy-cards",
+      "manifest": "registry/clawapp/clawapp-literacy-cards/clawasset.json",
+      "install": {
+        "type": "clawapp",
+        "url": "https://store.clawlego.com/store/clawapp/clawapp-literacy-cards/app_literacy-cards-1.0.0.clawapp",
+        "target": null
+      },
+      "app": {
+        "name": "literacy_cards",
         "target": "mobile",
         "public": false,
         "actions": [],

@@ -1,0 +1,7 @@
+{
+  "schema_version": "1",
+  "name": "card",
+  "display_name": "字卡",
+  "description": "一张汉字卡。id = c_+字本身的短哈希，所以同一个字反复生成是覆盖而不是堆重复。box/due 是间隔重复的状态，由 grade 函数确定性推进，不经模型。",
+  "fields": []
+}

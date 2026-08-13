@@ -1,0 +1,47 @@
+{
+  "id": "clawapp-literacy-cards",
+  "kind": "clawapp",
+  "source": "hosted",
+  "name": "识字卡",
+  "tagline": "按年龄生成汉字卡，点一下就朗读，答对答错自动排下次复习",
+  "summary": "家长选年龄和主题，AI 生成一批字卡（拼音·意思·组词·例句）；孩子点卡片听读音、翻面看解释。间隔重复的排期是本机算术，不花 token、断网也能算出今天该复习哪些。默认私有，无对外入口。",
+  "version": "1.0.0",
+  "category": "life",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:character-whole-number",
+  "accent": "#e0803a",
+  "tags": [
+    "轻应用",
+    "Mobile",
+    "育儿",
+    "识字",
+    "拼音",
+    "朗读",
+    "间隔重复",
+    "私有工具"
+  ],
+  "contents": {
+    "entity": 1,
+    "function": 3,
+    "page": 3
+  },
+  "install": {
+    "type": "clawapp"
+  },
+  "app": {
+    "name": "literacy_cards",
+    "target": "mobile",
+    "public": false,
+    "actions": [],
+    "requires": {
+      "connectors": [],
+      "engines": []
+    },
+    "screenshots": []
+  },
+  "updated": "2026-08-13"
+}

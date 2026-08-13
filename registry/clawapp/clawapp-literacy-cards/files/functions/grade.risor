@@ -1,0 +1,65 @@
+# grade.risor — 记一次答对/答错，并排下一次复习。
+#
+# Leitner 盒子：答对进一格，答错直接退回 1 号盒。间隔 1/2/4/7/15 天。
+# 这套规则是确定的、可解释的、离线可算的——正是不该交给模型的那一半。
+
+id := ctx.params.get("id", "")
+if id == nil || id == "" {
+  ctx.fail("缺少字卡 id")
+} else {
+  card := ctx.entity.find("card", string(id))
+  if card == nil {
+    ctx.fail("找不到这张字卡")
+  } else {
+    right := ctx.params.get("right", "true")
+    got_it := string(right) != "false"
+
+    # 记录是从 records.jsonl 读回来的，所以数字到这里是 float（JSON 没有整数
+    # 类型），偶尔还会是字符串。不归一化的话 gaps[box-1] 会直接报
+    # "list index must be an int (got float)"。
+    to_int := func(v, fallback) {
+      t := type(v)
+      if t == "int" { return v }
+      if t == "float" { return int(v) }
+      if t == "string" && regexp.match("^[0-9]+$", v) { return int(v) }
+      return fallback
+    }
+
+    box := to_int(card.get("box", 1), 1)
+    if box < 1 { box = 1 }
+    if box > 5 { box = 5 }
+
+    n_right := to_int(card.get("right", 0), 0)
+    n_wrong := to_int(card.get("wrong", 0), 0)
+
+    if got_it {
+      if box < 5 { box = box + 1 }
+      n_right = n_right + 1
+    } else {
+      box = 1
+      n_wrong = n_wrong + 1
+    }
+
+    gaps := [1, 2, 4, 7, 15]
+    gap := gaps[box - 1]
+    # 日期算术走 unix 秒：risor 的 time 对象没有 add()。
+    next := time.unix(time.now().unix() + gap * 86400, 0)
+
+    ctx.entity.upsert("card", [{
+      "id": string(id),
+      "char": string(card.get("char", "")),
+      "pinyin": string(card.get("pinyin", "")),
+      "meaning": string(card.get("meaning", "")),
+      "word": string(card.get("word", "")),
+      "sentence": string(card.get("sentence", "")),
+      "theme": string(card.get("theme", "")),
+      "added_at": string(card.get("added_at", "")),
+      "box": box,
+      "due": next.format("2006-01-02"),
+      "right": n_right,
+      "wrong": n_wrong,
+    }])
+
+    ctx.ok("已记录", {"id": string(id), "box": box, "due": next.format("2006-01-02"), "gap_days": gap})
+  }
+}

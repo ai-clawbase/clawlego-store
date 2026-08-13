@@ -1,0 +1,97 @@
+<!-- 今天 —— 复习面。翻卡、朗读、记对错。 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>今天 · 识字卡</title>
+<link rel="stylesheet" href="app.css">
+<script src="/clawapp.js"></script>
+
+<main>
+  <h1>今天</h1>
+  <p class="sub" id="sub">正在看看今天该复习什么…</p>
+  <div id="stage" class="spin">…</div>
+</main>
+
+<script src="app.js"></script>
+<script>
+let queue = []
+let idx = 0
+let flipped = false
+
+async function load() {
+  const res = await run('due')
+  if (!res.ok) {
+    $('#sub').textContent = ''
+    $('#stage').innerHTML = `<div class="empty">${res.error}</div>`
+    return
+  }
+  const data = payload(res)
+  queue = data.cards || []
+  idx = 0
+  if (!data.total) {
+    $('#sub').textContent = ''
+    $('#stage').innerHTML = `<div class="empty">还没有字卡。<br>去「加字」生成第一批吧。</div>`
+    return
+  }
+  render()
+}
+
+function render() {
+  if (idx >= queue.length) {
+    $('#sub').textContent = ''
+    $('#stage').innerHTML = `<div class="empty">今天的都复习完啦 🎉<br>明天再来。</div>`
+    clawapp.tabbar.setBadge('today', null)
+    return
+  }
+  const left = queue.length - idx
+  $('#sub').textContent = `还剩 ${left} 张`
+  clawapp.tabbar.setBadge('today', left)
+
+  const c = queue[idx]
+  flipped = false
+  $('#stage').innerHTML = `
+    <div class="flash" id="flash">
+      <div class="glyph">${c.char || ''}</div>
+      <div class="hint">点一下看拼音和意思</div>
+    </div>
+    <div class="row">
+      <button class="speak" id="btn-say">🔊 读一遍</button>
+    </div>
+    <div class="row" id="grade" style="display:none">
+      <button class="ghost" id="btn-no">还不会</button>
+      <button id="btn-yes">认识</button>
+    </div>`
+
+  $('#flash').onclick = flip
+  $('#btn-say').onclick = () => say(c.char)
+  $('#btn-yes').onclick = () => grade(true)
+  $('#btn-no').onclick = () => grade(false)
+  // 卡片一出现就念一遍：孩子先听到音，再去认形。
+  say(c.char)
+}
+
+function flip() {
+  if (flipped) return
+  flipped = true
+  const c = queue[idx]
+  $('#flash').innerHTML = `
+    <div class="glyph">${c.char || ''}</div>
+    <div class="pinyin">${c.pinyin || ''}</div>
+    <div class="meaning">${c.meaning || ''}</div>
+    <div class="word">${c.word || ''}</div>
+    <div class="sentence">${c.sentence || ''}</div>`
+  $('#grade').style.display = 'flex'
+  if (c.word) say(c.word)
+}
+
+async function grade(right) {
+  const c = queue[idx]
+  $('#btn-yes').disabled = true
+  $('#btn-no').disabled = true
+  // 不等服务端：孩子的节奏比一次往返重要，记账失败下次 due 会自然纠正。
+  run('grade', { id: c.id, right: right ? 'true' : 'false' })
+  idx++
+  render()
+}
+
+clawapp.ready().then(load)
+</script>

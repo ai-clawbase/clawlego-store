@@ -1,0 +1,74 @@
+/* 作业陪练。 */
+:root {
+  --ink: #17281f; --muted: #6d8578; --accent: #2f9e6e;
+  --paper: #f5faf7; --card: #ffffff; --line: #dde9e2;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #e6f2ea; --muted: #7f9689; --accent: #4fc191;
+    --paper: #101815; --card: #182220; --line: #263531;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans SC", sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+main { padding: 20px 18px 8px; }
+h1 { font-size: 20px; margin: 0 0 4px; }
+.sub { color: var(--muted); font-size: 13px; margin: 0 0 18px; line-height: 1.6; }
+button {
+  font: inherit; border: none; border-radius: 12px; padding: 12px 18px;
+  background: var(--accent); color: #fff; cursor: pointer; transition: transform .08s ease;
+}
+button:active { transform: scale(.97); }
+button:disabled { opacity: .5; cursor: default; }
+button.ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); }
+textarea, input, select {
+  font: inherit; width: 100%; padding: 12px 14px; border: 1px solid var(--line);
+  border-radius: 12px; background: var(--card); color: var(--ink); resize: none;
+}
+label { display: block; font-size: 13px; color: var(--muted); margin: 14px 0 6px; }
+.row { display: flex; gap: 10px; margin-top: 16px; }
+.row > button { flex: 1; }
+
+/* 阅读面：一次一页，字要大，行距要松。 */
+.page {
+  background: var(--card); border: 1px solid var(--line); border-radius: 20px;
+  padding: 32px 24px; min-height: 300px; display: flex; align-items: center;
+  justify-content: center; text-align: center; font-size: 21px; line-height: 2;
+}
+.page img, .page svg { max-width: 100%; border-radius: 12px; margin-bottom: 16px; }
+.pager { text-align: center; color: var(--muted); font-size: 12px; margin-top: 12px; }
+.title { font-size: 22px; font-weight: 600; text-align: center; margin: 8px 0 16px; }
+
+.list { display: flex; flex-direction: column; gap: 8px; }
+.item {
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+  padding: 14px 16px; cursor: pointer;
+}
+.item b { font-weight: 600; }
+.item div { color: var(--muted); font-size: 12px; margin-top: 4px; }
+.empty { text-align: center; color: var(--muted); padding: 48px 20px; line-height: 1.8; }
+.err { color: #c0392b; font-size: 13px; margin-top: 12px; }
+.chip {
+  display: inline-block; padding: 6px 12px; border-radius: 999px;
+  border: 1px solid var(--line); color: var(--muted); font-size: 13px;
+  margin: 0 6px 6px 0; cursor: pointer; background: var(--card);
+}
+.chip.on { border-color: var(--accent); color: var(--accent); }
+
+/* 提示阶梯：一次只亮一层，剩下的是灰的占位，让孩子看见"还有"。 */
+.step {
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+  padding: 14px 16px; margin-bottom: 8px; line-height: 1.7;
+}
+.step.locked { color: transparent; user-select: none; position: relative; }
+.step.locked::after {
+  content: "还有一层提示"; position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted); font-size: 13px;
+}
+.shot { width: 100%; border-radius: 14px; border: 1px solid var(--line); margin-bottom: 12px; }
+.topic { font-size: 13px; color: var(--accent); margin-bottom: 12px; }

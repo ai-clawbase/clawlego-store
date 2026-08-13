@@ -1,0 +1,98 @@
+# generate.risor — 生成一批新字卡。
+#
+# 这是 ctx.ai.json 的范例：宿主负责把模型的回复变成合法 JSON（含一次修复重试）
+# 并按 schema 校验，所以这里拿到的要么是可用的对象，要么是错误——不需要在脚本里
+# 剥 ``` 围栏、不需要 try-parse。
+#
+# 已有的字会被排除在外再送给模型，这样"再来五个"不会反复给同样的字。
+
+age := ctx.params.get("age", "5")
+if age == nil || age == "" { age = "5" }
+theme := ctx.params.get("theme", "")
+if theme == nil { theme = "" }
+theme = strings.trim_space(string(theme))
+
+# int() 在这里会对非数字直接抛错（不是返回错误值），而 count 来自前端，
+# 所以先用正则确认它真的是一串数字再转。
+count := 5
+raw_count := string(ctx.params.get("count", "5"))
+if regexp.match("^[0-9]{1,2}$", raw_count) {
+  parsed := int(raw_count)
+  if parsed >= 1 && parsed <= 10 { count = parsed }
+}
+
+# 已经有的字：告诉模型别再出这些。截断是为了不让提示词随字表无限长大。
+existing := ctx.entity.query("card")
+have := []
+for _, row := range existing {
+  ch := row.get("char", "")
+  if ch != nil && ch != "" { have.append(string(ch)) }
+}
+avoid := ""
+if len(have) > 0 {
+  shown := have
+  if len(shown) > 120 { shown = shown[:120] }
+  avoid = "已经学过下面这些字，不要再出：" + strings.join(shown, "、")
+}
+
+topic := "常用字"
+if theme != "" { topic = theme }
+
+prompt := sprintf(
+  "为一个 %s 岁的中国孩子挑 %d 个适合现在学的汉字，主题是「%s」。%s\n" +
+  "每个字给：拼音（带声调）、一句话说明这个字的意思（用孩子听得懂的话）、一个常用词、一个不超过 15 字的例句。",
+  string(age), count, topic, avoid)
+
+schema := {
+  "type": "object",
+  "required": ["cards"],
+  "properties": {
+    "cards": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["char", "pinyin", "meaning", "word", "sentence"],
+      },
+    },
+  },
+}
+
+result := ctx.ai.json(prompt, schema, {"max_tokens": 1500})
+cards := result.get("cards", [])
+
+if len(cards) == 0 {
+  ctx.fail("这次没生成出字卡，再试一次吧")
+} else {
+  today := ctx.now()[:10]
+  rows := []
+  added := []
+  for _, c := range cards {
+    ch := c.get("char", "")
+    if ch == nil || ch == "" { continue }
+    ch = string(ch)
+    # 只取第一个字符：模型偶尔会给一个词而不是一个字。
+    if len(ch) > 4 { ch = ch[:4] }
+    rows.append({
+      "id": "c_" + ctx.hash(ch)[:10],
+      "char": ch,
+      "pinyin": string(c.get("pinyin", "")),
+      "meaning": string(c.get("meaning", "")),
+      "word": string(c.get("word", "")),
+      "sentence": string(c.get("sentence", "")),
+      "theme": topic,
+      "added_at": today,
+      # 新卡进 1 号盒子，今天就该学。
+      "box": 1,
+      "due": today,
+      "right": 0,
+      "wrong": 0,
+    })
+    added.append(ch)
+  }
+  if len(rows) == 0 {
+    ctx.fail("这次没生成出字卡，再试一次吧")
+  } else {
+    ctx.entity.upsert("card", rows)
+    ctx.ok("加了 " + string(len(rows)) + " 个字：" + strings.join(added, " "), {"cards": rows})
+  }
+}

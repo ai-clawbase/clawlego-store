@@ -1,0 +1,78 @@
+# tell.risor — 生成一个睡前故事。
+#
+# 输入是家长随口说的一句话（"今天她和妹妹抢玩具了"），输出是一个不点名说教、
+# 但正好对着那件事的故事。分页是为了朗读：一页一段，读完停一下再翻。
+#
+# 为什么用 ctx.ai.json 而不是 ctx.ai.text：要的是**分好页**的正文。让模型直接
+# 写一大段再在这里切分，切出来的断点会落在句子中间，朗读就会断得莫名其妙。
+
+topic := strings.trim_space(string(ctx.params.get("topic", "")))
+if topic == "" {
+  ctx.fail("说一句今天发生了什么吧")
+} else {
+  child_id := string(ctx.params.get("child", ""))
+
+  who := "一个小朋友"
+  age := "4"
+  likes := ""
+  if child_id != "" {
+    kid := ctx.entity.find("child", child_id)
+    if kid != nil {
+      n := string(kid.get("name", ""))
+      if n != "" { who = n }
+      a := string(kid.get("age", ""))
+      if a != "" { age = a }
+      likes = string(kid.get("likes", ""))
+    }
+  }
+
+  hint := ""
+  if likes != "" {
+    hint = "TA 喜欢" + likes + "，可以让这些出现在故事里。"
+  }
+
+  prompt := sprintf(
+    "为 %s（%s 岁）写一个睡前故事。今天发生的事是：%s\n" +
+    "%s\n" +
+    "要求：\n" +
+    "- 主角不要直接叫 %s，用一个动物或小人物代替，让 TA 自己认出来。\n" +
+    "- 不要讲道理、不要说教、不要在结尾总结「所以我们要…」。\n" +
+    "- 情绪要落回安心和睡意，最后一页是安静的。\n" +
+    "- 6 到 8 页，每页 2-3 句话，用能读出声的短句。\n" +
+    "- 另外给一个不超过 12 个字的标题。",
+    who, age, topic, hint, who)
+
+  schema := {
+    "type": "object",
+    "required": ["title", "pages"],
+    "properties": {
+      "title": {"type": "string"},
+      "pages": {"type": "array", "items": {"type": "string"}},
+    },
+  }
+
+  result := ctx.ai.json(prompt, schema, {"max_tokens": 2000})
+  title := strings.trim_space(string(result.get("title", "")))
+  pages := result.get("pages", [])
+
+  if len(pages) == 0 {
+    ctx.fail("这次没讲出来，换个说法再试试")
+  } else {
+    if title == "" { title = "今晚的故事" }
+    now := ctx.now()
+    id := "s_" + ctx.hash(now + "|" + topic)[:12]
+    ctx.entity.upsert("story", [{
+      "id": id,
+      "title": title,
+      "pages": pages,
+      "topic": topic,
+      "child": child_id,
+      "child_name": who,
+      "created_at": now,
+      "date": now[:10],
+      "illustrated": false,
+      "job_id": "",
+    }])
+    ctx.ok(title, {"id": id, "title": title, "pages": pages})
+  }
+}

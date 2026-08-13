@@ -1,0 +1,60 @@
+# check.risor — 孩子写出答案后，看看对不对。
+#
+# 这是唯一允许判定对错的地方，而且仍然不给正确答案：错了就说错在哪一步，让他
+# 再来一次。如果直接告诉他正确答案，前面四层提示就白做了。
+
+qid := string(ctx.params.get("id", ""))
+answer := strings.trim_space(string(ctx.params.get("answer", "")))
+
+if qid == "" || answer == "" {
+  ctx.fail("先写下答案")
+} else {
+  q := ctx.entity.find("question", qid)
+  if q == nil {
+    ctx.fail("找不到这道题")
+  } else {
+    hints := q.get("hints", [])
+    recap := ""
+    for _, h := range hints { recap = recap + "- " + string(h) + "\n" }
+
+    guide := sprintf(
+      "孩子在做一道题，题目考的是：%s\n" +
+      "已经给过的提示：\n%s\n" +
+      "孩子的答案是：%s\n\n" +
+      "判断这个答案对不对。\n" +
+      "- 对了：一句话肯定他，说出他做对的关键那一步。\n" +
+      "- 错了：**不要给正确答案**，只指出是哪一步走偏了，并给一句能让他自己发现的问题。\n" +
+      "correct 字段填 true/false。",
+      string(q.get("topic", "")), recap, answer)
+
+    schema := {
+      "type": "object",
+      "required": ["correct", "reply"],
+      "properties": {
+        "correct": {"type": "boolean"},
+        "reply": {"type": "string"},
+      },
+    }
+
+    result := ctx.ai.json(guide, schema, {"max_tokens": 600})
+    correct := result.get("correct", false) == true
+    reply := strings.trim_space(string(result.get("reply", "")))
+    if reply == "" { reply = correct ? "对了！" : "再看看这一步" }
+
+    if correct {
+      ctx.entity.upsert("question", [{
+        "id": qid,
+        "photo": string(q.get("photo", "")),
+        "text": string(q.get("text", "")),
+        "grade": string(q.get("grade", "")),
+        "topic": string(q.get("topic", "")),
+        "hints": hints,
+        "revealed": q.get("revealed", 1),
+        "created_at": string(q.get("created_at", "")),
+        "date": string(q.get("date", "")),
+        "solved": true,
+      }])
+    }
+    ctx.ok(reply, {"correct": correct, "reply": reply})
+  }
+}

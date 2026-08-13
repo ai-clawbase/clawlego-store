@@ -1,0 +1,49 @@
+<!-- 记录 —— 陪练过哪些题。看得出孩子常卡在哪一类。 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>记录 · 作业陪练</title>
+<link rel="stylesheet" href="app.css">
+<script src="/clawapp.js"></script>
+
+<main>
+  <h1>记录</h1>
+  <p class="sub" id="sub">…</p>
+  <div id="topics"></div>
+  <div id="list" class="list" style="margin-top:16px"></div>
+</main>
+
+<script src="app.js"></script>
+<script>
+async function load() {
+  let rows = []
+  try { rows = await clawapp.entity.query('question') } catch (e) { rows = [] }
+  if (!rows.length) {
+    $('#sub').textContent = ''
+    $('#list').innerHTML = `<div class="empty">还没陪练过。<br>去「拍题」开第一道。</div>`
+    return
+  }
+  rows.sort((a, b) => String(b.created_at || '').localeCompare(String(a.created_at || '')))
+
+  const solved = rows.filter(r => r.solved === true).length
+  $('#sub').textContent = `陪练 ${rows.length} 道，自己做出来 ${solved} 道`
+
+  // 反复出现的知识点就是该补的地方——这是这一屏真正的用处。
+  const byTopic = {}
+  for (const r of rows) {
+    const t = (r.topic || '').trim()
+    if (t) byTopic[t] = (byTopic[t] || 0) + 1
+  }
+  const repeated = Object.entries(byTopic).filter(([, n]) => n > 1).sort((a, b) => b[1] - a[1])
+  $('#topics').innerHTML = repeated.length
+    ? `<p class="sub">反复卡住的：${repeated.map(([t, n]) => `${t}（${n} 次）`).join('、')}</p>`
+    : ''
+
+  $('#list').innerHTML = rows.map(r => `
+    <div class="item">
+      <b>${r.topic || '一道题'}</b>
+      <div>${r.date || ''} · ${r.grade || ''} · ${r.solved === true ? '做出来了' : '还没做出来'}</div>
+    </div>`).join('')
+}
+
+clawapp.ready().then(load)
+</script>

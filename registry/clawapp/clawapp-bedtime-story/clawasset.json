@@ -1,0 +1,46 @@
+{
+  "id": "clawapp-bedtime-story",
+  "kind": "clawapp",
+  "source": "hosted",
+  "name": "哄睡故事机",
+  "tagline": "说一句今天发生了什么，马上生成一个对症的睡前故事，按页朗读",
+  "summary": "家长随口说一件事（抢玩具、打针、第一天上幼儿园），AI 写成一个不点破、不说教、情绪落回安心的分页故事，逐页朗读。想要插图时再排一个后台任务交给引擎去画——正文不依赖插图，画不了也照样能讲。默认私有。",
+  "version": "1.0.0",
+  "category": "life",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:moon",
+  "accent": "#7c6bd8",
+  "tags": [
+    "轻应用",
+    "Mobile",
+    "育儿",
+    "睡前故事",
+    "朗读",
+    "绘本",
+    "私有工具"
+  ],
+  "contents": {
+    "entity": 2,
+    "function": 2,
+    "page": 3
+  },
+  "install": {
+    "type": "clawapp"
+  },
+  "app": {
+    "name": "bedtime_story",
+    "target": "mobile",
+    "public": false,
+    "actions": [],
+    "requires": {
+      "connectors": [],
+      "engines": []
+    },
+    "screenshots": []
+  },
+  "updated": "2026-08-13"
+}

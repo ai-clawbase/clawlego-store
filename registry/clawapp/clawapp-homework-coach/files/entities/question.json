@@ -1,0 +1,7 @@
+{
+  "schema_version": "1",
+  "name": "question",
+  "display_name": "题目",
+  "description": "一次陪练。photo 存的是 clawapp.media 的不透明 id，不是路径。hints 是已经给出的提示阶梯，revealed 记录讲到第几层了。",
+  "fields": []
+}

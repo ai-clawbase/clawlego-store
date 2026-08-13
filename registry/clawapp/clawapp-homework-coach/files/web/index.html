@@ -1,0 +1,136 @@
+<!-- 拍题 —— 拍照或打字，然后一层一层解锁提示。 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>拍题 · 作业陪练</title>
+<link rel="stylesheet" href="app.css">
+<script src="/clawapp.js"></script>
+
+<main>
+  <div id="ask">
+    <h1>哪道题卡住了</h1>
+    <p class="sub">它不会告诉孩子答案。只会一层一层提示，让他自己想出来。</p>
+
+    <img id="preview" class="shot" style="display:none">
+    <div class="row">
+      <button class="ghost" id="pick">📷 拍/选一张</button>
+    </div>
+    <input type="file" id="file" accept="image/*" capture="environment" style="display:none">
+
+    <label for="text">或者直接打出来</label>
+    <textarea id="text" rows="3" placeholder="小明有 3 个苹果，又买了 5 个…"></textarea>
+
+    <label for="grade">几年级</label>
+    <select id="grade">
+      <option>一年级</option><option selected>二年级</option><option>三年级</option>
+      <option>四年级</option><option>五年级</option><option>六年级</option>
+    </select>
+
+    <div class="row"><button id="go">开始陪练</button></div>
+    <div id="msg"></div>
+  </div>
+
+  <div id="coach" style="display:none">
+    <div class="topic" id="topic"></div>
+    <div id="steps"></div>
+    <div class="row">
+      <button id="more">再给一层提示</button>
+    </div>
+    <label for="answer">孩子的答案</label>
+    <input id="answer" placeholder="写下他算出来的结果">
+    <div class="row">
+      <button class="ghost" id="submit">看看对不对</button>
+    </div>
+    <div id="verdict"></div>
+    <div class="row"><button class="ghost" id="again">换一道</button></div>
+  </div>
+</main>
+
+<script src="app.js"></script>
+<script>
+let mediaID = ''
+let hints = []
+let shown = 1
+let qid = ''
+
+$('#pick').onclick = () => $('#file').click()
+$('#file').onchange = async e => {
+  const f = e.target.files && e.target.files[0]
+  if (!f) return
+  $('#msg').innerHTML = ''
+  try {
+    // 图片经 clawapp.media 走宿主存进 files/media，我们只拿回一个不透明 id；
+    // 函数把这个 id 直接交给 ctx.ai.vision，全程不出现路径。
+    const saved = await clawapp.media.save(f, { name: f.name })
+    mediaID = saved.id
+    $('#preview').src = await clawapp.media.url(saved.id)
+    $('#preview').style.display = 'block'
+    $('#pick').textContent = '📷 换一张'
+  } catch (err) {
+    $('#msg').innerHTML = `<div class="err">${(err && err.message) || '这张没存上'}</div>`
+  }
+}
+
+$('#go').onclick = async () => {
+  const text = $('#text').value.trim()
+  if (!mediaID && !text) {
+    $('#msg').innerHTML = `<div class="err">拍一张，或者把题目打出来</div>`
+    return
+  }
+  const btn = $('#go')
+  btn.disabled = true
+  btn.textContent = '在看这道题…'
+  $('#msg').innerHTML = ''
+
+  const res = await run('coach', { photo: mediaID, text, grade: $('#grade').value })
+  btn.disabled = false
+  btn.textContent = '开始陪练'
+  if (!res.ok) { $('#msg').innerHTML = `<div class="err">${res.error}</div>`; return }
+
+  const data = payload(res)
+  qid = data.id
+  hints = data.hints || []
+  shown = 1
+  $('#topic').textContent = data.topic || ''
+  $('#ask').style.display = 'none'
+  $('#coach').style.display = 'block'
+  renderSteps()
+}
+
+function renderSteps() {
+  $('#steps').innerHTML = hints.map((h, i) =>
+    i < shown
+      ? `<div class="step">${h}</div>`
+      : `<div class="step locked">${h}</div>`).join('')
+  $('#more').style.display = shown >= hints.length ? 'none' : 'block'
+  read(hints[shown - 1])
+}
+
+$('#more').onclick = () => { if (shown < hints.length) { shown++; renderSteps() } }
+
+$('#submit').onclick = async () => {
+  const answer = $('#answer').value.trim()
+  if (!answer) return
+  const btn = $('#submit')
+  btn.disabled = true
+  const res = await run('check', { id: qid, answer })
+  btn.disabled = false
+  if (!res.ok) { $('#verdict').innerHTML = `<div class="err">${res.error}</div>`; return }
+  const d = payload(res)
+  $('#verdict').innerHTML = `<p class="sub" style="margin-top:12px">${d.correct ? '✅ ' : '🤔 '}${d.reply}</p>`
+  read(d.reply)
+}
+
+$('#again').onclick = () => {
+  clawapp.speech.stop()
+  mediaID = ''; hints = []; shown = 1; qid = ''
+  $('#preview').style.display = 'none'
+  $('#pick').textContent = '📷 拍/选一张'
+  $('#text').value = ''
+  $('#answer').value = ''
+  $('#verdict').innerHTML = ''
+  $('#coach').style.display = 'none'
+  $('#ask').style.display = 'block'
+}
+
+clawapp.ready()
+</script>

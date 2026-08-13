@@ -1,0 +1,51 @@
+apiVersion: app.clawlego.com/v1
+kind: LightApp
+metadata:
+  name: literacy_cards
+  version: 1.0.0
+
+# 识字卡 —— 育儿套件里最轻的一个，也是这套 AI 运行时的第一份教材。
+#
+# 它只用快车道（ctx.ai.json 出结构化字卡）+ 端侧朗读，没有后台任务、没有公网面。
+# 值得照抄的两点：
+#   · AI 只负责"想内容"，间隔重复的排期是 functions/ 里的确定性算术 —— 复习该
+#     什么时候来不该每天问一次模型，那既慢又贵，而且答案会飘。
+#   · 生成的字卡先落库再展示，所以断网时今天该复习什么照样算得出来。
+spec:
+  display:
+    name: 识字卡
+    icon: carbon:character-whole-number
+    description: 按年龄生成汉字卡（拼音·组词·例句），点一下就朗读；答对答错自动排下次复习，不用你记
+    color: "#e0803a"
+  category: life
+
+  entities:
+    - { name: card, schema: entities/card.json }
+
+  functions:
+    - { name: generate, script: functions/generate.risor, summary: 生成一批新字卡 }
+    - { name: due,      script: functions/due.risor,      summary: 今天该复习哪些 }
+    - { name: grade,    script: functions/grade.risor,    summary: 记一次答对/答错并排下次 }
+
+  web: { entry: web/index.html }
+
+  pages:
+    - { name: today,  path: index.html,  title: 今天 }
+    - { name: add,    path: add.html,    title: 加字 }
+    - { name: allcards, path: cards.html, title: 字表 }
+
+  tabbar:
+    selected_color: "#e0803a"
+    items:
+      - { page: today,    label: 今天, icon: home }
+      - { page: add,      label: 加字, icon: edit }
+      - { page: allcards, label: 字表, icon: list }
+
+  target: mobile
+
+  # 这是给自家孩子用的，没有对外的一面 —— 不声明 public 就没有。
+  ai:
+    enabled: true
+    safety: child
+    budget:
+      daily_tokens: 60000

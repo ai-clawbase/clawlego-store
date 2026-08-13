@@ -1,0 +1,94 @@
+<!-- 故事库 —— 讲过的都留着，可以重讲，也可以补插图。 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>故事库 · 哄睡故事机</title>
+<link rel="stylesheet" href="app.css">
+<script src="/clawapp.js"></script>
+
+<main>
+  <div id="index">
+    <h1>故事库</h1>
+    <p class="sub" id="sub">…</p>
+    <div id="list" class="list"></div>
+  </div>
+
+  <div id="reader" style="display:none">
+    <div class="title" id="title"></div>
+    <div class="page" id="page"></div>
+    <div class="pager" id="pager"></div>
+    <div class="row">
+      <button class="ghost" id="prev">上一页</button>
+      <button id="next">下一页</button>
+    </div>
+    <div class="row">
+      <button class="ghost" id="back">回列表</button>
+      <button class="ghost" id="draw">配插图</button>
+    </div>
+    <div id="msg"></div>
+  </div>
+</main>
+
+<script src="app.js"></script>
+<script>
+let stories = []
+let cur = null
+let pages = []
+let at = 0
+
+async function load() {
+  try { stories = await clawapp.entity.query('story') } catch (e) { stories = [] }
+  if (!stories.length) {
+    $('#sub').textContent = ''
+    $('#list').innerHTML = `<div class="empty">还没讲过故事。<br>去「讲故事」开第一个。</div>`
+    return
+  }
+  stories.sort((a, b) => String(b.created_at || '').localeCompare(String(a.created_at || '')))
+  $('#sub').textContent = `讲过 ${stories.length} 个`
+  $('#list').innerHTML = stories.map((s, i) => `
+    <div class="item" data-i="${i}">
+      <b>${s.title || '故事'}</b>
+      <div>${s.date || ''} · ${s.topic || ''}</div>
+    </div>`).join('')
+  for (const el of document.querySelectorAll('.item')) {
+    el.onclick = () => open(stories[Number(el.dataset.i)])
+  }
+}
+
+function open(s) {
+  cur = s
+  pages = Array.isArray(s.pages) ? s.pages : []
+  at = 0
+  $('#title').textContent = s.title || '故事'
+  $('#index').style.display = 'none'
+  $('#reader').style.display = 'block'
+  $('#msg').innerHTML = ''
+  show()
+}
+
+function show() {
+  $('#page').textContent = pages[at] || ''
+  $('#pager').textContent = `${at + 1} / ${pages.length}`
+  $('#prev').disabled = at === 0
+  $('#next').disabled = at >= pages.length - 1
+  read(pages[at])
+}
+
+$('#next').onclick = () => { if (at < pages.length - 1) { at++; show() } }
+$('#prev').onclick = () => { if (at > 0) { at--; show() } }
+$('#back').onclick = () => {
+  clawapp.speech.stop()
+  $('#reader').style.display = 'none'
+  $('#index').style.display = 'block'
+}
+$('#draw').onclick = async () => {
+  const btn = $('#draw')
+  btn.disabled = true
+  const res = await run('illustrate', { id: cur.id })
+  btn.disabled = false
+  $('#msg').innerHTML = res.ok
+    ? `<p class="sub" style="margin-top:12px">${res.data.text || '开始画了'}</p>`
+    : `<div class="err">${res.error}</div>`
+}
+
+clawapp.ready().then(load)
+</script>

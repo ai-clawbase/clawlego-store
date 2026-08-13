@@ -1,0 +1,60 @@
+/* 哄睡故事机。深色优先——它多半在关了灯的房间里被打开。 */
+:root {
+  --ink: #2a2540; --muted: #857fa3; --accent: #7c6bd8;
+  --paper: #f7f5ff; --card: #ffffff; --line: #e6e2f5;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #ece9f8; --muted: #918bb0; --accent: #a495ff;
+    --paper: #14121f; --card: #1e1b2e; --line: #302b45;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans SC", sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+main { padding: 20px 18px 8px; }
+h1 { font-size: 20px; margin: 0 0 4px; }
+.sub { color: var(--muted); font-size: 13px; margin: 0 0 18px; line-height: 1.6; }
+button {
+  font: inherit; border: none; border-radius: 12px; padding: 12px 18px;
+  background: var(--accent); color: #fff; cursor: pointer; transition: transform .08s ease;
+}
+button:active { transform: scale(.97); }
+button:disabled { opacity: .5; cursor: default; }
+button.ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); }
+textarea, input, select {
+  font: inherit; width: 100%; padding: 12px 14px; border: 1px solid var(--line);
+  border-radius: 12px; background: var(--card); color: var(--ink); resize: none;
+}
+label { display: block; font-size: 13px; color: var(--muted); margin: 14px 0 6px; }
+.row { display: flex; gap: 10px; margin-top: 16px; }
+.row > button { flex: 1; }
+
+/* 阅读面：一次一页，字要大，行距要松。 */
+.page {
+  background: var(--card); border: 1px solid var(--line); border-radius: 20px;
+  padding: 32px 24px; min-height: 300px; display: flex; align-items: center;
+  justify-content: center; text-align: center; font-size: 21px; line-height: 2;
+}
+.page img, .page svg { max-width: 100%; border-radius: 12px; margin-bottom: 16px; }
+.pager { text-align: center; color: var(--muted); font-size: 12px; margin-top: 12px; }
+.title { font-size: 22px; font-weight: 600; text-align: center; margin: 8px 0 16px; }
+
+.list { display: flex; flex-direction: column; gap: 8px; }
+.item {
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+  padding: 14px 16px; cursor: pointer;
+}
+.item b { font-weight: 600; }
+.item div { color: var(--muted); font-size: 12px; margin-top: 4px; }
+.empty { text-align: center; color: var(--muted); padding: 48px 20px; line-height: 1.8; }
+.err { color: #c0392b; font-size: 13px; margin-top: 12px; }
+.chip {
+  display: inline-block; padding: 6px 12px; border-radius: 999px;
+  border: 1px solid var(--line); color: var(--muted); font-size: 13px;
+  margin: 0 6px 6px 0; cursor: pointer; background: var(--card);
+}
+.chip.on { border-color: var(--accent); color: var(--accent); }

@@ -1,0 +1,97 @@
+/* 识字卡共用样式。宿主画底部导航，这里只管内容区。 */
+:root {
+  --ink: #2b2118;
+  --muted: #8a7b6d;
+  --accent: #e0803a;
+  --paper: #fffaf4;
+  --card: #ffffff;
+  --line: #efe3d6;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #f2e9e0;
+    --muted: #a2938a;
+    --accent: #f0964f;
+    --paper: #1a1512;
+    --card: #241c17;
+    --line: #3a2e26;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans SC", sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-text-size-adjust: 100%;
+}
+main { padding: 20px 18px 8px; }
+h1 { font-size: 20px; margin: 0 0 4px; }
+.sub { color: var(--muted); font-size: 13px; margin: 0 0 18px; }
+
+button {
+  font: inherit;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 18px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: transform .08s ease, opacity .15s ease;
+}
+button:active { transform: scale(.97); }
+button:disabled { opacity: .5; cursor: default; }
+button.ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); }
+
+input, select {
+  font: inherit;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--ink);
+}
+label { display: block; font-size: 13px; color: var(--muted); margin: 14px 0 6px; }
+
+/* 字卡本体：正面只有一个大字，点一下翻到背面。 */
+.flash {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 28px 20px;
+  text-align: center;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+.glyph { font-size: 96px; line-height: 1.1; font-weight: 500; }
+.pinyin { color: var(--accent); font-size: 20px; letter-spacing: .04em; }
+.meaning { font-size: 15px; }
+.word { font-size: 17px; font-weight: 600; }
+.sentence { color: var(--muted); font-size: 14px; line-height: 1.6; }
+.hint { color: var(--muted); font-size: 12px; }
+
+.row { display: flex; gap: 10px; margin-top: 16px; }
+.row > button { flex: 1; }
+.speak { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+
+.list { display: flex; flex-direction: column; gap: 8px; }
+.item {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 14px; padding: 12px 14px;
+}
+.item .ch { font-size: 28px; min-width: 40px; text-align: center; }
+.item .meta { flex: 1; min-width: 0; }
+.item .meta b { font-weight: 600; }
+.item .meta div { color: var(--muted); font-size: 12px; margin-top: 2px; }
+.box { font-size: 11px; color: var(--muted); white-space: nowrap; }
+
+.empty { text-align: center; color: var(--muted); padding: 48px 20px; line-height: 1.8; }
+.err { color: #c0392b; font-size: 13px; margin-top: 12px; }
+.spin { color: var(--muted); text-align: center; padding: 40px; }

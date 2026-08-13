@@ -1,0 +1,49 @@
+apiVersion: app.clawlego.com/v1
+kind: LightApp
+metadata:
+  name: homework_coach
+  version: 1.0.0
+
+# 作业陪练 —— 和市面上所有「拍照搜答案」反着做。
+#
+# 那类工具解决的是孩子的问题（这题答案是什么），而家长真正的问题是「我讲不明白，
+# 又不想直接告诉他答案」。所以这个应用的硬约束是：**永远不给答案**，只给一层一
+# 层的提示阶梯，孩子每次只多知道一点点。
+#
+# 技术上它是 media + vision 那条链路的范例：clawapp.media.save 拿到不透明 id，
+# 存进记录，函数把同一个 id 直接交给 ctx.ai.vision——脚本从头到尾不知道文件在哪。
+spec:
+  display:
+    name: 作业陪练
+    icon: carbon:pen
+    description: 拍下不会的那道题，它不给答案，只一层层给提示，陪孩子自己想出来
+    color: "#2f9e6e"
+  category: life
+
+  entities:
+    - { name: question, schema: entities/question.json }
+
+  functions:
+    - { name: coach, script: functions/coach.risor, summary: 看题目，出提示阶梯 }
+    - { name: check, script: functions/check.risor, summary: 看孩子的答案对不对 }
+
+  web: { entry: web/index.html }
+
+  pages:
+    - { name: ask,     path: index.html,   title: 拍题 }
+    - { name: history, path: history.html, title: 记录 }
+
+  tabbar:
+    selected_color: "#2f9e6e"
+    items:
+      - { page: ask,     label: 拍题, icon: edit }
+      - { page: history, label: 记录, icon: list }
+
+  target: mobile
+
+  ai:
+    enabled: true
+    safety: child
+    budget:
+      # 看图比纯文本贵不少，额度给得比识字卡宽。
+      daily_tokens: 150000

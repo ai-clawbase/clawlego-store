@@ -1,0 +1,7 @@
+{
+  "schema_version": "1",
+  "name": "story",
+  "display_name": "故事",
+  "description": "一个生成好的睡前故事。pages 是分页正文（按页朗读用），theme 是当晚那件事。illustrated/job_id 记插图任务的状态——正文不依赖它们。",
+  "fields": []
+}

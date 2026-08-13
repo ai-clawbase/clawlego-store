@@ -1,0 +1,55 @@
+apiVersion: app.clawlego.com/v1
+kind: LightApp
+metadata:
+  name: bedtime_story
+  version: 1.0.0
+
+# 哄睡故事机 —— 这套 AI 运行时的两条车道在一个应用里同时出现：
+#
+#   · 快车道 tell.risor：说一句今天发生了什么，秒级出一个对症的故事。睡前哄睡
+#     等不起后台任务，所以正文必须是同步的。
+#   · 慢车道 illustrate.risor：想要插图时才排一个后台任务，交给引擎带全套工具去
+#     画。生图慢、贵、而且取决于装的是哪个引擎，所以它是可选的加菜，不是主菜——
+#     没有插图这个应用照样完整。
+spec:
+  display:
+    name: 哄睡故事机
+    icon: carbon:moon
+    description: 说一句今天发生了什么，马上生成一个对症的睡前故事，按页朗读；想要插图再让它慢慢画
+    color: "#7c6bd8"
+  category: life
+
+  entities:
+    - { name: story, schema: entities/story.json }
+    - { name: child, schema: entities/child.json }
+
+  functions:
+    - { name: tell,       script: functions/tell.risor,       summary: 生成一个睡前故事 }
+    - { name: illustrate, script: functions/illustrate.risor, summary: 给故事配插图（后台） }
+
+  web: { entry: web/index.html }
+
+  pages:
+    - { name: tell,    path: index.html,    title: 讲故事 }
+    - { name: library, path: library.html,  title: 故事库 }
+    - { name: kids,    path: kids.html,     title: 孩子 }
+
+  tabbar:
+    selected_color: "#7c6bd8"
+    items:
+      - { page: tell,    label: 讲故事, icon: edit }
+      - { page: library, label: 故事库, icon: list }
+      - { page: kids,    label: 孩子,   icon: home }
+
+  target: mobile
+
+  ai:
+    enabled: true
+    safety: child
+    budget:
+      daily_tokens: 120000
+    job:
+      enabled: true
+      # 一晚上画不了几本。这个数字小是故意的：一个 job 是一整个引擎回合，
+      # 比一次对话贵一个量级。
+      daily_jobs: 6

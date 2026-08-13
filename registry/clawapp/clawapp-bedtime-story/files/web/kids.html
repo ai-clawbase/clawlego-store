@@ -1,0 +1,56 @@
+<!-- 孩子 —— 名字/年龄/喜欢什么，只为了让故事更贴。 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>孩子 · 哄睡故事机</title>
+<link rel="stylesheet" href="app.css">
+<script src="/clawapp.js"></script>
+
+<main>
+  <h1>孩子</h1>
+  <p class="sub">填了之后，故事会用 TA 喜欢的东西当主角。不填也能讲。</p>
+
+  <label for="name">名字</label>
+  <input id="name" placeholder="朵朵">
+  <label for="age">几岁</label>
+  <select id="age"></select>
+  <label for="likes">喜欢什么</label>
+  <input id="likes" placeholder="恐龙、挖掘机、小兔子">
+
+  <div class="row"><button id="save">添上</button></div>
+  <div id="msg"></div>
+
+  <div id="list" class="list" style="margin-top:24px"></div>
+</main>
+
+<script src="app.js"></script>
+<script>
+$('#age').innerHTML = [1,2,3,4,5,6,7,8,9,10]
+  .map(n => `<option value="${n}"${n === 4 ? ' selected' : ''}>${n} 岁</option>`).join('')
+
+async function load() {
+  let kids = []
+  try { kids = await clawapp.entity.query('child') } catch (e) { kids = [] }
+  $('#list').innerHTML = kids.length
+    ? kids.map(k => `<div class="item"><b>${k.name}</b><div>${k.age} 岁${k.likes ? ' · 喜欢' + k.likes : ''}</div></div>`).join('')
+    : ''
+}
+
+$('#save').onclick = async () => {
+  const name = $('#name').value.trim()
+  if (!name) { $('#msg').innerHTML = `<div class="err">先写个名字</div>`; return }
+  $('#msg').innerHTML = ''
+  try {
+    // id 由名字派生，所以再添一次同名的是改，不是多一条。
+    await clawapp.entity.insert('child', {
+      id: 'k_' + name, name, age: $('#age').value, likes: $('#likes').value.trim(),
+    })
+    $('#name').value = ''
+    $('#likes').value = ''
+    load()
+  } catch (e) {
+    $('#msg').innerHTML = `<div class="err">${(e && e.message) || '没添上'}</div>`
+  }
+}
+
+clawapp.ready().then(load)
+</script>

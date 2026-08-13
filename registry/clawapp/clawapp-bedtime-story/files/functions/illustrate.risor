@@ -1,0 +1,64 @@
+# illustrate.risor — 给一个已有的故事配插图。
+#
+# 慢车道的范例：这里不生成任何东西，只**排一个任务**然后立刻返回。真正的活由
+# 引擎去干——它有工具，能一张张画、能保持风格一致、能把文件写下来，这些都不是
+# 一次模型调用做得到的事。
+#
+# 所以这个函数是秒回的，前端拿到 job_id 之后自己轮询。故事正文早就在库里了，
+# 插图没画完不影响今晚讲。
+
+story_id := string(ctx.params.get("id", ""))
+if story_id == "" {
+  ctx.fail("缺少故事 id")
+} else {
+  story := ctx.entity.find("story", story_id)
+  if story == nil {
+    ctx.fail("找不到这个故事")
+  } else {
+    title := string(story.get("title", "故事"))
+    pages := story.get("pages", [])
+    if len(pages) == 0 {
+      ctx.fail("这个故事没有正文")
+    } else {
+      # 把正文原样交给引擎：让它自己决定每页画什么，比我们在这里替它想好要好。
+      body := ""
+      i := 1
+      for _, p := range pages {
+        body = body + sprintf("第 %d 页：%s\n", i, string(p))
+        i = i + 1
+      }
+
+      brief := sprintf(
+        "为一本儿童睡前绘本《%s》画插图。\n\n正文如下：\n%s\n" +
+        "要求：\n" +
+        "- 每页一张插图，共 %d 张，画风统一（温暖、柔和、适合睡前）。\n" +
+        "- 主角形象在每张里保持一致。\n" +
+        "- 画面里不要出现文字。\n" +
+        "- 把图片保存到输出目录，命名为 page_01.png、page_02.png，以此类推。\n" +
+        "- 如果当前引擎没有生成图片的能力，就改为每页输出一段内联 SVG 插画，" +
+        "命名 page_01.svg 等，不要因为画不了就什么都不产出。",
+        title, body, len(pages))
+
+      job := ctx.ai.job({
+        "title": "给《" + title + "》画插图",
+        "brief": brief,
+        "expect": ["page_*.png", "page_*.svg"],
+      })
+
+      ctx.entity.upsert("story", [{
+        "id": story_id,
+        "title": title,
+        "pages": pages,
+        "topic": string(story.get("topic", "")),
+        "child": string(story.get("child", "")),
+        "child_name": string(story.get("child_name", "")),
+        "created_at": string(story.get("created_at", "")),
+        "date": string(story.get("date", "")),
+        "illustrated": false,
+        "job_id": string(job.get("id", "")),
+      }])
+
+      ctx.ok("已经开始画了，画好会出现在故事里", {"job_id": job.get("id", ""), "status": job.get("status", "pending")})
+    }
+  }
+}

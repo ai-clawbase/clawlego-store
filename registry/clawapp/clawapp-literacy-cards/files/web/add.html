@@ -1,0 +1,75 @@
+<!-- 加字 —— 唯一花 token 的一屏。 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>加字 · 识字卡</title>
+<link rel="stylesheet" href="app.css">
+<script src="/clawapp.js"></script>
+
+<main>
+  <h1>加字</h1>
+  <p class="sub">挑一批新字，生成拼音、意思、组词和例句</p>
+
+  <label for="age">孩子几岁</label>
+  <select id="age">
+    <option value="3">3 岁</option>
+    <option value="4">4 岁</option>
+    <option value="5" selected>5 岁</option>
+    <option value="6">6 岁</option>
+    <option value="7">7 岁</option>
+    <option value="8">8 岁</option>
+  </select>
+
+  <label for="theme">想学什么（留空就是常用字）</label>
+  <input id="theme" placeholder="比如：动物、身体、吃的、数字">
+
+  <label for="count">这次加几个</label>
+  <select id="count">
+    <option value="3">3 个</option>
+    <option value="5" selected>5 个</option>
+    <option value="8">8 个</option>
+  </select>
+
+  <div class="row">
+    <button id="go">生成字卡</button>
+  </div>
+  <div id="msg"></div>
+  <div id="out" class="list" style="margin-top:18px"></div>
+</main>
+
+<script src="app.js"></script>
+<script>
+$('#go').onclick = async () => {
+  const btn = $('#go')
+  btn.disabled = true
+  btn.textContent = '想一想…'
+  $('#msg').innerHTML = ''
+  $('#out').innerHTML = ''
+
+  const res = await run('generate', {
+    age: $('#age').value,
+    theme: $('#theme').value.trim(),
+    count: $('#count').value,
+  })
+
+  btn.disabled = false
+  btn.textContent = '生成字卡'
+
+  if (!res.ok) {
+    $('#msg').innerHTML = `<div class="err">${res.error}</div>`
+    return
+  }
+  $('#msg').innerHTML = `<p class="sub" style="margin-top:12px">${res.data.text || ''}</p>`
+  const cards = payload(res).cards || []
+  $('#out').innerHTML = cards.map(c => `
+    <div class="item">
+      <div class="ch">${c.char}</div>
+      <div class="meta">
+        <b>${c.pinyin || ''}</b> ${c.word || ''}
+        <div>${c.meaning || ''}</div>
+      </div>
+    </div>`).join('')
+  if (cards.length) clawapp.tabbar.setBadge('today', true)
+}
+
+clawapp.ready()
+</script>

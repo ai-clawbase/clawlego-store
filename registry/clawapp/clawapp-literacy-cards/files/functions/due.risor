@@ -1,0 +1,40 @@
+# due.risor — 今天该复习哪些字。
+#
+# 全程不碰模型。复习排期是算术，不是判断：问模型"今天该复习什么"每天要花一次
+# token，答案还会飘。AI 负责想内容，这里负责记账。
+
+today := ctx.now()[:10]
+rows := ctx.entity.query("card")
+
+due := []
+ahead := 0
+for _, row := range rows {
+  d := row.get("due", "")
+  if d == nil || d == "" { d = today }
+  if string(d) <= today {
+    due.append(row)
+  } else {
+    ahead = ahead + 1
+  }
+}
+
+# 先复习盒子低的（记得最不牢的），同一盒子里先到期的在前。
+# box 从 JSONL 回来是 float，比较用 float 就够了，不必归一化成 int。
+due = sorted(due, func(a, b) {
+  ba := float(a.get("box", 1))
+  bb := float(b.get("box", 1))
+  if ba != bb { return ba < bb }
+  return string(a.get("due", "")) < string(b.get("due", ""))
+})
+
+# 一次最多 12 张：给孩子一个能做完的量，做完有"清空了"的感觉。
+capped := due
+if len(capped) > 12 { capped = capped[:12] }
+
+ctx.ok("今天有 " + string(len(capped)) + " 张要复习", {
+  "cards": capped,
+  "due_total": len(due),
+  "scheduled": ahead,
+  "total": len(rows),
+  "date": today,
+})

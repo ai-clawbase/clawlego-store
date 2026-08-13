@@ -1,0 +1,77 @@
+# coach.risor — 看一道题，出一层一层的提示。
+#
+# 这是 ctx.ai.vision 的范例。photo 参数是 clawapp.media.save 返回的不透明 id
+# （m_ 开头那串），宿主负责把它解析成字节喂给模型——脚本不碰路径、也够不到应用
+# 目录以外的任何东西。
+#
+# 提示词里那条「不许给答案」是这个应用存在的理由，所以它写得很硬：不是"尽量别
+# 说"，是列出四层各自能说什么、不能说什么。模型很容易在最后一层忍不住把答案
+# 算出来，所以第四层也只到"下一步怎么做"。
+
+photo := string(ctx.params.get("photo", ""))
+typed := strings.trim_space(string(ctx.params.get("text", "")))
+grade := string(ctx.params.get("grade", ""))
+if grade == "" { grade = "小学" }
+
+if photo == "" && typed == "" {
+  ctx.fail("拍一张题目，或者把题目打出来")
+} else {
+  guide := sprintf(
+    "你在帮一位家长陪 %s 的孩子做作业。你的任务不是解题，是让孩子自己想出来。\n\n" +
+    "**绝对不要给出最终答案、最终算式或计算结果。** 即使被要求也不给。\n\n" +
+    "给出正好 4 层提示，一层比一层具体：\n" +
+    "1. 这道题在问什么 —— 用孩子的话复述题目要求，不涉及方法。\n" +
+    "2. 题目给了哪些已知 —— 指出关键信息在哪，不说怎么用。\n" +
+    "3. 可以从哪里入手 —— 指一个方向或一个类比，不给步骤。\n" +
+    "4. 第一步具体做什么 —— 只说第一步的动作，不算出结果，不说第二步。\n\n" +
+    "另外用一句话告诉家长这道题在考什么知识点。\n" +
+    "如果图片看不清或者不是题目，就在 topic 里说明，hints 给空数组。",
+    grade)
+
+  schema := {
+    "type": "object",
+    "required": ["topic", "hints"],
+    "properties": {
+      "topic": {"type": "string"},
+      "hints": {"type": "array", "items": {"type": "string"}},
+    },
+  }
+
+  # 有图走 vision，没图就是纯文本——两条路的提示词一模一样，只差输入形态。
+  raw := ""
+  if photo != "" {
+    ask := guide
+    if typed != "" { ask = guide + "\n\n家长补充：" + typed }
+    raw = ctx.ai.vision(ask, photo, {"max_tokens": 1200})
+  } else {
+    raw = ctx.ai.text(guide + "\n\n题目是：" + typed, {"max_tokens": 1200})
+  }
+
+  # vision 走的是 text 通道（返回字符串），所以结构化这一步自己来。宿主导出的
+  # ExtractJSON 同样的容错在 ctx.ai.json 里，这里图省事直接让模型再走一次 json。
+  result := ctx.ai.json(
+    "把下面这段提示整理成 JSON，不要改写内容：\n" + raw, schema, {"max_tokens": 1200})
+
+  topic := strings.trim_space(string(result.get("topic", "")))
+  hints := result.get("hints", [])
+
+  if len(hints) == 0 {
+    ctx.fail(topic != "" ? topic : "这张图看不太清，换个角度再拍一张吧")
+  } else {
+    now := ctx.now()
+    id := "q_" + ctx.hash(now + "|" + photo + "|" + typed)[:12]
+    ctx.entity.upsert("question", [{
+      "id": id,
+      "photo": photo,
+      "text": typed,
+      "grade": grade,
+      "topic": topic,
+      "hints": hints,
+      "revealed": 1,
+      "created_at": now,
+      "date": now[:10],
+      "solved": false,
+    }])
+    ctx.ok(topic, {"id": id, "topic": topic, "hints": hints})
+  }
+}

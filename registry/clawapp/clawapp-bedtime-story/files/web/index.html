@@ -1,0 +1,110 @@
+<!-- 讲故事 —— 输入一句话，出一个故事，然后一页一页读。 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>讲故事 · 哄睡故事机</title>
+<link rel="stylesheet" href="app.css">
+<script src="/clawapp.js"></script>
+
+<main>
+  <div id="ask">
+    <h1>今晚讲点什么</h1>
+    <p class="sub">说一句今天发生的事就行。故事会绕着它讲，但不会点破。</p>
+
+    <div id="kids"></div>
+
+    <label for="topic">今天发生了什么</label>
+    <textarea id="topic" rows="3" placeholder="比如：今天她把妹妹的积木推倒了&#10;或者：明天要第一天上幼儿园"></textarea>
+
+    <div class="row">
+      <button id="go">讲一个</button>
+    </div>
+    <div id="msg"></div>
+  </div>
+
+  <div id="reader" style="display:none">
+    <div class="title" id="title"></div>
+    <div class="page" id="page"></div>
+    <div class="pager" id="pager"></div>
+    <div class="row">
+      <button class="ghost" id="prev">上一页</button>
+      <button id="next">下一页</button>
+    </div>
+    <div class="row">
+      <button class="ghost" id="again">再讲一个</button>
+    </div>
+  </div>
+</main>
+
+<script src="app.js"></script>
+<script>
+let pages = []
+let at = 0
+let childId = ''
+
+async function loadKids() {
+  let kids = []
+  try { kids = await clawapp.entity.query('child') } catch (e) { kids = [] }
+  if (!kids.length) {
+    $('#kids').innerHTML = `<p class="sub">还没有添过孩子。<b>不添也能讲</b>，添了故事会更贴。</p>`
+    return
+  }
+  $('#kids').innerHTML = kids.map(k =>
+    `<span class="chip" data-id="${k.id}">${k.name || '孩子'}</span>`).join('')
+  for (const el of document.querySelectorAll('.chip')) {
+    el.onclick = () => {
+      const on = el.classList.contains('on')
+      for (const o of document.querySelectorAll('.chip')) o.classList.remove('on')
+      if (!on) { el.classList.add('on'); childId = el.dataset.id } else { childId = '' }
+    }
+  }
+  // 只有一个孩子就默认选中——没人想每晚点一次。
+  if (kids.length === 1) {
+    document.querySelector('.chip').classList.add('on')
+    childId = kids[0].id
+  }
+}
+
+$('#go').onclick = async () => {
+  const topic = $('#topic').value.trim()
+  if (!topic) { $('#msg').innerHTML = `<div class="err">先说一句今天发生了什么</div>`; return }
+  const btn = $('#go')
+  btn.disabled = true
+  btn.textContent = '正在想…'
+  $('#msg').innerHTML = ''
+
+  const res = await run('tell', { topic, child: childId })
+  btn.disabled = false
+  btn.textContent = '讲一个'
+
+  if (!res.ok) { $('#msg').innerHTML = `<div class="err">${res.error}</div>`; return }
+  const data = payload(res)
+  pages = data.pages || []
+  at = 0
+  $('#title').textContent = data.title || '今晚的故事'
+  $('#ask').style.display = 'none'
+  $('#reader').style.display = 'block'
+  show()
+}
+
+function show() {
+  $('#page').textContent = pages[at] || ''
+  $('#pager').textContent = `${at + 1} / ${pages.length}`
+  $('#prev').disabled = at === 0
+  $('#next').textContent = at === pages.length - 1 ? '讲完了' : '下一页'
+  read(pages[at])
+}
+
+$('#next').onclick = () => {
+  if (at < pages.length - 1) { at++; show() }
+  else { clawapp.speech.stop(); clawapp.nav.switchTab('library') }
+}
+$('#prev').onclick = () => { if (at > 0) { at--; show() } }
+$('#again').onclick = () => {
+  clawapp.speech.stop()
+  $('#reader').style.display = 'none'
+  $('#ask').style.display = 'block'
+  $('#topic').value = ''
+}
+
+clawapp.ready().then(loadKids)
+</script>
