@@ -2,7 +2,7 @@ apiVersion: app.clawlego.com/v1
 kind: LightApp
 metadata:
   name: praise_diary
-  version: 1.2.0
+  version: 1.2.1
 
 spec:
   display:
@@ -38,8 +38,8 @@ spec:
   # 夸夸日记只提供手机版；桌面宿主按该逻辑视口套设备边框预览。
   target: mobile
   viewport: { width: 430, height: 864 }
-  # 1.2.0 only adds optional fields/entities, so the persisted-data contract
-  # stays at v1 and existing records upgrade without a migration script.
+  # 1.2.x only adds optional fields/entities and app-owned UI controls, so the
+  # persisted-data contract stays at v1 and upgrades need no migration script.
   data_version: 1
   # 对外链接只是一张「送一颗夸夸星」的表单：访客可以写入一条夸夸，
   # 不能读取家庭、成员、历史或媒体。动作在服务端校验并限流。

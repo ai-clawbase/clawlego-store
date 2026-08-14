@@ -27,6 +27,7 @@
     activeFamilyId: 'demo_home',
     hiddenDemoIds: new Set(),
     overlay: null,
+    memberDraft: null,
     editingEntryId: '',
     removedMediaIds: [],
     tipIndex: 0,
@@ -65,11 +66,20 @@
   }
 
   function openOverlay(type, data = {}) {
+    if (type === 'member-form' && !data.preserveDraft) {
+      state.memberDraft = memberDraftFor(data.id)
+    }
     state.overlay = { type, ...data }
     render()
   }
 
   function closeOverlay() {
+    if (state.overlay?.returnTo === 'member-form') {
+      state.overlay = { type: 'member-form', id: state.memberDraft?.id || '', preserveDraft: true }
+      render()
+      return
+    }
+    if (state.overlay?.type === 'member-form') state.memberDraft = null
     state.overlay = null
     render()
   }
@@ -78,9 +88,122 @@
     return `<div class="modal-scrim" id="modalScrim"><section class="app-modal ${className}" role="dialog" aria-modal="true" aria-label="${escapeHTML(title)}"><div class="sheet-handle" aria-hidden="true"></div><header class="modal-head"><h2>${escapeHTML(title)}</h2><button id="modalClose" type="button" aria-label="关闭">${icon('close')}</button></header>${content}</section></div>`
   }
 
+  function memberDraftFor(id = '') {
+    const member = state.members.find(item => item.id === id) || demoMembers().find(item => item.id === id) || {}
+    const role = member.role || 'child'
+    return {
+      id: member.id || '',
+      name: member.name || '',
+      role,
+      relation: member.relation || '',
+      birthday: member.birthday || '',
+      avatar: member.avatar || (role === 'child' ? 'child-avatar.webp' : 'mother-avatar.webp'),
+    }
+  }
+
+  function captureMemberDraft() {
+    if (!$('memberForm')) return
+    state.memberDraft = {
+      ...(state.memberDraft || {}),
+      name: $('memberName')?.value || '',
+      role: $('memberRole')?.value || 'family',
+      relation: $('memberRelation')?.value || '',
+      birthday: $('memberBirthday')?.value || '',
+      avatar: document.querySelector('input[name="memberAvatar"]:checked')?.value || 'family-avatar.webp',
+    }
+  }
+
+  function memberRoleLabel(role) {
+    return ({ child: '孩子', parent: '家长', family: '其他家人' })[role] || '其他家人'
+  }
+
+  function authorOptions() {
+    return [
+      { value: '妈妈记录', label: '妈妈记录', hint: '把这一刻温柔地收藏下来', avatar: 'mother-avatar.webp' },
+      { value: '爸爸记录', label: '爸爸记录', hint: '一起见证孩子的努力', avatar: 'father-avatar.webp' },
+      { value: '孩子记录', label: '孩子记录', hint: '让孩子说出自己的闪光', avatar: 'child-avatar.webp' },
+      { value: '其他家人记录', label: '其他家人记录', hint: '全家人都可以参与记录', avatar: 'family-avatar.webp' },
+    ]
+  }
+
+  function childOptions() {
+    const members = visibleMembers()
+    const candidates = members.filter(member => member.role === 'child')
+    return (candidates.length ? candidates : members).map(member => ({
+      value: member.name,
+      label: member.name,
+      hint: member.relation || memberRoleLabel(member.role),
+      avatar: member.avatar || 'child-avatar.webp',
+    }))
+  }
+
+  function pickerDate(value, withTime = true) {
+    const source = value || (withTime ? defaultDraft().date : dateISO())
+    const date = new Date(withTime ? source : `${source}T12:00:00`)
+    return Number.isNaN(date.getTime()) ? new Date() : date
+  }
+
+  function localDateTimeValue(date) {
+    const local = new Date(date.getTime() - date.getTimezoneOffset() * 60000)
+    return local.toISOString().slice(0, 16)
+  }
+
+  function formatOwnedDate(value) {
+    const date = pickerDate(value, false)
+    return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`
+  }
+
+  function formatOwnedDateTime(value) {
+    const date = pickerDate(value)
+    return `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`
+  }
+
+  function pickerCalendarCells(month, selectedValue) {
+    const selected = String(selectedValue || '').slice(0, 10)
+    const first = new Date(month.getFullYear(), month.getMonth(), 1)
+    return Array.from({ length: 42 }, (_, index) => {
+      const date = new Date(month.getFullYear(), month.getMonth(), index - first.getDay() + 1)
+      const iso = dateISO(date)
+      const outside = date.getMonth() !== month.getMonth()
+      const current = iso === dateISO(today)
+      return `<button type="button" class="owned-cal-day${outside ? ' outside' : ''}${iso === selected ? ' selected' : ''}${current ? ' today' : ''}" data-picker-date="${iso}"><span>${date.getDate()}</span></button>`
+    }).join('')
+  }
+
+  function renderDatePicker(overlay) {
+    const withTime = overlay.type === 'entry-date-picker'
+    const selectedDate = pickerDate(overlay.value, withTime)
+    const month = pickerDate(`${overlay.month || dateISO(selectedDate).slice(0, 7)}-01`, false)
+    const title = withTime ? '选择记录时间' : '选择生日'
+    const time = withTime ? `<section class="owned-time-picker"><p>${icon('calendar')} 记录时间</p><div class="time-parts"><div class="time-part"><button type="button" data-time-part="hour" data-time-delta="-1" aria-label="小时减一">${icon('left')}</button><span><strong>${String(selectedDate.getHours()).padStart(2, '0')}</strong><small>时</small></span><button type="button" data-time-part="hour" data-time-delta="1" aria-label="小时加一">${icon('right')}</button></div><div class="time-part"><button type="button" data-time-part="minute" data-time-delta="-5" aria-label="分钟减五">${icon('left')}</button><span><strong>${String(selectedDate.getMinutes()).padStart(2, '0')}</strong><small>分</small></span><button type="button" data-time-part="minute" data-time-delta="5" aria-label="分钟加五">${icon('right')}</button></div></div></section>` : ''
+    const clear = withTime ? '' : '<button type="button" class="picker-clear" id="clearPickerDate">暂不填写生日</button>'
+    return modalShell(title, `<div class="owned-picker"><div class="owned-month-head"><button type="button" id="pickerPrevMonth" aria-label="上个月">${icon('left')}</button><h3>${monthLabel(month)}</h3><button type="button" id="pickerNextMonth" aria-label="下个月">${icon('right')}</button></div><div class="owned-calendar"><div class="owned-weekdays">${['日', '一', '二', '三', '四', '五', '六'].map(day => `<span>${day}</span>`).join('')}</div>${pickerCalendarCells(month, overlay.value)}</div>${time}<div class="picker-actions${clear ? '' : ' one'}">${clear}<button type="button" class="picker-confirm" id="confirmPickerDate">确认选择</button></div></div>`, 'picker-modal')
+  }
+
+  function renderOptionPicker(title, options, selected, attribute) {
+    return modalShell(title, `<div class="owned-option-list">${options.map(option => `<button type="button" class="owned-option${option.value === selected ? ' selected' : ''}" ${attribute}="${escapeHTML(option.value)}"><img src="${asset(option.avatar)}" alt=""><span><b>${escapeHTML(option.label)}</b><small>${escapeHTML(option.hint || '')}</small></span>${option.value === selected ? icon('check') : icon('right')}</button>`).join('')}</div>`, 'option-modal')
+  }
+
   function renderOverlay() {
     const overlay = state.overlay
     if (!overlay) return ''
+    if (overlay.type === 'entry-date-picker' || overlay.type === 'member-birthday-picker') {
+      return renderDatePicker(overlay)
+    }
+    if (overlay.type === 'entry-author-picker') {
+      return renderOptionPicker('选择记录人', authorOptions(), state.draft?.author || '妈妈记录', 'data-select-author')
+    }
+    if (overlay.type === 'entry-child-picker') {
+      return renderOptionPicker('这颗星送给谁', childOptions(), state.draft?.child || '小宝', 'data-select-child')
+    }
+    if (overlay.type === 'member-role-picker') {
+      const options = [
+        { value: 'child', label: '孩子', hint: '被记录成长与闪光时刻', avatar: 'child-avatar.webp' },
+        { value: 'parent', label: '家长', hint: '陪伴并记录孩子成长', avatar: 'mother-avatar.webp' },
+        { value: 'family', label: '其他家人', hint: '共同参与家庭记录', avatar: 'family-avatar.webp' },
+      ]
+      return renderOptionPicker('选择家庭身份', options, state.memberDraft?.role || 'family', 'data-select-member-role')
+    }
     if (overlay.type === 'family-picker') {
       const families = state.families.length ? state.families : [currentFamily()]
       const canManage = state.families.some(family => family.id === state.activeFamilyId)
@@ -91,9 +214,9 @@
       return modalShell(family ? '家庭设置' : '新建一个家', `<form class="stack-form" id="familyForm"><label><span>家庭名称</span><input id="familyName" maxlength="30" required value="${escapeHTML(family?.name || '')}" placeholder="例如：小宝的家"></label><p class="modal-hint">每个家庭有独立成员和日记；所有数据仍只保存在当前实例。</p><button class="primary-modal-button">${family ? '保存家庭名称' : '创建并切换'}</button></form>`)
     }
     if (overlay.type === 'member-form') {
-      const member = state.members.find(item => item.id === overlay.id) || demoMembers().find(item => item.id === overlay.id) || {}
+      const member = state.memberDraft || memberDraftFor(overlay.id)
       const avatar = member.avatar || (member.role === 'child' ? 'child-avatar.webp' : 'mother-avatar.webp')
-      return modalShell(member.id ? '编辑家庭成员' : '添加家庭成员', `<form class="stack-form member-form" id="memberForm"><label><span>名字</span><input id="memberName" maxlength="30" required value="${escapeHTML(member.name || '')}" placeholder="成员名字"></label><div class="form-grid"><label><span>身份</span><select id="memberRole"><option value="child"${member.role === 'child' ? ' selected' : ''}>孩子</option><option value="parent"${member.role === 'parent' ? ' selected' : ''}>家长</option><option value="family"${member.role === 'family' ? ' selected' : ''}>其他家人</option></select></label><label><span>称呼</span><input id="memberRelation" maxlength="20" value="${escapeHTML(member.relation || '')}" placeholder="宝贝 / 记录者"></label></div><label><span>生日（可选）</span><input id="memberBirthday" type="date" value="${escapeHTML(member.birthday || '')}"></label><fieldset class="avatar-picker"><legend>头像</legend>${['child-avatar.webp','mother-avatar.webp','father-avatar.webp','family-avatar.webp'].map(file => `<label><input type="radio" name="memberAvatar" value="${file}"${file === avatar ? ' checked' : ''}><img src="${asset(file)}" alt=""></label>`).join('')}</fieldset><button class="primary-modal-button">保存成员</button>${member.id ? '<button class="danger-modal-button" type="button" id="deleteMember">移除这个成员</button>' : ''}</form>`)
+      return modalShell(member.id ? '编辑家庭成员' : '添加家庭成员', `<form class="stack-form member-form" id="memberForm"><label><span>名字</span><input id="memberName" maxlength="30" required value="${escapeHTML(member.name || '')}" placeholder="成员名字"></label><div class="form-grid"><button class="form-owned-trigger" type="button" id="memberRoleTrigger"><span>身份</span><b>${escapeHTML(memberRoleLabel(member.role))}</b>${icon('down')}</button><label><span>称呼</span><input id="memberRelation" maxlength="20" value="${escapeHTML(member.relation || '')}" placeholder="宝贝 / 记录者"></label></div><button class="form-owned-trigger wide" type="button" id="memberBirthdayTrigger"><span>生日（可选）</span><b>${member.birthday ? escapeHTML(formatOwnedDate(member.birthday)) : '暂未填写'}</b>${icon('calendar')}</button><input id="memberRole" type="hidden" value="${escapeHTML(member.role || 'family')}"><input id="memberBirthday" type="hidden" value="${escapeHTML(member.birthday || '')}"><fieldset class="avatar-picker"><legend>头像</legend>${['child-avatar.webp','mother-avatar.webp','father-avatar.webp','family-avatar.webp'].map(file => `<label><input type="radio" name="memberAvatar" value="${file}"${file === avatar ? ' checked' : ''}><img src="${asset(file)}" alt=""></label>`).join('')}</fieldset><button class="primary-modal-button">保存成员</button>${member.id ? '<button class="danger-modal-button" type="button" id="deleteMember">移除这个成员</button>' : ''}</form>`)
     }
     if (overlay.type === 'invite') {
       const family = currentFamily()
@@ -276,6 +399,7 @@
       const inserted = await clawapp.entity.insert('family_member', { ...payload, created_at: new Date().toISOString() })
       state.members.push(inserted && typeof inserted === 'object' ? inserted : { id: `member_${Date.now()}`, ...payload })
     }
+    state.memberDraft = null
     state.overlay = null
     render()
     toast('成员信息已保存')
@@ -292,6 +416,7 @@
     const deletedAt = new Date().toISOString()
     await clawapp.entity.update('family_member', member.id, { deleted_at: deletedAt, updated_at: deletedAt })
     member.deleted_at = deletedAt
+    state.memberDraft = null
     state.overlay = null
     render()
     toast('成员已移除')
@@ -335,6 +460,71 @@
     $('modalScrim')?.addEventListener('click', event => { if (event.target === $('modalScrim')) closeOverlay() })
     document.querySelectorAll('[data-overlay]').forEach(button => button.addEventListener('click', () => openOverlay(button.dataset.overlay)))
     document.querySelector('[data-edit-family]')?.addEventListener('click', buttonEvent => openOverlay('family-form', { id: buttonEvent.currentTarget.dataset.editFamily }))
+    $('memberRoleTrigger')?.addEventListener('click', () => {
+      captureMemberDraft()
+      openOverlay('member-role-picker', { returnTo: 'member-form' })
+    })
+    $('memberBirthdayTrigger')?.addEventListener('click', () => {
+      captureMemberDraft()
+      const value = state.memberDraft?.birthday || dateISO()
+      openOverlay('member-birthday-picker', { value, month: value.slice(0, 7), returnTo: 'member-form' })
+    })
+    document.querySelectorAll('[data-select-member-role]').forEach(button => button.addEventListener('click', () => {
+      state.memberDraft = { ...(state.memberDraft || memberDraftFor()), role: button.dataset.selectMemberRole }
+      state.overlay = { type: 'member-form', id: state.memberDraft.id || '', preserveDraft: true }
+      render()
+    }))
+    document.querySelectorAll('[data-select-author]').forEach(button => button.addEventListener('click', () => {
+      state.draft = { ...(state.draft || defaultDraft()), author: button.dataset.selectAuthor }
+      state.overlay = null
+      render()
+    }))
+    document.querySelectorAll('[data-select-child]').forEach(button => button.addEventListener('click', () => {
+      state.draft = { ...(state.draft || defaultDraft()), child: button.dataset.selectChild }
+      state.overlay = null
+      render()
+    }))
+    const movePickerMonth = delta => {
+      const selected = pickerDate(overlay.value, overlay.type === 'entry-date-picker')
+      const month = pickerDate(`${overlay.month || dateISO(selected).slice(0, 7)}-01`, false)
+      month.setMonth(month.getMonth() + delta)
+      overlay.month = dateISO(month).slice(0, 7)
+      render()
+    }
+    $('pickerPrevMonth')?.addEventListener('click', () => movePickerMonth(-1))
+    $('pickerNextMonth')?.addEventListener('click', () => movePickerMonth(1))
+    document.querySelectorAll('[data-picker-date]').forEach(button => button.addEventListener('click', () => {
+      const withTime = overlay.type === 'entry-date-picker'
+      const selected = pickerDate(overlay.value, withTime)
+      const next = pickerDate(button.dataset.pickerDate, false)
+      selected.setFullYear(next.getFullYear(), next.getMonth(), next.getDate())
+      overlay.value = withTime ? localDateTimeValue(selected) : dateISO(selected)
+      overlay.month = dateISO(next).slice(0, 7)
+      render()
+    }))
+    document.querySelectorAll('[data-time-part]').forEach(button => button.addEventListener('click', () => {
+      const selected = pickerDate(overlay.value)
+      const delta = Number(button.dataset.timeDelta || 0)
+      if (button.dataset.timePart === 'hour') selected.setHours(selected.getHours() + delta)
+      else selected.setMinutes(selected.getMinutes() + delta)
+      overlay.value = localDateTimeValue(selected)
+      render()
+    }))
+    $('confirmPickerDate')?.addEventListener('click', () => {
+      if (overlay.type === 'entry-date-picker') {
+        state.draft = { ...(state.draft || defaultDraft()), date: overlay.value || defaultDraft().date }
+        state.overlay = null
+      } else {
+        state.memberDraft = { ...(state.memberDraft || memberDraftFor()), birthday: overlay.value || '' }
+        state.overlay = { type: 'member-form', id: state.memberDraft.id || '', preserveDraft: true }
+      }
+      render()
+    })
+    $('clearPickerDate')?.addEventListener('click', () => {
+      state.memberDraft = { ...(state.memberDraft || memberDraftFor()), birthday: '' }
+      state.overlay = { type: 'member-form', id: state.memberDraft.id || '', preserveDraft: true }
+      render()
+    })
     document.querySelectorAll('[data-select-family]').forEach(button => button.addEventListener('click', () => void setActiveFamily(button.dataset.selectFamily)))
     document.querySelector('[data-focus-join]')?.addEventListener('click', () => {
       document.querySelector('.join-form')?.classList.add('visible')
@@ -636,11 +826,11 @@
     return `<div class="scrim" id="editorScrim"><form class="editor" id="entryForm">
       <div class="sheet-handle" aria-hidden="true"></div>
       <div class="editor-head"><h2><img src="${asset('star-friend.png')}" alt="">${state.editingEntryId ? '编辑这颗夸夸星' : '收下一颗夸夸星'}</h2><button type="button" class="editor-close" id="editorClose" aria-label="关闭">${icon('close')}</button></div>
-      <label class="chooser" for="entryChild"><b>夸夸谁</b><img src="${asset('child-avatar.webp')}" alt=""><input id="entryChild" maxlength="30" value="${escapeHTML(draft.child)}" required>${icon('down')}</label>
+      <button class="chooser" type="button" id="entryChildTrigger"><b>夸夸谁</b><img src="${asset('child-avatar.webp')}" alt=""><span>${escapeHTML(draft.child)}</span>${icon('down')}</button><input id="entryChild" type="hidden" value="${escapeHTML(draft.child)}">
       <label class="editor-field title-field"><span class="sr-only">想夸夸什么</span><input id="entryTitle" maxlength="100" required value="${escapeHTML(draft.title)}" placeholder="你今天勇敢地表达了自己的想法"><small id="titleCount">0/100</small></label>
       <label class="editor-field body-field"><span class="sr-only">把这个美好时刻写下来</span><textarea id="entryBody" maxlength="1500" placeholder="妈妈看见你主动说出了自己的感受，也认真听完了大家的想法，真的很棒。">${escapeHTML(draft.body)}</textarea><small id="bodyCount">0/1500</small></label>
       <div class="draft-tags"><b>给这颗星选个主题</b><div>${['生活自理', '勇敢表达', '温暖善意', '坚持努力'].map(tag => `<button type="button" data-draft-tag="${tag}" class="${draft.tags?.includes(tag) ? 'selected' : ''}">${tag}</button>`).join('')}</div></div>
-      <div class="meta-fields"><label>${icon('calendar')}<input id="entryDate" type="datetime-local" value="${escapeHTML(draft.date)}" required></label><label>${icon('user')}<select id="entryAuthor" data-native>${['妈妈记录', '爸爸记录', '孩子记录', '其他家人记录'].map(author => `<option${author === draft.author ? ' selected' : ''}>${author}</option>`).join('')}</select>${icon('down')}</label></div>
+      <div class="meta-fields"><button type="button" id="entryDateTrigger">${icon('calendar')}<span>${escapeHTML(formatOwnedDateTime(draft.date))}</span>${icon('right')}</button><button type="button" id="entryAuthorTrigger">${icon('user')}<span>${escapeHTML(draft.author)}</span>${icon('down')}</button><input id="entryDate" type="hidden" value="${escapeHTML(draft.date)}"><input id="entryAuthor" type="hidden" value="${escapeHTML(draft.author)}"></div>
       ${state.editorMode === 'audio' || state.recording ? renderRecorder(recordingSeconds) : `<div class="editor-tools"><button type="button" class="editor-tool text-tool" data-add="text">${icon('text')}<span>写文字</span></button><button type="button" class="editor-tool audio-tool" data-add="audio">${icon('microphone')}<span>录声音</span></button><button type="button" class="editor-tool image-tool" data-add="image">${icon('image')}<span>选图片</span></button><button type="button" class="editor-tool video-tool" data-add="video">${icon('video')}<span>拍视频</span></button></div><div id="recordSlot"></div>`}
       <div class="attachment-list" id="attachmentList"></div>
       <button class="save-button" id="saveEntry" ${state.saving || state.recording ? 'disabled' : ''}><span>${state.saving ? '正在收进星星罐…' : state.editingEntryId ? '保存修改' : '保存这颗星'}</span></button><p class="form-error" id="formError"></p>
@@ -762,6 +952,18 @@
     $('editorClose')?.addEventListener('click', closeEditor)
     $('editorScrim')?.addEventListener('click', event => { if (event.target === $('editorScrim')) closeEditor() })
     $('entryForm')?.addEventListener('submit', saveEntry)
+    $('entryChildTrigger')?.addEventListener('click', () => {
+      captureDraft()
+      openOverlay('entry-child-picker')
+    })
+    $('entryDateTrigger')?.addEventListener('click', () => {
+      captureDraft()
+      openOverlay('entry-date-picker', { value: state.draft.date, month: state.draft.date.slice(0, 7) })
+    })
+    $('entryAuthorTrigger')?.addEventListener('click', () => {
+      captureDraft()
+      openOverlay('entry-author-picker')
+    })
     for (const id of ['entryTitle', 'entryBody', 'entryChild', 'entryDate', 'entryAuthor']) {
       $(id)?.addEventListener('input', () => { captureDraft(); updateCounts() })
       $(id)?.addEventListener('change', captureDraft)
