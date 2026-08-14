@@ -1,0 +1,15 @@
+{
+  "schema_version": "1",
+  "name": "praise_family",
+  "display_name": "夸夸家庭",
+  "description": "夸夸日记应用自主管理的家庭空间，不依赖外部家庭中台。",
+  "fields": [
+    { "name": "name", "type": "string", "required": true },
+    { "name": "invite_code", "type": "string", "required": true },
+    { "name": "created_at", "type": "datetime" },
+    { "name": "updated_at", "type": "datetime" },
+    { "name": "deleted_at", "type": "datetime" }
+  ],
+  "indexes": ["invite_code", "deleted_at"],
+  "search_fields": ["name", "invite_code"]
+}

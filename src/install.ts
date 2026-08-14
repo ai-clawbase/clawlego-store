@@ -250,6 +250,10 @@ export function initInstallBridge(): void {
     }
 
     if (data.type === 'installed' && Array.isArray(data.items)) {
+      // A handshake is a full snapshot of the host's current install state.
+      // Clear stale entries first so an uninstall followed by a frame refresh
+      // cannot leave a card permanently marked as installed.
+      for (const key of Object.keys(installedVersions)) delete installedVersions[key]
       for (const it of data.items) {
         if (it && it.kind && it.id) {
           installedVersions[keyOf(String(it.kind), String(it.id))] = String(it.version ?? '')

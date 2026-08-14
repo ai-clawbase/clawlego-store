@@ -3,9 +3,9 @@
   "kind": "clawapp",
   "source": "hosted",
   "name": "识字卡",
-  "tagline": "按年龄生成汉字卡，点一下就朗读，答对答错自动排下次复习",
-  "summary": "家长选年龄和主题，AI 生成一批字卡（拼音·意思·组词·例句）；孩子点卡片听读音、翻面看解释。间隔重复的排期是本机算术，不花 token、断网也能算出今天该复习哪些。默认私有，无对外入口。",
-  "version": "1.0.0",
+  "tagline": "按年龄生成汉字卡，点一下就朗读；链接发给爷爷奶奶就是陪练模式",
+  "summary": "家长选年龄和主题，AI 生成一批字卡（拼音·意思·组词·例句）；孩子点卡片听读音、翻面看解释。间隔重复的排期是本机算术，不花 token、断网也算得出今天该复习哪些。对外分享出去的是「陪练」——收到链接的人能带孩子过一遍今天的字并记对错，但看不到字表、也不能生成新字（那会花钱）。",
+  "version": "1.1.0",
   "category": "life",
   "author": {
     "name": "ClawLego",
@@ -22,7 +22,7 @@
     "拼音",
     "朗读",
     "间隔重复",
-    "私有工具"
+    "可分享"
   ],
   "contents": {
     "entity": 1,
@@ -35,13 +35,16 @@
   "app": {
     "name": "literacy_cards",
     "target": "mobile",
-    "public": false,
-    "actions": [],
+    "public": true,
+    "actions": [
+      "due",
+      "grade"
+    ],
     "requires": {
       "connectors": [],
       "engines": []
     },
     "screenshots": []
   },
-  "updated": "2026-08-13"
+  "updated": "2026-08-14"
 }

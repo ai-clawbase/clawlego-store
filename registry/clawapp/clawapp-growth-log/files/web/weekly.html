@@ -1,0 +1,40 @@
+<!-- 本周 —— 唯一花 token 的一屏，而且数字是先算好的。 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>本周 · 成长档案</title>
+<link rel="stylesheet" href="app.css">
+<script src="/clawapp.js"></script>
+
+<main>
+  <h1>这一周</h1>
+  <p class="sub">数字都是本机统计的，AI 只负责把它读成一段人话。</p>
+  <div class="row"><button id="go">看看这周</button></div>
+  <div id="out" style="margin-top:16px"></div>
+  <p class="caveat">不做医学判断。真有担心，把记录带去问儿保医生。</p>
+</main>
+
+<script src="app.js"></script>
+<script>
+let kid = null
+
+$('#go').onclick = async () => {
+  if (!kid) { $('#out').innerHTML = `<div class="empty">还没有孩子档案。</div>`; return }
+  const btn = $('#go')
+  btn.disabled = true
+  btn.textContent = '看一下…'
+  const res = await run('weekly', { kid: kid.id })
+  btn.disabled = false
+  btn.textContent = '看看这周'
+  if (!res.ok) { $('#out').innerHTML = `<div class="err">${res.error}</div>`; return }
+  const d = payload(res)
+  $('#out').innerHTML = `
+    <div class="stat">
+      <div><b>${d.feeds || 0}</b><span>喂养</span></div>
+      <div><b>${Number(d.sleep_hours || 0).toFixed(0)}</b><span>睡眠小时</span></div>
+      <div><b>${d.diapers || 0}</b><span>尿布</span></div>
+    </div>
+    <div class="note">${(res.data.text || '').replace(/\n/g, '<br>')}</div>`
+}
+
+clawapp.ready().then(async () => { kid = await pickKid() })
+</script>

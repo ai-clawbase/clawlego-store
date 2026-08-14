@@ -2,7 +2,7 @@ apiVersion: app.clawlego.com/v1
 kind: LightApp
 metadata:
   name: praise_diary
-  version: 1.0.0
+  version: 1.2.0
 
 spec:
   display:
@@ -15,12 +15,17 @@ spec:
   entities:
     - { name: praise_entry, schema: entities/praise_entry.json }
     - { name: family_member, schema: entities/family_member.json }
+    - { name: praise_family, schema: entities/praise_family.json }
+
+  functions:
+    - { name: receive, script: functions/receive.risor, summary: 从公开链接收下一颗夸夸星 }
 
   web: { entry: web/index.html }
   pages:
-    - { name: glow, path: index.html, title: 星光 }
-    - { name: memories, path: memories.html, title: 时光 }
-    - { name: family, path: family.html, title: 家人 }
+    - { name: glow, path: index.html, title: 星光, visibility: owner }
+    - { name: memories, path: memories.html, title: 时光, visibility: owner }
+    - { name: family, path: family.html, title: 家人, visibility: owner }
+    - { name: gift, path: gift.html, title: 送一颗星, visibility: public }
   tabbar:
     background: "#FFFFFF"
     color: "#667085"
@@ -30,7 +35,15 @@ spec:
       - { page: memories, label: 时光, icon: calendar }
       - { page: family, label: 家人, icon: user }
 
-  # 手机上全屏，桌面和 Web 页面由应用自己的断点扩展为常规双栏宽度。
-  target: responsive
+  # 夸夸日记只提供手机版；桌面宿主按该逻辑视口套设备边框预览。
+  target: mobile
+  viewport: { width: 430, height: 864 }
+  # 1.2.0 only adds optional fields/entities, so the persisted-data contract
+  # stays at v1 and existing records upgrade without a migration script.
   data_version: 1
-  public: { enabled: false, actions: [] }
+  # 对外链接只是一张「送一颗夸夸星」的表单：访客可以写入一条夸夸，
+  # 不能读取家庭、成员、历史或媒体。动作在服务端校验并限流。
+  public:
+    enabled: true
+    actions:
+      - { name: receive, rate: "10/min" }

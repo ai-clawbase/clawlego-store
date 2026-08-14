@@ -4,23 +4,23 @@
   "source": "hosted",
   "name": "打卡台",
   "tagline": "列出每天要坚持的事，点一下打卡，连续天数和完成率自动计算",
-  "summary": "独立 ClawApp 范例：Mobile 形态、默认完全私有，包含今日、历史和管理三屏。所有数据存放在应用自己的实体空间，全程零 token。",
-  "version": "2.1.0",
+  "summary": "独立 ClawApp 范例：Mobile 形态，主人管理清单与历史，对外链接只开放今日共同打卡。所有数据存放在应用自己的实体空间，全程零 token。",
+  "version": "2.2.0",
   "category": "life",
   "author": { "name": "ClawLego", "url": "https://clawlego.com" },
   "license": "MIT",
   "icon": "carbon:checkbox-checked",
   "accent": "#10B981",
-  "tags": ["轻应用", "Mobile", "打卡", "习惯", "私有工具"],
+  "tags": ["轻应用", "Mobile", "打卡", "习惯", "公开链接"],
   "contents": { "entity": 2, "function": 6, "page": 3 },
   "install": { "type": "clawapp" },
   "app": {
     "name": "checkin_desk",
     "target": "mobile",
-    "public": false,
-    "actions": [],
+    "public": true,
+    "actions": ["board", "toggle"],
     "requires": { "connectors": [], "engines": [] },
     "screenshots": []
   },
-  "updated": "2026-08-12"
+  "updated": "2026-08-14"
 }

@@ -2,10 +2,10 @@ apiVersion: app.clawlego.com/v1
 kind: LightApp
 metadata:
   name: checkin_desk
-  version: 2.1.0
+  version: 2.2.0
 
-# 内置轻应用之二。报名台示范「对外收表单」，这一个示范「私有工具」：
-# 完全不对外，全部动作零 token，前端自己管交互。
+# 内置轻应用之二。主人有今日、历史和管理三屏；对外链接只留下「今日」，
+# 家人可以看到今天的共同清单并代为打卡。全部动作零 token，前端自己管交互。
 spec:
   display:
     name: 打卡台
@@ -31,9 +31,9 @@ spec:
   # 三个页面，各是 web/ 下的一份真 HTML。没有前端路由：换页就是换文档，
   # 底部导航栏由宿主（clawapp.js）按下面的声明画出来。
   pages:
-    - { name: today,   path: index.html,   title: 今日 }
-    - { name: history, path: history.html, title: 记录 }
-    - { name: manage,  path: manage.html,  title: 管理 }
+    - { name: today,   path: index.html,   title: 今日, visibility: all }
+    - { name: history, path: history.html, title: 记录, visibility: owner }
+    - { name: manage,  path: manage.html,  title: 管理, visibility: owner }
 
   tabbar:
     selected_color: "#10b981"
@@ -45,5 +45,8 @@ spec:
   target: mobile
 
   public:
-    # 打卡记录是私事，默认不对外。应用照常在实例内可用。
-    enabled: false
+    # 对外只开放今天的看板和单项打卡；历史与清单管理仍只给主人。
+    enabled: true
+    actions:
+      - { name: board,  rate: "60/min" }
+      - { name: toggle, rate: "30/min" }

@@ -52,6 +52,8 @@ let hints = []
 let shown = 1
 let qid = ''
 
+// 公网面的上传要看宿主给不给：外壳会明确回绝而不是挂着，所以这里能提前降级
+// 成"打字也行"，而不是让人点了没反应。
 $('#pick').onclick = () => $('#file').click()
 $('#file').onchange = async e => {
   const f = e.target.files && e.target.files[0]
@@ -66,7 +68,9 @@ $('#file').onchange = async e => {
     $('#preview').style.display = 'block'
     $('#pick').textContent = '📷 换一张'
   } catch (err) {
-    $('#msg').innerHTML = `<div class="err">${(err && err.message) || '这张没存上'}</div>`
+    mediaID = ''
+    $('#preview').style.display = 'none'
+    $('#msg').innerHTML = `<div class="err">${(err && err.message) || '这张没存上'}——也可以直接把题目打出来。</div>`
   }
 }
 

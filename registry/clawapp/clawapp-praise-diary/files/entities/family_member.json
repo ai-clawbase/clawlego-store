@@ -4,12 +4,17 @@
   "display_name": "家人",
   "description": "夸夸日记中的家庭成员。",
   "fields": [
+    { "name": "family_id", "type": "string" },
     { "name": "name", "type": "string", "required": true },
     { "name": "role", "type": "select", "required": true },
     { "name": "relation", "type": "string" },
     { "name": "birthday", "type": "date" },
     { "name": "color", "type": "string" },
-    { "name": "avatar_media_id", "type": "string" }
+    { "name": "avatar", "type": "string" },
+    { "name": "avatar_media_id", "type": "string" },
+    { "name": "created_at", "type": "datetime" },
+    { "name": "updated_at", "type": "datetime" },
+    { "name": "deleted_at", "type": "datetime" }
   ],
-  "indexes": ["role"]
+  "indexes": ["family_id", "role", "deleted_at"]
 }

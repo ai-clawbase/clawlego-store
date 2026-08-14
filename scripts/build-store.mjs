@@ -29,7 +29,7 @@ const REGISTRY = join(ROOT, 'registry')
 // The four aggregation tiers, from atoms to whole agents:
 // `brick` (atomic prompt/skill) → `mod` (asset pack) → `tpl` (agent template)
 // → `pkg` (full agent clone, incl. knowledge/data).
-// Plus three software-asset catalogs browsed by what users can run/create:
+// Plus three component delivery forms browsed by what users can run/create:
 // smart folders, project templates and independent ClawApps.
 const KINDS = ['pkg', 'tpl', 'mod', 'brick', 'smartfolder', 'projtpl', 'clawapp']
 // Atomic-asset kinds: the kind names the asset type, so install target and the

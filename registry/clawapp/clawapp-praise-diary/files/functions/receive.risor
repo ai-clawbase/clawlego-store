@@ -1,0 +1,54 @@
+# receive.risor — 从公开链接收下一颗夸夸星。
+#
+# 这是陌生访客唯一能调用的动作。它只能追加一条纯文字夸夸，不能读取家庭、
+# 成员、历史或媒体；每个字段都在这里校验，不能依赖公开页前端。
+
+title := ctx.params.get("title", "")
+if title == nil { title = "" }
+title = strings.trim_space(string(title))
+
+body := ctx.params.get("body", "")
+if body == nil { body = "" }
+body = strings.trim_space(string(body))
+
+child := ctx.params.get("child", "小宝")
+if child == nil || strings.trim_space(string(child)) == "" { child = "小宝" }
+child = strings.trim_space(string(child))
+
+author := ctx.params.get("author", "家人")
+if author == nil || strings.trim_space(string(author)) == "" { author = "家人" }
+author = strings.trim_space(string(author))
+
+request_id := ctx.params.get("request_id", "")
+if request_id == nil { request_id = "" }
+request_id = strings.trim_space(string(request_id))
+
+if title == "" {
+  ctx.fail("请写下想夸夸的事")
+} else if len(title) > 100 {
+  ctx.fail("标题太长了")
+} else if len(body) > 1500 {
+  ctx.fail("内容太长了")
+} else if len(child) > 40 || len(author) > 40 {
+  ctx.fail("称呼太长了")
+} else {
+  now := ctx.now()
+  seed := request_id == "" ? now + "|" + title + "|" + author : request_id
+  id := "public_" + ctx.hash(seed)[:16]
+  ctx.entity.upsert("praise_entry", [{
+    "id": id,
+    "family_id": "",
+    "title": title,
+    "body": body,
+    "child": child,
+    "author": author,
+    "happened_at": now,
+    "media": [],
+    "tags": ["亲友送来的星"],
+    "stars": 1,
+    "created_at": now,
+    "updated_at": now,
+    "deleted_at": "",
+  }])
+  ctx.ok("这颗夸夸星已经送到星星罐", {"id": id})
+}

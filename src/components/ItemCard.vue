@@ -7,7 +7,7 @@
       <span class="badges">
         <span class="kind" :class="`kind-${item.kind}`">{{ kindShort }}</span>
         <span v-if="item.kind === 'clawapp'" class="target-badge">
-          {{ item.app?.target === 'mobile' ? '手机版' : 'Web版' }}
+          {{ targetLabel }}
         </span>
         <span v-if="item.source === 'reference'" class="src">
           <Icon icon="material-symbols:link" width="12" /> 外部源
@@ -24,18 +24,20 @@
 
     <div class="card-foot">
       <span class="cat">{{ categoryLabel }}</span>
-      <button
-        v-if="embedded"
-        class="install-mini"
-        :class="`is-${installAction}`"
-        :disabled="installAction === 'installing' || installAction === 'installed'"
-        :title="installTitle"
-        @click.stop.prevent="onInstall"
-      >
-        <Icon :icon="miniIcon" width="14" :class="{ spin: installAction === 'installing' }" />
-        {{ miniLabel }}
-      </button>
-      <span v-else class="ver mono">v{{ item.version }}</span>
+      <span class="card-foot-side">
+        <span class="ver mono">v{{ item.version }}</span>
+        <button
+          v-if="embedded"
+          class="install-mini"
+          :class="`is-${installAction}`"
+          :disabled="installAction === 'installing' || installAction === 'installed'"
+          :title="installTitle"
+          @click.stop.prevent="onInstall"
+        >
+          <Icon :icon="miniIcon" width="14" :class="{ spin: installAction === 'installing' }" />
+          {{ miniLabel }}
+        </button>
+      </span>
     </div>
   </router-link>
 </template>
@@ -58,6 +60,11 @@ const kindShort = computed(() =>
 )
 const categoryLabel = computed(() => CATEGORY_LABEL[props.item.category] || props.item.category)
 const tint = computed(() => props.item.accent + '1F')
+const targetLabel = computed(() => {
+  if (props.item.app?.target === 'mobile') return '手机版'
+  if (props.item.app?.target === 'responsive') return 'Mobile + Web'
+  return 'Web版'
+})
 
 const contentBits = computed(() => {
   const c = props.item.contents
@@ -235,6 +242,13 @@ function onInstall() {
 .ver {
   font-size: 12px;
   color: var(--ink-4);
+}
+.card-foot-side {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  min-width: 0;
 }
 
 .install-mini {

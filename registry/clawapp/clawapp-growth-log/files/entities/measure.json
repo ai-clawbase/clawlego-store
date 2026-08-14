@@ -1,0 +1,7 @@
+{
+  "schema_version": "1",
+  "name": "measure",
+  "display_name": "测量",
+  "description": "一次身高/体重记录。百分位不存进来：它由 birthday+date+值现算，存下来会在参数表更新后变成错的。",
+  "fields": []
+}

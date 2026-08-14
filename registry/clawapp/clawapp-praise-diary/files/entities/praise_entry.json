@@ -4,6 +4,7 @@
   "display_name": "夸夸日记",
   "description": "一次值得被看见的亲子闪光时刻；媒体只保存应用私有 media id。",
   "fields": [
+    { "name": "family_id", "type": "string" },
     { "name": "title", "type": "text", "required": true },
     { "name": "body", "type": "textarea" },
     { "name": "child", "type": "string", "required": true },
@@ -11,8 +12,11 @@
     { "name": "happened_at", "type": "datetime", "required": true },
     { "name": "media", "type": "json" },
     { "name": "tags", "type": "tags" },
-    { "name": "stars", "type": "integer" }
+    { "name": "stars", "type": "integer" },
+    { "name": "created_at", "type": "datetime" },
+    { "name": "updated_at", "type": "datetime" },
+    { "name": "deleted_at", "type": "datetime" }
   ],
-  "indexes": ["child", "author", "happened_at"],
+  "indexes": ["family_id", "child", "author", "happened_at", "deleted_at"],
   "search_fields": ["title", "body", "child", "author"]
 }

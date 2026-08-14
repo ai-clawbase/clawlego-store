@@ -1,0 +1,28 @@
+# today.risor — 今天记了多少。对外开放。
+#
+# 只回今天的三个计数，不回任何一条记录、不回身高体重、不回历史。
+# 它存在的理由只有一个：记完一笔要能看到"记上了"，否则对方不知道自己有没有
+# 重复点。这是可用性的最低要求，也刚好是隐私上能给的最多。
+
+kid_id := string(ctx.params.get("kid", ""))
+kids := ctx.entity.query("kid")
+if kid_id == "" && len(kids) == 1 {
+  kid_id = string(kids[0].get("id", ""))
+}
+
+today := ctx.now()[:10]
+feed := 0
+sleep := 0
+diaper := 0
+
+if kid_id != "" {
+  for _, e := range ctx.entity.query("event", {"kid": kid_id}) {
+    if string(e.get("date", "")) != today { continue }
+    kind := string(e.get("kind", ""))
+    if kind == "feed" { feed = feed + 1 } else if kind == "sleep" { sleep = sleep + 1 } else if kind == "diaper" { diaper = diaper + 1 }
+  }
+}
+
+ctx.ok("今天：喂 " + string(feed) + " 次", {
+  "feed": feed, "sleep": sleep, "diaper": diaper, "date": today,
+})

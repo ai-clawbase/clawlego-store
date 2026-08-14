@@ -2,7 +2,7 @@ apiVersion: app.clawlego.com/v1
 kind: LightApp
 metadata:
   name: bedtime_story
-  version: 1.0.0
+  version: 1.1.0
 
 # 哄睡故事机 —— 这套 AI 运行时的两条车道在一个应用里同时出现：
 #
@@ -26,13 +26,18 @@ spec:
   functions:
     - { name: tell,       script: functions/tell.risor,       summary: 生成一个睡前故事 }
     - { name: illustrate, script: functions/illustrate.risor, summary: 给故事配插图（后台） }
+    - { name: share,      script: functions/share.risor,      summary: 把一个故事标记为可分享 }
+    - { name: shared,     script: functions/shared.risor,     summary: 列出已分享的故事（对外） }
 
   web: { entry: web/index.html }
 
+  # 对外只有一屏「念故事」，而且它只念被逐个标记分享的那些。讲故事要花 token、
+  # 故事库是全部记录、孩子那屏是姓名年龄——三样都不跟着链接出门。
   pages:
-    - { name: tell,    path: index.html,    title: 讲故事 }
-    - { name: library, path: library.html,  title: 故事库 }
-    - { name: kids,    path: kids.html,     title: 孩子 }
+    - { name: tell,    path: index.html,    title: 讲故事, visibility: owner }
+    - { name: library, path: library.html,  title: 故事库, visibility: owner }
+    - { name: kids,    path: kids.html,     title: 孩子,   visibility: owner }
+    - { name: read,    path: read.html,     title: 念故事, visibility: public }
 
   tabbar:
     selected_color: "#7c6bd8"
@@ -42,6 +47,13 @@ spec:
       - { page: kids,    label: 孩子,   icon: home }
 
   target: mobile
+
+  # 对外 = 把某一个故事发给不在身边的家人念给孩子听。只读、不花钱，所以不开
+  # ai.public：念一个已经写好的故事一个 token 都不用。
+  public:
+    enabled: true
+    actions:
+      - { name: shared, rate: "60/min" }
 
   ai:
     enabled: true

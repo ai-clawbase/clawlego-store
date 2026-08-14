@@ -2,7 +2,7 @@ apiVersion: app.clawlego.com/v1
 kind: LightApp
 metadata:
   name: homework_coach
-  version: 1.0.0
+  version: 1.1.0
 
 # 作业陪练 —— 和市面上所有「拍照搜答案」反着做。
 #
@@ -29,9 +29,11 @@ spec:
 
   web: { entry: web/index.html }
 
+  # 对外只有拍题那一屏。记录是孩子做过哪些题、哪类反复卡住——那是家长看的，
+  # 不该跟着链接发出去。
   pages:
     - { name: ask,     path: index.html,   title: 拍题 }
-    - { name: history, path: history.html, title: 记录 }
+    - { name: history, path: history.html, title: 记录, visibility: owner }
 
   tabbar:
     selected_color: "#2f9e6e"
@@ -41,9 +43,29 @@ spec:
 
   target: mobile
 
+  # 这是四个里最该对外的一个：孩子自己拿手机拍下卡住的那道题，家长不必在场。
+  # 所以它也是唯一同时要求「公网能调模型」和「公网能上传」的应用——两样都要
+  # 单独声明，而且各自带自己的上限。
+  public:
+    enabled: true
+    actions:
+      - { name: coach, rate: "6/min" }
+      - { name: check, rate: "12/min" }
+    media:
+      enabled: true
+      # 一张手机照片，不是一段视频。
+      max_bytes: 6291456
+      daily_uploads: 60
+
   ai:
     enabled: true
     safety: child
     budget:
       # 看图比纯文本贵不少，额度给得比识字卡宽。
       daily_tokens: 150000
+    public:
+      enabled: true
+      # 对外那份额度是独立记的：外人刷爆的是这 20000，不是主人的 150000。
+      # 一次看图陪练大约几千 token，所以这够几个孩子用一天，又不至于把主人的
+      # 账单打穿。
+      daily_tokens: 20000

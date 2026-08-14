@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>送一颗星 · 夸夸日记</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="app.css">
+  <script defer src="/clawapp.js"></script>
+</head>
+<body class="gift-page">
+  <main class="gift-shell">
+    <header class="gift-hero">
+      <div class="gift-wordmark">夸夸日记</div>
+      <p>把今天看见的闪光，送进孩子的星星罐</p>
+      <img src="assets/star-friend.png" alt="抱着星星的小伙伴">
+    </header>
+
+    <section class="gift-card" aria-labelledby="giftTitle">
+      <div class="gift-card-title">
+        <img src="assets/star-cta.png" alt="">
+        <div>
+          <h1 id="giftTitle">送一颗夸夸星</h1>
+          <p>你的留言只会送给这个家庭，不会显示他们的日记。</p>
+        </div>
+      </div>
+
+      <form id="giftForm">
+        <label>
+          <span>想夸夸谁</span>
+          <input id="child" maxlength="40" value="小宝" autocomplete="off">
+        </label>
+        <label>
+          <span>今天看见了什么闪光</span>
+          <input id="title" maxlength="100" placeholder="例如：你勇敢地表达了自己的想法" required>
+        </label>
+        <label>
+          <span>再多说一点</span>
+          <textarea id="body" maxlength="1500" placeholder="把当时温暖的小细节也写下来……"></textarea>
+        </label>
+        <label>
+          <span>你的称呼</span>
+          <input id="author" maxlength="40" placeholder="例如：外婆" autocomplete="name">
+        </label>
+        <p id="giftError" class="gift-error" role="alert" hidden></p>
+        <button id="giftSubmit" type="submit">
+          <img src="assets/star-cta.png" alt="">
+          <span>把这颗星送出去</span>
+        </button>
+      </form>
+    </section>
+
+    <section id="giftSuccess" class="gift-success" hidden>
+      <img src="assets/star-friend.png" alt="抱着星星的小伙伴">
+      <h2>已经送到星星罐啦</h2>
+      <p>谢谢你认真看见孩子的努力。</p>
+      <button id="giftAgain" type="button">再送一颗星</button>
+    </section>
+  </main>
+
+  <script type="module">
+    await clawapp.ready()
+
+    const form = document.getElementById('giftForm')
+    const card = document.querySelector('.gift-card')
+    const success = document.getElementById('giftSuccess')
+    const error = document.getElementById('giftError')
+    const submit = document.getElementById('giftSubmit')
+
+    function requestID() {
+      if (globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID()
+      return `gift-${Date.now()}-${Math.random().toString(16).slice(2)}`
+    }
+
+    form.addEventListener('submit', async event => {
+      event.preventDefault()
+      const title = document.getElementById('title').value.trim()
+      if (!title) {
+        error.textContent = '请先写下想夸夸的事。'
+        error.hidden = false
+        document.getElementById('title').focus()
+        return
+      }
+
+      submit.disabled = true
+      error.hidden = true
+      try {
+        await clawapp.call('receive', {
+          child: document.getElementById('child').value.trim(),
+          title,
+          body: document.getElementById('body').value.trim(),
+          author: document.getElementById('author').value.trim(),
+          request_id: requestID(),
+        })
+        card.hidden = true
+        success.hidden = false
+        success.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      } catch (reason) {
+        error.textContent = String(reason?.message || reason || '没有送成功，请稍后再试。')
+        error.hidden = false
+      } finally {
+        submit.disabled = false
+      }
+    })
+
+    document.getElementById('giftAgain').addEventListener('click', () => {
+      form.reset()
+      document.getElementById('child').value = '小宝'
+      success.hidden = true
+      card.hidden = false
+      document.getElementById('title').focus()
+    })
+  </script>
+</body>
+</html>

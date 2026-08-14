@@ -1,0 +1,116 @@
+<!-- 记一笔 —— 单手能用。喂了/睡了/换了各一个按钮，量了身高体重另说。 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>记一笔 · 成长档案</title>
+<link rel="stylesheet" href="app.css">
+<script src="/clawapp.js"></script>
+
+<main>
+  <h1 id="who">记一笔</h1>
+  <p class="sub" id="sub">…</p>
+
+  <div id="setup" style="display:none">
+    <label for="name">孩子叫什么</label>
+    <input id="name" placeholder="朵朵">
+    <label for="birthday">生日</label>
+    <input id="birthday" type="date">
+    <label for="sex">性别（算生长曲线要用）</label>
+    <select id="sex"><option value="girl">女孩</option><option value="boy">男孩</option></select>
+    <div class="row"><button id="create">建档</button></div>
+  </div>
+
+  <div id="log" style="display:none">
+    <div class="row">
+      <button id="feed">🍼 喂了</button>
+      <button id="sleep">😴 睡了</button>
+    </div>
+    <div class="row">
+      <button class="ghost" id="diaper">尿布</button>
+    </div>
+
+    <label for="value">量了身高体重</label>
+    <div class="row">
+      <input id="value" type="number" step="0.1" placeholder="数值">
+      <select id="metric" style="max-width:110px">
+        <option value="weight">体重 kg</option>
+        <option value="height">身高 cm</option>
+      </select>
+    </div>
+    <div class="row"><button class="ghost" id="measure">记下来</button></div>
+
+    <div id="msg"></div>
+    <div id="recent" class="list" style="margin-top:20px"></div>
+  </div>
+</main>
+
+<script src="app.js"></script>
+<script>
+let kid = null
+
+function today() { return new Date().toISOString().slice(0, 10) }
+function uid(p) { return p + '_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6) }
+
+async function boot() {
+  kid = await pickKid()
+  if (!kid) {
+    $('#sub').textContent = '先给孩子建个档，之后每天只要点一下'
+    $('#setup').style.display = 'block'
+    return
+  }
+  $('#who').textContent = kid.name || '记一笔'
+  $('#sub').textContent = '点一下就记好，不用填时间'
+  $('#log').style.display = 'block'
+  refresh()
+}
+
+$('#create').onclick = async () => {
+  const name = $('#name').value.trim()
+  const birthday = $('#birthday').value
+  if (!name || !birthday) { $('#sub').textContent = '名字和生日都要填'; return }
+  await clawapp.entity.insert('kid', { id: uid('kid'), name, birthday, sex: $('#sex').value })
+  location.reload()
+}
+
+async function add(kind, amount) {
+  $('#msg').innerHTML = ''
+  try {
+    await clawapp.entity.insert('event', {
+      id: uid('e'), kid: kid.id, kind, amount: amount || 0,
+      date: today(), at: new Date().toISOString(),
+    })
+    refresh()
+  } catch (e) {
+    $('#msg').innerHTML = `<div class="err">${(e && e.message) || '没记上'}</div>`
+  }
+}
+
+$('#feed').onclick = () => add('feed', 0)
+$('#sleep').onclick = () => add('sleep', 1)
+$('#diaper').onclick = () => add('diaper', 0)
+
+$('#measure').onclick = async () => {
+  const v = Number($('#value').value)
+  if (!v || v <= 0) { $('#msg').innerHTML = `<div class="err">填个数值</div>`; return }
+  await clawapp.entity.insert('measure', {
+    id: uid('m'), kid: kid.id, metric: $('#metric').value, value: v, date: today(),
+  })
+  $('#value').value = ''
+  refresh()
+}
+
+async function refresh() {
+  let events = []
+  try { events = await clawapp.entity.query('event', { kid: kid.id }) } catch (e) { events = [] }
+  const t = today()
+  const mine = events.filter(e => e.date === t)
+  const n = k => mine.filter(e => e.kind === k).length
+  $('#recent').innerHTML = `
+    <div class="stat">
+      <div><b>${n('feed')}</b><span>今天喂养</span></div>
+      <div><b>${n('sleep')}</b><span>今天睡眠</span></div>
+      <div><b>${n('diaper')}</b><span>今天尿布</span></div>
+    </div>`
+}
+
+clawapp.ready().then(boot)
+</script>

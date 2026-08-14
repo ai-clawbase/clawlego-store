@@ -7,6 +7,7 @@ window.PraiseIcons = {
   microphone: '<path fill="currentColor" d="M23 14v3a7 7 0 0 1-14 0v-3H7v3a9 9 0 0 0 8 8.94V28h-4v2h10v-2h-4v-2.06A9 9 0 0 0 25 17v-3Z"/><path fill="currentColor" d="M16 22a5 5 0 0 0 5-5V7a5 5 0 0 0-10 0v10a5 5 0 0 0 5 5M13 7a3 3 0 0 1 6 0v10a3 3 0 0 1-6 0Z"/>',
   video: '<path fill="currentColor" d="M21 26H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h17a2 2 0 0 1 2 2v4.06l5.42-3.87A1 1 0 0 1 30 9v14a1 1 0 0 1-1.58.81L23 19.94V24a2 2 0 0 1-2 2M4 8v16h17v-6a1 1 0 0 1 1.58-.81L28 21.06V10.94l-5.42 3.87A1 1 0 0 1 21 14V8Z"/>',
   edit: '<path fill="currentColor" d="M2 26h28v2H2zM25.4 9c.8-.8.8-2 0-2.8l-3.6-3.6c-.8-.8-2-.8-2.8 0l-15 15V24h6.4zm-5-5L24 7.6l-3 3L17.4 7zM6 22v-3.6l10-10 3.6 3.6-10 10z"/>',
+  text: '<path fill="currentColor" d="M4 5v6h2V7h9v18h-4v2h10v-2h-4V7h9v4h2V5z"/>',
   play: '<path fill="currentColor" d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2m7.447 14.895-12 6A1 1 0 0 1 10 22V10a1 1 0 0 1 1.447-.894l12 6a1 1 0 0 1 0 1.788"/>',
   pause: '<path fill="currentColor" d="M12 6h-2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2m10 0h-2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2"/>',
   close: '<path fill="currentColor" d="M17.414 16 24 9.414 22.586 8 16 14.586 9.414 8 8 9.414 14.586 16 8 22.586 9.414 24 16 17.414 22.586 24 24 22.586z"/>',
@@ -15,6 +16,13 @@ window.PraiseIcons = {
   filter: '<path fill="currentColor" d="M18 28h-4a2 2 0 0 1-2-2v-7.59L4.59 11A2 2 0 0 1 4 9.59V6a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v3.59a2 2 0 0 1-.59 1.41L20 18.41V26a2 2 0 0 1-2 2M6 6v3.59l8 8V26h4v-8.41l8-8V6Z"/>',
   left: '<path fill="currentColor" d="M10 16 20 6l1.4 1.4-8.6 8.6 8.6 8.6L20 26z"/>',
   right: '<path fill="currentColor" d="m22 16-10 10-1.4-1.4 8.6-8.6-8.6-8.6L12 6z"/>',
+  down: '<path fill="currentColor" d="m16 22-10-10 1.4-1.4 8.6 8.6 8.6-8.6L26 12z"/>',
+  user: '<path fill="currentColor" d="M16 16a7 7 0 1 0-7-7 7 7 0 0 0 7 7m0-12a5 5 0 1 1-5 5 5 5 0 0 1 5-5m0 14C8.27 18 2 22.03 2 27v3h2v-3c0-3.45 5.36-7 12-7s12 3.55 12 7v3h2v-3c0-4.97-6.27-9-14-9"/>',
+  home: '<path fill="currentColor" d="M16 2 2 14h4v16h8V20h4v10h8V14h4Zm8 26h-4V18h-8v10H8V13.1l8-6.86 8 6.86Z"/>',
+  add: '<path fill="currentColor" d="M17 15V5h-2v10H5v2h10v10h2V17h10v-2z"/>',
+  happy: '<path fill="currentColor" d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2m0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12"/><circle cx="11" cy="13" r="1.5" fill="currentColor"/><circle cx="21" cy="13" r="1.5" fill="currentColor"/><path fill="currentColor" d="M16 24a8 8 0 0 0 7-4.1l-1.75-.97A6 6 0 0 1 10.75 19l-1.75.97A8 8 0 0 0 16 24"/>',
+  idea: '<path fill="currentColor" d="M16 2a10 10 0 0 0-6.11 17.92A5 5 0 0 1 12 23.9V26h8v-2.1a5 5 0 0 1 2.11-3.98A10 10 0 0 0 16 2m4.89 16.34A7 7 0 0 0 18 23.9V24h-4v-.1a7 7 0 0 0-2.89-5.56A8 8 0 1 1 24 12a7.94 7.94 0 0 1-3.11 6.34M12 28h8v2h-8z"/>',
+  share: '<path fill="currentColor" d="M23 20a4.98 4.98 0 0 0-3.86 1.84l-8.31-4.62a5.2 5.2 0 0 0 0-2.44l8.31-4.62A5 5 0 1 0 18 7c0 .42.05.82.15 1.21l-8.32 4.62A5 5 0 1 0 9.83 19l8.32 4.62A5 5 0 1 0 23 20m0-16a3 3 0 1 1 0 6 3 3 0 0 1 0-6M6 19a3 3 0 1 1 0-6 3 3 0 0 1 0 6m17 9a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>',
   trash: '<path fill="currentColor" d="M12 12h2v12h-2zm6 0h2v12h-2z"/><path fill="currentColor" d="M4 6v2h2v20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8h2V6Zm4 22V8h16v20Zm4-26h8v2h-8z"/>',
   more: '<circle cx="8" cy="16" r="2" fill="currentColor"/><circle cx="16" cy="16" r="2" fill="currentColor"/><circle cx="24" cy="16" r="2" fill="currentColor"/>'
 }

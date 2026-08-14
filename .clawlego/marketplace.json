@@ -12,7 +12,7 @@
     "url": "https://github.com/ai-clawbase/clawlego-store.git",
     "ref": "main"
   },
-  "count": 48,
+  "count": 49,
   "entries": [
     {
       "id": "prompt-commit-message",
@@ -52,20 +52,22 @@
       "source": "hosted",
       "name": "哄睡故事机",
       "tagline": "说一句今天发生了什么，马上生成一个对症的睡前故事，按页朗读",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "category": "life",
       "path": "registry/clawapp/clawapp-bedtime-story",
       "manifest": "registry/clawapp/clawapp-bedtime-story/clawasset.json",
       "install": {
         "type": "clawapp",
-        "url": "https://store.clawlego.com/store/clawapp/clawapp-bedtime-story/app_bedtime-story-1.0.0.clawapp",
+        "url": "https://store.clawlego.com/store/clawapp/clawapp-bedtime-story/app_bedtime-story-1.1.0.clawapp",
         "target": null
       },
       "app": {
         "name": "bedtime_story",
         "target": "mobile",
-        "public": false,
-        "actions": [],
+        "public": true,
+        "actions": [
+          "shared"
+        ],
         "requires": {
           "connectors": [],
           "engines": []
@@ -79,20 +81,53 @@
       "source": "hosted",
       "name": "打卡台",
       "tagline": "列出每天要坚持的事，点一下打卡，连续天数和完成率自动计算",
-      "version": "2.1.0",
+      "version": "2.2.0",
       "category": "life",
       "path": "registry/clawapp/clawapp-checkin-desk",
       "manifest": "registry/clawapp/clawapp-checkin-desk/clawasset.json",
       "install": {
         "type": "clawapp",
-        "url": "https://store.clawlego.com/store/clawapp/clawapp-checkin-desk/app_checkin-desk-2.1.0.clawapp",
+        "url": "https://store.clawlego.com/store/clawapp/clawapp-checkin-desk/app_checkin-desk-2.2.0.clawapp",
         "target": null
       },
       "app": {
         "name": "checkin_desk",
         "target": "mobile",
-        "public": false,
-        "actions": [],
+        "public": true,
+        "actions": [
+          "board",
+          "toggle"
+        ],
+        "requires": {
+          "connectors": [],
+          "engines": []
+        },
+        "screenshots": []
+      }
+    },
+    {
+      "id": "clawapp-growth-log",
+      "kind": "clawapp",
+      "source": "hosted",
+      "name": "成长档案",
+      "tagline": "记喂养睡眠身高体重，生长曲线按 WHO 标准在本机计算",
+      "version": "1.1.0",
+      "category": "life",
+      "path": "registry/clawapp/clawapp-growth-log",
+      "manifest": "registry/clawapp/clawapp-growth-log/clawasset.json",
+      "install": {
+        "type": "clawapp",
+        "url": "https://store.clawlego.com/store/clawapp/clawapp-growth-log/app_growth-log-1.1.0.clawapp",
+        "target": null
+      },
+      "app": {
+        "name": "growth_log",
+        "target": "mobile",
+        "public": true,
+        "actions": [
+          "record",
+          "today"
+        ],
         "requires": {
           "connectors": [],
           "engines": []
@@ -106,20 +141,23 @@
       "source": "hosted",
       "name": "作业陪练",
       "tagline": "拍下不会的那道题，它不给答案，只一层层给提示",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "category": "life",
       "path": "registry/clawapp/clawapp-homework-coach",
       "manifest": "registry/clawapp/clawapp-homework-coach/clawasset.json",
       "install": {
         "type": "clawapp",
-        "url": "https://store.clawlego.com/store/clawapp/clawapp-homework-coach/app_homework-coach-1.0.0.clawapp",
+        "url": "https://store.clawlego.com/store/clawapp/clawapp-homework-coach/app_homework-coach-1.1.0.clawapp",
         "target": null
       },
       "app": {
         "name": "homework_coach",
         "target": "mobile",
-        "public": false,
-        "actions": [],
+        "public": true,
+        "actions": [
+          "coach",
+          "check"
+        ],
         "requires": {
           "connectors": [],
           "engines": []
@@ -132,21 +170,24 @@
       "kind": "clawapp",
       "source": "hosted",
       "name": "识字卡",
-      "tagline": "按年龄生成汉字卡，点一下就朗读，答对答错自动排下次复习",
-      "version": "1.0.0",
+      "tagline": "按年龄生成汉字卡，点一下就朗读；链接发给爷爷奶奶就是陪练模式",
+      "version": "1.1.0",
       "category": "life",
       "path": "registry/clawapp/clawapp-literacy-cards",
       "manifest": "registry/clawapp/clawapp-literacy-cards/clawasset.json",
       "install": {
         "type": "clawapp",
-        "url": "https://store.clawlego.com/store/clawapp/clawapp-literacy-cards/app_literacy-cards-1.0.0.clawapp",
+        "url": "https://store.clawlego.com/store/clawapp/clawapp-literacy-cards/app_literacy-cards-1.1.0.clawapp",
         "target": null
       },
       "app": {
         "name": "literacy_cards",
         "target": "mobile",
-        "public": false,
-        "actions": [],
+        "public": true,
+        "actions": [
+          "due",
+          "grade"
+        ],
         "requires": {
           "connectors": [],
           "engines": []
@@ -160,20 +201,22 @@
       "source": "hosted",
       "name": "夸夸日记",
       "tagline": "把孩子和家人的每一次努力，用文字、声音、照片和视频收进星星罐",
-      "version": "1.0.0",
+      "version": "1.2.0",
       "category": "life",
       "path": "registry/clawapp/clawapp-praise-diary",
       "manifest": "registry/clawapp/clawapp-praise-diary/clawasset.json",
       "install": {
         "type": "clawapp",
-        "url": "https://store.clawlego.com/store/clawapp/clawapp-praise-diary/app_praise-diary-1.0.0.clawapp",
+        "url": "https://store.clawlego.com/store/clawapp/clawapp-praise-diary/app_praise-diary-1.2.0.clawapp",
         "target": null
       },
       "app": {
         "name": "praise_diary",
-        "target": "responsive",
-        "public": false,
-        "actions": [],
+        "target": "mobile",
+        "public": true,
+        "actions": [
+          "receive"
+        ],
         "requires": {
           "connectors": [],
           "engines": []

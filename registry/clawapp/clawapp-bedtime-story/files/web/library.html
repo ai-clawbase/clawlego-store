@@ -23,6 +23,7 @@
     <div class="row">
       <button class="ghost" id="back">回列表</button>
       <button class="ghost" id="draw">配插图</button>
+      <button class="ghost" id="share">分享</button>
     </div>
     <div id="msg"></div>
   </div>
@@ -62,6 +63,7 @@ function open(s) {
   $('#index').style.display = 'none'
   $('#reader').style.display = 'block'
   $('#msg').innerHTML = ''
+  $('#share').textContent = s.shared === true ? '收回分享' : '分享'
   show()
 }
 
@@ -80,6 +82,21 @@ $('#back').onclick = () => {
   $('#reader').style.display = 'none'
   $('#index').style.display = 'block'
 }
+$('#share').onclick = async () => {
+  const btn = $('#share')
+  btn.disabled = true
+  const on = cur.shared !== true
+  const res = await run('share', { id: cur.id, on: on ? 'true' : 'false' })
+  btn.disabled = false
+  if (res.ok) {
+    cur.shared = on
+    btn.textContent = on ? '收回分享' : '分享'
+    $('#msg').innerHTML = `<p class="sub" style="margin-top:12px">${res.data.text || ''}</p>`
+  } else {
+    $('#msg').innerHTML = `<div class="err">${res.error}</div>`
+  }
+}
+
 $('#draw').onclick = async () => {
   const btn = $('#draw')
   btn.disabled = true

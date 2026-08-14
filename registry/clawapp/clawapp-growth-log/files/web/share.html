@@ -1,0 +1,51 @@
+<!-- 一起记 —— 对外那一屏。单手、大按钮、记完立刻看到今天的数。 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>一起记</title>
+<link rel="stylesheet" href="app.css">
+<script src="/clawapp.js"></script>
+
+<main>
+  <h1>一起记</h1>
+  <p class="sub">点一下就记好，不用填时间。</p>
+
+  <div class="row">
+    <button id="feed">🍼 喂了</button>
+    <button id="sleep">😴 睡了</button>
+  </div>
+  <div class="row"><button class="ghost" id="diaper">换尿布</button></div>
+
+  <div id="msg"></div>
+  <div id="counts" class="stat" style="margin-top:20px"></div>
+  <p class="caveat">这个链接只能记，不显示身高体重和历史记录。</p>
+</main>
+
+<script src="app.js"></script>
+<script>
+async function refresh() {
+  const res = await run('today')
+  if (!res.ok) { $('#counts').innerHTML = ''; return }
+  const d = payload(res)
+  $('#counts').innerHTML = `
+    <div><b>${d.feed || 0}</b><span>今天喂养</span></div>
+    <div><b>${d.sleep || 0}</b><span>今天睡眠</span></div>
+    <div><b>${d.diaper || 0}</b><span>今天尿布</span></div>`
+}
+
+async function add(kind, amount, btn) {
+  btn.disabled = true
+  $('#msg').innerHTML = ''
+  const res = await run('record', { kind, amount: String(amount || 0) })
+  btn.disabled = false
+  if (!res.ok) { $('#msg').innerHTML = `<div class="err">${res.error}</div>`; return }
+  $('#msg').innerHTML = `<p class="sub" style="margin-top:12px">${res.data.text || ''}</p>`
+  refresh()
+}
+
+$('#feed').onclick = e => add('feed', 0, e.currentTarget)
+$('#sleep').onclick = e => add('sleep', 1, e.currentTarget)
+$('#diaper').onclick = e => add('diaper', 0, e.currentTarget)
+
+// 被外壳保活，所以每次重新可见都刷新——两个人同时记时数字才是对的。
+clawapp.ready().then(() => { refresh(); clawapp.onShow(refresh) })
+</script>

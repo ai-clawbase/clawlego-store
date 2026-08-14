@@ -1,0 +1,28 @@
+# shared.risor — 对外开放的唯一一个函数：列出被标记分享的故事。
+#
+# 它替代了 clawapp.entity.query —— 公网面读不到记录，读什么由函数说了算。
+# 这里说了算的内容是：只有 shared=true 的，而且只给正文和标题，不给 topic
+# （那是"今天发生了什么"，是家里的事）、不给 child、不给创建时间。
+#
+# 这就是为什么公网面不开 entity.*：能读什么必须是一句写得出来、审得动的话。
+
+rows := ctx.entity.query("story")
+out := []
+for _, r := range rows {
+  if r.get("shared", false) != true { continue }
+  out.append({
+    "id": string(r.get("id", "")),
+    "title": string(r.get("title", "")),
+    "pages": r.get("pages", []),
+    "date": string(r.get("date", "")),
+  })
+}
+
+out = sorted(out, func(a, b) { return string(a.get("date", "")) > string(b.get("date", "")) })
+if len(out) > 30 { out = out[:30] }
+
+if len(out) == 0 {
+  ctx.ok("还没有分享出来的故事", {"stories": []})
+} else {
+  ctx.ok("有 " + string(len(out)) + " 个故事", {"stories": out})
+}

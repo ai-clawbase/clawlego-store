@@ -1,0 +1,7 @@
+{
+  "schema_version": "1",
+  "name": "kid",
+  "display_name": "孩子",
+  "description": "谁的档案。birthday 和 sex 是算百分位的必要输入——WHO 的参数表按性别和月龄分开。",
+  "fields": []
+}

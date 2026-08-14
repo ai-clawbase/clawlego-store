@@ -2,7 +2,7 @@ apiVersion: app.clawlego.com/v1
 kind: LightApp
 metadata:
   name: literacy_cards
-  version: 1.0.0
+  version: 1.1.0
 
 # 识字卡 —— 育儿套件里最轻的一个，也是这套 AI 运行时的第一份教材。
 #
@@ -29,10 +29,13 @@ spec:
 
   web: { entry: web/index.html }
 
+  # 对外那一面只有「今天」：爷爷奶奶点开链接就是今天该复习的字，其余两屏对
+  # 陌生人根本不存在。加字要花 token，字表是整份学习记录，两样都不该跟着链接
+  # 一起发出去。
   pages:
     - { name: today,  path: index.html,  title: 今天 }
-    - { name: add,    path: add.html,    title: 加字 }
-    - { name: allcards, path: cards.html, title: 字表 }
+    - { name: add,    path: add.html,    title: 加字, visibility: owner }
+    - { name: allcards, path: cards.html, title: 字表, visibility: owner }
 
   tabbar:
     selected_color: "#e0803a"
@@ -43,7 +46,15 @@ spec:
 
   target: mobile
 
-  # 这是给自家孩子用的，没有对外的一面 —— 不声明 public 就没有。
+  # 对外 = 陪练模式：把链接发给另一位家长或爷爷奶奶，他们能带孩子过一遍今天
+  # 该复习的字并记下对错。两个动作都不碰模型，所以对外开放不会花钱——这正是
+  # 挑这两个函数、而不是挑 generate 的原因。
+  public:
+    enabled: true
+    actions:
+      - { name: due,   rate: "60/min" }
+      - { name: grade, rate: "120/min" }
+
   ai:
     enabled: true
     safety: child

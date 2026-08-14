@@ -1,0 +1,50 @@
+{
+  "id": "clawapp-growth-log",
+  "kind": "clawapp",
+  "source": "hosted",
+  "name": "成长档案",
+  "tagline": "记喂养睡眠身高体重，生长曲线按 WHO 标准在本机计算",
+  "summary": "单手可用的日常记录（喂了/睡了/换尿布各一个按钮）。身高体重按世界卫生组织儿童生长标准的 LMS 参数在本机算百分位——不联网、不经过模型、结果可复现。AI 只负责每周把已经统计好的数字读成一段人话，且明确不做医学判断。分享出去的是「一起记」：另一位家长能记一笔，但读不到任何历史，也读不到身高体重。",
+  "version": "1.1.0",
+  "category": "life",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:chart-line-smooth",
+  "accent": "#3b82c4",
+  "tags": [
+    "轻应用",
+    "Mobile",
+    "育儿",
+    "成长记录",
+    "生长曲线",
+    "WHO",
+    "喂养",
+    "可分享"
+  ],
+  "contents": {
+    "entity": 3,
+    "function": 4,
+    "page": 4
+  },
+  "install": {
+    "type": "clawapp"
+  },
+  "app": {
+    "name": "growth_log",
+    "target": "mobile",
+    "public": true,
+    "actions": [
+      "record",
+      "today"
+    ],
+    "requires": {
+      "connectors": [],
+      "engines": []
+    },
+    "screenshots": []
+  },
+  "updated": "2026-08-14"
+}

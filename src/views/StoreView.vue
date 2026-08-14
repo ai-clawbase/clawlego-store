@@ -3,24 +3,24 @@
     <SiteHeader />
 
     <main>
-      <!-- Hero — lead with installable software assets -->
+      <!-- Hero — lead with the installable component family. -->
       <section class="hero">
         <div class="wrap">
           <span class="kicker">CLAWLEGO STORE</span>
-          <h1 class="hero-title">把成熟做法，<br />装成可运行的软件资产。</h1>
+          <h1 class="hero-title">把成熟做法，<br />装成可运行的智能组件。</h1>
           <p class="hero-sub">
-            智能文件夹、项目模板和轻应用，共同组成 ClawLego 的软件资产。
+            智能文件夹、项目模板和轻应用，都是 ClawLego 智能组件的不同交付形态。
             它们分别让目录长出智能、把流程封装成模板、把业务能力交付成点开即用的程序。
           </p>
           <div class="hero-stats">
             <div class="stat-group lead">
-              <button class="stat stat-btn primary" @click="browseSoftwareClass('smartfolder')">
+              <button class="stat stat-btn primary" @click="browseComponentClass('smartfolder')">
                 <strong>{{ counts.smartfolder }}</strong><span>智能文件夹</span>
               </button>
-              <button class="stat stat-btn primary" @click="browseSoftwareClass('projtpl')">
+              <button class="stat stat-btn primary" @click="browseComponentClass('projtpl')">
                 <strong>{{ counts.projtpl }}</strong><span>项目模板</span>
               </button>
-              <button class="stat stat-btn primary" @click="browseSoftwareClass('clawapp')">
+              <button class="stat stat-btn primary" @click="browseComponentClass('clawapp')">
                 <strong>{{ counts.clawapp }}</strong><span>轻应用</span>
               </button>
             </div>
@@ -37,49 +37,6 @@
             </div>
           </div>
         </div>
-      </section>
-
-      <!-- Software assets — peer to the behavior/component catalog below. -->
-      <section id="software-assets" ref="softwareAssetsEl" class="wrap featured anchor-section">
-        <div class="featured-head">
-          <div>
-            <span class="kicker">软件资产</span>
-            <h2>智能文件夹 · 项目模板 · 轻应用</h2>
-            <p>
-              三类资产各自独立安装和升级：文件夹类型不等于文件夹实例，项目模板不等于行为原子，
-              ClawApp 也不从 SmartFolder 派生。
-            </p>
-          </div>
-          <button class="ghost-btn" @click="browseSoftwareCatalog">浏览全部 →</button>
-        </div>
-
-        <div class="software-tabs">
-          <button
-            v-for="s in softwareClassTabs"
-            :key="s.key"
-            class="software-tab"
-            :class="{ on: activeSoftwareClass === s.key }"
-            @click="activeSoftwareClass = s.key"
-          >
-            {{ s.label }}<i>{{ s.count }}</i>
-          </button>
-        </div>
-
-        <ul class="feat-points">
-          <li><Icon icon="material-symbols:folder-open-outline" width="18" /> 智能文件夹：安装类型，创建实例</li>
-          <li><Icon icon="material-symbols:route-outline" width="18" /> 项目模板：封装目标与交付流程</li>
-          <li><Icon icon="material-symbols:apps" width="18" /> 轻应用：Mobile / Web，点开即用</li>
-        </ul>
-
-        <p v-if="loading" class="state">正在加载软件资产…</p>
-        <p v-else-if="error" class="state err">{{ error }}</p>
-        <p v-else-if="!softwareItems.length" class="state">暂无该类软件资产。</p>
-        <template v-else>
-          <div class="grid">
-            <ItemCard v-for="it in pagedSoftware" :key="`${it.kind}/${it.id}`" :item="it" />
-          </div>
-          <Pager v-model:page="softwarePage" :page-count="softwarePageCount" />
-        </template>
       </section>
 
       <!-- Catalog — building blocks & everything else -->
@@ -110,18 +67,6 @@
             class="subtab"
             :class="{ on: activeComponentClass === s.key }"
             @click="activeComponentClass = s.key"
-          >
-            {{ s.label }}<i>{{ s.count }}</i>
-          </button>
-        </div>
-
-        <div v-if="activeKind === 'software'" class="subtabs">
-          <button
-            v-for="s in softwareClassTabs"
-            :key="s.key"
-            class="subtab"
-            :class="{ on: activeSoftwareClass === s.key }"
-            @click="activeSoftwareClass = s.key"
           >
             {{ s.label }}<i>{{ s.count }}</i>
           </button>
@@ -232,9 +177,8 @@ import { fetchLatestResources, withLatestResources } from '../services/updateSer
 
 const route = useRoute()
 
-type CatalogKind = 'all' | 'pkg' | 'tpl' | 'mod' | 'software'
-type ComponentClass = 'all' | 'mod' | 'brick'
-type SoftwareClass = 'all' | 'smartfolder' | 'projtpl' | 'clawapp'
+type CatalogKind = 'all' | 'pkg' | 'tpl' | 'mod'
+type ComponentClass = 'all' | 'mod' | 'brick' | 'smartfolder' | 'projtpl' | 'clawapp'
 
 const index = ref<StoreIndex | null>(null)
 const loading = ref(true)
@@ -242,30 +186,19 @@ const error = ref('')
 
 const activeKind = ref<CatalogKind>('all')
 const activeComponentClass = ref<ComponentClass>('all')
-const activeSoftwareClass = ref<SoftwareClass>('all')
 const activeCat = ref<'all' | string>('all')
 const query = ref('')
 
-const softwareAssetsEl = ref<HTMLElement | null>(null)
 const catalogEl = ref<HTMLElement | null>(null)
 
-const COMPONENT_KINDS: ItemKind[] = ['mod', 'brick']
-const SOFTWARE_KINDS: ItemKind[] = ['smartfolder', 'projtpl', 'clawapp']
+const COMPONENT_KINDS: ItemKind[] = ['mod', 'brick', 'smartfolder', 'projtpl', 'clawapp']
 
 function isComponentKind(kind: ItemKind) {
   return COMPONENT_KINDS.includes(kind)
 }
 
-function isSoftwareKind(kind: ItemKind) {
-  return SOFTWARE_KINDS.includes(kind)
-}
-
 function scrollToEl(resolve: () => HTMLElement | null) {
   nextTick(() => resolve()?.scrollIntoView({ behavior: 'smooth', block: 'start' }))
-}
-
-function scrollToSoftwareAssets() {
-  scrollToEl(() => softwareAssetsEl.value)
 }
 
 function scrollToCatalog() {
@@ -275,7 +208,6 @@ function scrollToCatalog() {
 function selectKind(kind: CatalogKind) {
   activeKind.value = kind
   if (kind !== 'mod') activeComponentClass.value = 'all'
-  if (kind !== 'software') activeSoftwareClass.value = 'all'
 }
 
 function browse(kind: Exclude<CatalogKind, 'all'>) {
@@ -286,16 +218,6 @@ function browse(kind: Exclude<CatalogKind, 'all'>) {
 function browseComponentClass(kind: ComponentClass) {
   activeKind.value = 'mod'
   activeComponentClass.value = kind
-  scrollToCatalog()
-}
-
-function browseSoftwareClass(kind: SoftwareClass) {
-  activeSoftwareClass.value = kind
-  scrollToSoftwareAssets()
-}
-
-function browseSoftwareCatalog() {
-  activeKind.value = 'software'
   scrollToCatalog()
 }
 
@@ -311,10 +233,6 @@ function syncFromRoute() {
     if (k === 'pkg' || k === 'tpl') {
       selectKind(k)
       if (!route.hash) scrollToCatalog()
-    } else if (isSoftwareKind(k as ItemKind)) {
-      activeKind.value = 'software'
-      activeSoftwareClass.value = k as SoftwareClass
-      if (!route.hash) scrollToSoftwareAssets()
     } else {
       activeKind.value = 'mod'
       activeComponentClass.value = k as ComponentClass
@@ -323,16 +241,16 @@ function syncFromRoute() {
   }
   // Legacy alias: ?category=smartspace → 智能文件夹 tab.
   if (route.query.category === 'smartspace') {
-    activeKind.value = 'software'
-    activeSoftwareClass.value = 'smartfolder'
-    if (!route.hash) scrollToSoftwareAssets()
+    activeKind.value = 'mod'
+    activeComponentClass.value = 'smartfolder'
+    if (!route.hash) scrollToCatalog()
   } else if (route.query.category === 'biz') {
-    activeKind.value = 'software'
-    activeSoftwareClass.value = 'projtpl'
-    if (!route.hash) scrollToSoftwareAssets()
+    activeKind.value = 'mod'
+    activeComponentClass.value = 'projtpl'
+    if (!route.hash) scrollToCatalog()
   }
 
-  if (route.hash === '#smartspaces' || route.hash === '#business-templates' || route.hash === '#software-assets') scrollToSoftwareAssets()
+  if (route.hash === '#smartspaces' || route.hash === '#business-templates' || route.hash === '#software-assets') scrollToCatalog()
   else if (route.hash === '#all-assets') scrollToCatalog()
 }
 watch(() => route.fullPath, syncFromRoute, { immediate: true })
@@ -366,32 +284,21 @@ const counts = computed(() => ({
   projtpl: items.value.filter((i) => i.kind === 'projtpl').length,
   clawapp: items.value.filter((i) => i.kind === 'clawapp').length,
   component: items.value.filter((i) => isComponentKind(i.kind)).length,
-  software: items.value.filter((i) => isSoftwareKind(i.kind)).length,
 }))
 
-const softwareItems = computed(() => items.value.filter((item) =>
-  isSoftwareKind(item.kind)
-  && (activeSoftwareClass.value === 'all' || item.kind === activeSoftwareClass.value),
-))
-
-// Catalog tabs surface the packaging levels. Smart folders, business templates
-// and single-atom components are browsed as ClawMod subclasses.
+// Catalog tabs surface the packaging levels. Smart folders, project templates
+// and LightApps are component delivery forms alongside ClawMod and ClawBit.
 const kindTabs = computed(() => [
   { key: 'all' as const, label: '全部', count: items.value.length },
   { key: 'pkg' as const, label: 'ClawPkg 智能体包', count: counts.value.pkg },
   { key: 'tpl' as const, label: 'ClawTpl 模板', count: counts.value.tpl },
-  { key: 'software' as const, label: '软件资产', count: counts.value.software },
-  { key: 'mod' as const, label: 'ClawMod 智能组件', count: counts.value.component },
+  { key: 'mod' as const, label: '智能组件', count: counts.value.component },
 ])
 
 const componentClassTabs = computed(() => [
-  { key: 'all' as const, label: '全部组件', count: counts.value.component },
-  { key: 'mod' as const, label: '标准组件', count: counts.value.mod },
+  { key: 'all' as const, label: '全部智能组件', count: counts.value.component },
+  { key: 'mod' as const, label: 'ClawMod 标准组件', count: counts.value.mod },
   { key: 'brick' as const, label: 'ClawBit 单原子组件', count: counts.value.brick },
-])
-
-const softwareClassTabs = computed(() => [
-  { key: 'all' as const, label: '全部软件资产', count: counts.value.software },
   { key: 'smartfolder' as const, label: '智能文件夹', count: counts.value.smartfolder },
   { key: 'projtpl' as const, label: '项目模板', count: counts.value.projtpl },
   { key: 'clawapp' as const, label: '轻应用', count: counts.value.clawapp },
@@ -415,10 +322,6 @@ const filtered = computed(() => {
       if (!isComponentKind(i.kind)) return false
       if (activeComponentClass.value !== 'all' && i.kind !== activeComponentClass.value) return false
     }
-    if (activeKind.value === 'software') {
-      if (!isSoftwareKind(i.kind)) return false
-      if (activeSoftwareClass.value !== 'all' && i.kind !== activeSoftwareClass.value) return false
-    }
     if (activeCat.value !== 'all' && i.category !== activeCat.value) return false
     if (q) {
       const hay = [i.name, i.tagline, i.summary, ...i.tags].join(' ').toLowerCase()
@@ -429,16 +332,13 @@ const filtered = computed(() => {
 })
 
 // Each grid pages rather than rendering its whole set at once.
-const { paged: pagedSoftware, page: softwarePage, pageCount: softwarePageCount } =
-  usePagination(softwareItems, 8)
 const { paged: pagedCatalog, page: catalogPage, pageCount: catalogPageCount } =
   usePagination(filtered, 12)
 
 // Any change to the catalog filters jumps back to its first page.
-watch([activeKind, activeComponentClass, activeSoftwareClass, activeCat, query], () => {
+watch([activeKind, activeComponentClass, activeCat, query], () => {
   catalogPage.value = 1
 })
-watch(activeSoftwareClass, () => { softwarePage.value = 1 })
 </script>
 
 <style scoped>

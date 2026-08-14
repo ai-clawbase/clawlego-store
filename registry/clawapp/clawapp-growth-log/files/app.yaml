@@ -1,0 +1,68 @@
+apiVersion: app.clawlego.com/v1
+kind: LightApp
+metadata:
+  name: growth_log
+  version: 1.1.0
+
+# 成长档案 —— 这套运行时里「AI 该少管一点」的范例。
+#
+# 身高体重的百分位是 WHO 公布的 LMS 参数算出来的确定数值，不是意见。让模型去
+# 「估计」它，既慢、又贵、还会给出每次都不一样的数字——而这个数字家长会拿去做
+# 判断。所以 percentile.risor 是纯算术，离线可算，一个 token 都不花。
+#
+# AI 只在一个地方出现：weekly.risor 把一周的记录读成一段人话。那是解释，不是
+# 计算，正是模型该干的那一半。
+spec:
+  display:
+    name: 成长档案
+    icon: carbon:chart-line-smooth
+    description: 记喂养、睡眠、身高体重；生长曲线按 WHO 标准离线计算，每周给一段看得懂的解读
+    color: "#3b82c4"
+  category: life
+
+  entities:
+    - { name: kid,     schema: entities/kid.json }
+    - { name: measure, schema: entities/measure.json }
+    - { name: event,   schema: entities/event.json }
+
+  functions:
+    - { name: percentile, script: functions/percentile.risor, summary: 算身高体重百分位（离线，不花 token） }
+    - { name: weekly,     script: functions/weekly.risor,     summary: 这周的解读 }
+    - { name: record,     script: functions/record.risor,     summary: 记一笔（对外） }
+    - { name: today,      script: functions/today.risor,      summary: 今天记了多少（对外） }
+
+  web: { entry: web/index.html }
+
+  # 这是四个里最私密的一个：身高体重是孩子的身体数据。所以对外只有「一起记」
+  # 那一屏，其余三屏对陌生人不存在。
+  pages:
+    - { name: today,  path: index.html,  title: 记一笔, visibility: owner }
+    - { name: growth, path: growth.html, title: 曲线,   visibility: owner }
+    - { name: weekly, path: weekly.html, title: 本周,   visibility: owner }
+    - { name: share,  path: share.html,  title: 一起记, visibility: public }
+
+  tabbar:
+    selected_color: "#3b82c4"
+    items:
+      - { page: today,  label: 记一笔, icon: edit }
+      - { page: growth, label: 曲线,   icon: chart }
+      - { page: weekly, label: 本周,   icon: list }
+
+  target: mobile
+
+  # 对外 = 「一起记」：把链接发给另一位家长或家里的老人，他们能记一笔，
+  # 但读不到任何历史、读不到身高体重。分享出去的是协作，不是查看权限。
+  #
+  # 不开 ai.public：这两个函数一个 token 都不花。
+  public:
+    enabled: true
+    actions:
+      - { name: record, rate: "30/min" }
+      - { name: today,  rate: "60/min" }
+
+  ai:
+    enabled: true
+    safety: child
+    budget:
+      # 只有「本周解读」花钱，一周几次而已。
+      daily_tokens: 40000

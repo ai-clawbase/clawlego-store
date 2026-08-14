@@ -1,0 +1,92 @@
+<!-- 曲线 —— 百分位由 percentile.risor 离线算好，这里只负责画。 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>曲线 · 成长档案</title>
+<link rel="stylesheet" href="app.css">
+<script src="/clawapp.js"></script>
+
+<main>
+  <h1>生长曲线</h1>
+  <p class="sub" id="sub">…</p>
+  <div class="seg">
+    <button class="on" data-m="weight">体重</button>
+    <button data-m="height">身高</button>
+  </div>
+  <div id="body"></div>
+  <p class="caveat">
+    百分位按 WHO 生长标准在本机计算，不联网、不经过模型。它描述的是同龄同性别孩子里的相对位置，
+    <b>不是健康判断</b>。有疑问请咨询儿保医生。
+  </p>
+</main>
+
+<script src="app.js"></script>
+<script>
+let kid = null
+let metric = 'weight'
+
+async function load() {
+  if (!kid) {
+    $('#sub').textContent = ''
+    $('#body').innerHTML = `<div class="empty">还没有孩子档案。<br>去「记一笔」建一个。</div>`
+    return
+  }
+  $('#body').innerHTML = `<div class="spin">算一下…</div>`
+  const res = await run('percentile', { kid: kid.id, metric })
+  if (!res.ok) {
+    $('#sub').textContent = ''
+    $('#body').innerHTML = `<div class="empty">${res.error}</div>`
+    return
+  }
+  const data = payload(res)
+  const points = data.points || []
+  if (!points.length) {
+    $('#sub').textContent = ''
+    $('#body').innerHTML = `<div class="empty">还没有记录。<br>在「记一笔」里量一次。</div>`
+    return
+  }
+  $('#sub').textContent = res.data.text || ''
+  const last = data.latest || points[points.length - 1]
+  $('#body').innerHTML = `
+    <div class="stat">
+      <div><b>${Number(last.value).toFixed(1)}</b><span>${metric === 'weight' ? 'kg' : 'cm'}</span></div>
+      <div><b>P${Number(last.percentile).toFixed(0)}</b><span>百分位</span></div>
+      <div><b>${Number(last.z).toFixed(2)}</b><span>Z 值</span></div>
+    </div>
+    <div class="chart">${chart(points)}</div>`
+}
+
+/** 一条最朴素的折线。刻意不引图表库：应用够不到网络。 */
+function chart(points) {
+  const W = 320, H = 180, PAD = 28
+  const xs = points.map(p => Number(p.months))
+  const ys = points.map(p => Number(p.percentile))
+  const x0 = Math.min(...xs), x1 = Math.max(...xs)
+  const sx = m => PAD + (x1 === x0 ? (W - 2 * PAD) / 2 : (m - x0) / (x1 - x0) * (W - 2 * PAD))
+  const sy = p => H - PAD - (p / 100) * (H - 2 * PAD)
+  const d = points.map((p, i) => `${i ? 'L' : 'M'}${sx(xs[i]).toFixed(1)},${sy(ys[i]).toFixed(1)}`).join(' ')
+  // 3/50/97 三条参考线：家长真正在看的是"有没有掉出带子"。
+  const guides = [3, 50, 97].map(p =>
+    `<line x1="${PAD}" y1="${sy(p)}" x2="${W - PAD}" y2="${sy(p)}"
+           stroke="currentColor" stroke-opacity=".18" stroke-dasharray="3 4"/>
+     <text x="2" y="${sy(p) + 4}" font-size="9" fill="currentColor" opacity=".45">P${p}</text>`).join('')
+  const dots = points.map((p, i) =>
+    `<circle cx="${sx(xs[i]).toFixed(1)}" cy="${sy(ys[i]).toFixed(1)}" r="3" fill="currentColor"/>`).join('')
+  return `<svg viewBox="0 0 ${W} ${H}" style="color:var(--accent)">
+    ${guides}
+    <path d="${d}" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linejoin="round" stroke-linecap="round"/>
+    ${dots}
+  </svg>`
+}
+
+for (const b of document.querySelectorAll('.seg button')) {
+  b.onclick = () => {
+    for (const o of document.querySelectorAll('.seg button')) o.classList.remove('on')
+    b.classList.add('on')
+    metric = b.dataset.m
+    load()
+  }
+}
+
+clawapp.ready().then(async () => { kid = await pickKid(); load() })
+</script>

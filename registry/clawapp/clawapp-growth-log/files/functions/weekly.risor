@@ -1,0 +1,91 @@
+# weekly.risor — 把这一周的记录读成一段人话。
+#
+# 这是这个应用里唯一花 token 的地方，而且它只做**解释**，不做计算：所有数字先
+# 在这里用算术汇总好，模型拿到的是已经算完的结果。这样即使模型胡说，数字本身
+# 也是对的；而且提示词短，一周几次的成本可以忽略。
+#
+# 儿童安全档位（spec.ai.safety: child）会由宿主在提示词最前面钉一段约束，其中
+# 就包括"不做医疗诊断"。这里再说一次是因为这个场景特别容易被当成问诊。
+
+kid_id := string(ctx.params.get("kid", ""))
+kid := nil
+if kid_id != "" { kid = ctx.entity.find("kid", kid_id) }
+if kid == nil {
+  ctx.fail("先选一个孩子")
+} else {
+  today := ctx.now()[:10]
+  since := time.unix(time.now().unix() - 7 * 86400, 0).format("2006-01-02")
+
+  events := ctx.entity.query("event", {"kid": kid_id})
+  feeds := 0
+  feed_ml := 0.0
+  sleep_h := 0.0
+  diapers := 0
+  days := {}
+
+  for _, e := range events {
+    d := string(e.get("date", ""))
+    if d < since || d > today { continue }
+    days[d] = true
+    kind := string(e.get("kind", ""))
+    amount := float(e.get("amount", 0))
+    if kind == "feed" {
+      feeds = feeds + 1
+      feed_ml = feed_ml + amount
+    } else if kind == "sleep" {
+      sleep_h = sleep_h + amount
+    } else if kind == "diaper" {
+      diapers = diapers + 1
+    }
+  }
+
+  n_days := len(keys(days))
+  if n_days == 0 {
+    ctx.ok("这一周还没有记录。记几笔再来看。", {"days": 0})
+  } else {
+    nd := float(n_days)
+    summary := sprintf(
+      "记录天数 %d 天\n喂养 %d 次（平均每天 %.1f 次，共 %.0f 毫升）\n睡眠合计 %.1f 小时（平均每天 %.1f 小时）\n换尿布 %d 次（平均每天 %.1f 次）",
+      n_days, feeds, float(feeds) / nd, feed_ml, sleep_h, sleep_h / nd, diapers, float(diapers) / nd)
+
+    # 身高体重的变化直接给模型看最近两次，让它说"长了多少"而不是自己去查表。
+    growth := ""
+    for _, metric := range ["weight", "height"] {
+      rows := []
+      for _, r := range ctx.entity.query("measure", {"kid": kid_id}) {
+        if string(r.get("metric", "")) == metric { rows.append(r) }
+      }
+      if len(rows) >= 2 {
+        rows = sorted(rows, func(a, b) { return string(a.get("date", "")) < string(b.get("date", "")) })
+        first := rows[len(rows) - 2]
+        last := rows[len(rows) - 1]
+        label := metric == "weight" ? "体重" : "身高"
+        unit := metric == "weight" ? "kg" : "cm"
+        growth = growth + sprintf("%s：%s 时 %.1f%s → %s 时 %.1f%s\n",
+          label, string(first.get("date", "")), float(first.get("value", 0)), unit,
+          string(last.get("date", "")), float(last.get("value", 0)), unit)
+      }
+    }
+
+    name := string(kid.get("name", "孩子"))
+    prompt := sprintf(
+      "下面是 %s 最近一周的养育记录，已经统计好了：\n\n%s\n%s\n" +
+      "用 3-4 句话跟家长说说这一周。要求：\n" +
+      "- 先说值得高兴的地方，具体到数字。\n" +
+      "- 如果某项明显偏离平常（比如睡眠时长掉下来），温和地提一句，说清楚是记录上的现象。\n" +
+      "- **不要做任何医学判断**，不说是否正常、不说该不该看医生的结论。真有担心，就建议记下来问儿保医生。\n" +
+      "- 别复述上面的数字清单，家长已经看到了。",
+      name, summary, growth)
+
+    reply := ctx.ai.text(prompt, {"max_tokens": 500})
+    ctx.ok(reply, {
+      "days": n_days,
+      "feeds": feeds,
+      "feed_ml": feed_ml,
+      "sleep_hours": sleep_h,
+      "diapers": diapers,
+      "since": since,
+      "stats_text": summary,
+    })
+  }
+}

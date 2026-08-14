@@ -1,0 +1,7 @@
+{
+  "schema_version": "1",
+  "name": "event",
+  "display_name": "日常",
+  "description": "喂养/睡眠/换尿布各记一条。kind=feed|sleep|diaper，amount 的含义随 kind 变（毫升/小时/次）。",
+  "fields": []
+}

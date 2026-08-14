@@ -4,8 +4,8 @@
   "source": "hosted",
   "name": "哄睡故事机",
   "tagline": "说一句今天发生了什么，马上生成一个对症的睡前故事，按页朗读",
-  "summary": "家长随口说一件事（抢玩具、打针、第一天上幼儿园），AI 写成一个不点破、不说教、情绪落回安心的分页故事，逐页朗读。想要插图时再排一个后台任务交给引擎去画——正文不依赖插图，画不了也照样能讲。默认私有。",
-  "version": "1.0.0",
+  "summary": "家长随口说一件事（抢玩具、打针、第一天上幼儿园），AI 写成一个不点破、不说教、情绪落回安心的分页故事，逐页朗读。想要插图时再排一个后台任务交给引擎去画——正文不依赖插图。分享是逐个故事的开关：把某一个故事发给不在身边的家人念，故事之外的东西（当天发生了什么、孩子的名字）不跟着出门。",
+  "version": "1.1.0",
   "category": "life",
   "author": {
     "name": "ClawLego",
@@ -21,12 +21,12 @@
     "睡前故事",
     "朗读",
     "绘本",
-    "私有工具"
+    "可分享"
   ],
   "contents": {
     "entity": 2,
-    "function": 2,
-    "page": 3
+    "function": 4,
+    "page": 4
   },
   "install": {
     "type": "clawapp"
@@ -34,13 +34,15 @@
   "app": {
     "name": "bedtime_story",
     "target": "mobile",
-    "public": false,
-    "actions": [],
+    "public": true,
+    "actions": [
+      "shared"
+    ],
     "requires": {
       "connectors": [],
       "engines": []
     },
     "screenshots": []
   },
-  "updated": "2026-08-13"
+  "updated": "2026-08-14"
 }

@@ -1,0 +1,32 @@
+# share.risor — 把一个故事标记为「可以分享」。主人面用。
+#
+# 分享是**逐个故事**的开关，不是整个应用的开关。故事里会出现孩子的名字和当天
+# 发生的事，所以"把链接发给外婆"不能顺带把所有故事都交出去——外婆该看到的是
+# 今晚这一个。
+
+story_id := string(ctx.params.get("id", ""))
+on := string(ctx.params.get("on", "true")) != "false"
+
+if story_id == "" {
+  ctx.fail("缺少故事 id")
+} else {
+  story := ctx.entity.find("story", story_id)
+  if story == nil {
+    ctx.fail("找不到这个故事")
+  } else {
+    ctx.entity.upsert("story", [{
+      "id": story_id,
+      "title": string(story.get("title", "")),
+      "pages": story.get("pages", []),
+      "topic": string(story.get("topic", "")),
+      "child": string(story.get("child", "")),
+      "child_name": string(story.get("child_name", "")),
+      "created_at": string(story.get("created_at", "")),
+      "date": string(story.get("date", "")),
+      "illustrated": story.get("illustrated", false),
+      "job_id": string(story.get("job_id", "")),
+      "shared": on,
+    }])
+    ctx.ok(on ? "已经可以分享了" : "已经收回分享", {"id": story_id, "shared": on})
+  }
+}

@@ -1,0 +1,58 @@
+# record.risor — 记一笔。对外开放。
+#
+# 这个应用是四个里最私密的：孩子的身高体重是身体数据。所以它的对外面只做一件
+# 事——**写**。另一位家长（或家里的老人）点开链接就能记一笔喂养/睡眠/尿布，
+# 但读不到任何历史，也读不到身高体重。
+#
+# 换句话说：分享出去的是「一起记」的能力，不是「看孩子档案」的权限。这条边界
+# 之所以能画得这么干净，正是因为公网面根本没有 entity.*——能读什么必须由函数
+# 一条条写出来，而这里一条都没写。
+
+kid_id := string(ctx.params.get("kid", ""))
+kind := string(ctx.params.get("kind", ""))
+
+if kind != "feed" && kind != "sleep" && kind != "diaper" {
+  ctx.fail("只能记喂养、睡眠或换尿布")
+} else {
+  # 没指定孩子就用唯一的那个：链接是发给自家人的，多数家庭只有一个档案，
+  # 让对方先选一遍是没必要的一步。
+  kids := ctx.entity.query("kid")
+  if kid_id == "" {
+    if len(kids) == 1 {
+      kid_id = string(kids[0].get("id", ""))
+    }
+  }
+  found := false
+  for _, k := range kids {
+    if string(k.get("id", "")) == kid_id { found = true }
+  }
+
+  if !found {
+    ctx.fail("还没有建档，让主人先在应用里建一个")
+  } else {
+    amount := 0.0
+    raw := string(ctx.params.get("amount", "0"))
+    if regexp.match("^[0-9]+(\\.[0-9]+)?$", raw) {
+      amount = float(raw)
+      # 上限是防手滑也是防滥用：一次喂养不会有 5 升，一次睡眠不会有 48 小时。
+      if amount > 5000.0 { amount = 5000.0 }
+    }
+
+    now := ctx.now()
+    id := "e_" + ctx.hash(now + "|" + kind + "|" + kid_id)[:12]
+    ctx.entity.upsert("event", [{
+      "id": id,
+      "kid": kid_id,
+      "kind": kind,
+      "amount": amount,
+      "date": now[:10],
+      "at": now,
+      "by": "shared",
+    }])
+
+    # risor 不支持嵌套三元，所以这里是 if/else 而不是一行。
+    label := "换尿布"
+    if kind == "feed" { label = "喂养" } else if kind == "sleep" { label = "睡眠" }
+    ctx.ok("记好了：" + label, {"id": id, "kind": kind})
+  }
+}
