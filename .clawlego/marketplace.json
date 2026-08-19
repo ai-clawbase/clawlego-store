@@ -893,15 +893,15 @@
       "id": "clawtpl-wikiflow",
       "kind": "tpl",
       "source": "hosted",
-      "name": "WikiFlow 知识库后端",
+      "name": "WikiFlow",
       "tagline": "一个实例即一整套企业知识库后端",
-      "version": "0.20.0",
+      "version": "0.21.0",
       "category": "service",
       "path": "registry/tpl/clawtpl-wikiflow",
       "manifest": "registry/tpl/clawtpl-wikiflow/clawasset.json",
       "install": {
         "type": "clawtpl",
-        "url": "https://download.clawlego.com/tpls/tpl_wikiflow/0.20.0/tpl_wikiflow-0.20.0.clawtpl",
+        "url": "https://download.clawlego.com/tpls/tpl_wikiflow/0.21.0/tpl_wikiflow-0.21.0.clawtpl",
         "target": null
       }
     },
