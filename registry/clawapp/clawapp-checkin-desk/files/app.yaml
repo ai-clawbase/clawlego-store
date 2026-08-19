@@ -4,8 +4,8 @@ metadata:
   name: checkin_desk
   version: 2.2.0
 
-# 内置轻应用之二。主人有今日、历史和管理三屏；对外链接只留下「今日」，
-# 家人可以看到今天的共同清单并代为打卡。全部动作零 token，前端自己管交互。
+# 内置轻应用之二。公开入口交付与主人面相同的完整三屏应用；全部动作零 token，
+# 前端自己管业务交互，导航与 SPA 历史由宿主统一管理。
 spec:
   display:
     name: 打卡台
@@ -28,8 +28,8 @@ spec:
 
   web: { entry: web/index.html }
 
-  # 三个页面，各是 web/ 下的一份真 HTML。没有前端路由：换页就是换文档，
-  # 底部导航栏由宿主（clawapp.js）按下面的声明画出来。
+  # 三个页面，各是 web/ 下的一份真 HTML。visibility 先保留未来角色权限的
+  # 作者意图；当前公开入口仍展示完整三屏和底部导航。
   pages:
     - { name: today,   path: index.html,   title: 今日, visibility: all }
     - { name: history, path: history.html, title: 记录, visibility: owner }
@@ -45,8 +45,9 @@ spec:
   target: mobile
 
   public:
-    # 对外只开放今天的看板和单项打卡；历史与清单管理仍只给主人。
+    # 当前产品阶段所有轻应用默认打开对外入口，先保证完整功能。
     enabled: true
+    # 可选的函数速率覆盖；其他函数仍使用平台默认速率。
     actions:
       - { name: board,  rate: "60/min" }
       - { name: toggle, rate: "30/min" }

@@ -4,8 +4,8 @@
   "source": "hosted",
   "name": "报名台",
   "tagline": "收报名、查名单、导出签到表；发一条链接就能让别人填写",
-  "summary": "独立 ClawApp 范例：Mobile 形态，主人可查名单和统计，对外只开放带限流的报名动作。应用拥有自己的实体、函数与静态前端，不依赖 SmartFolder。",
-  "version": "2.1.0",
+  "summary": "独立 ClawApp 范例：Mobile 形态，公开入口与主人面共享报名、名单和统计三屏。应用拥有自己的实体、函数与静态前端，不依赖 SmartFolder。",
+  "version": "2.2.0",
   "category": "service",
   "author": { "name": "ClawLego", "url": "https://clawlego.com" },
   "license": "MIT",
@@ -18,9 +18,9 @@
     "name": "signup_desk",
     "target": "mobile",
     "public": true,
-    "actions": ["signup"],
+    "actions": ["signup", "today", "export"],
     "requires": { "connectors": [], "engines": [] },
     "screenshots": []
   },
-  "updated": "2026-08-12"
+  "updated": "2026-08-15"
 }

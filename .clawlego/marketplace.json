@@ -12,7 +12,7 @@
     "url": "https://github.com/ai-clawbase/clawlego-store.git",
     "ref": "main"
   },
-  "count": 49,
+  "count": 50,
   "entries": [
     {
       "id": "prompt-commit-message",
@@ -95,8 +95,12 @@
         "target": "mobile",
         "public": true,
         "actions": [
+          "add",
+          "toggle",
           "board",
-          "toggle"
+          "history",
+          "items",
+          "archive"
         ],
         "requires": {
           "connectors": [],
@@ -230,13 +234,13 @@
       "source": "hosted",
       "name": "报名台",
       "tagline": "收报名、查名单、导出签到表；发一条链接就能让别人填写",
-      "version": "2.1.0",
+      "version": "2.2.0",
       "category": "service",
       "path": "registry/clawapp/clawapp-signup-desk",
       "manifest": "registry/clawapp/clawapp-signup-desk/clawasset.json",
       "install": {
         "type": "clawapp",
-        "url": "https://store.clawlego.com/store/clawapp/clawapp-signup-desk/app_signup-desk-2.1.0.clawapp",
+        "url": "https://store.clawlego.com/store/clawapp/clawapp-signup-desk/app_signup-desk-2.2.0.clawapp",
         "target": null
       },
       "app": {
@@ -244,7 +248,9 @@
         "target": "mobile",
         "public": true,
         "actions": [
-          "signup"
+          "signup",
+          "today",
+          "export"
         ],
         "requires": {
           "connectors": [],
@@ -628,22 +634,6 @@
       }
     },
     {
-      "id": "smartfolder-llm-wiki",
-      "kind": "smartfolder",
-      "source": "hosted",
-      "name": "LLM Wiki",
-      "tagline": "把资料增量沉淀成一座活的、互相链接的知识维基",
-      "version": "1.0.0",
-      "category": "general",
-      "path": "registry/smartfolder/smartfolder-llm-wiki",
-      "manifest": "registry/smartfolder/smartfolder-llm-wiki/clawasset.json",
-      "install": {
-        "type": "clawmod",
-        "url": "https://download.clawlego.com/mods/mod_llm_wiki/1.0.0/mod_llm_wiki-1.0.0.clawmod",
-        "target": null
-      }
-    },
-    {
       "id": "smartfolder-media-library",
       "kind": "smartfolder",
       "source": "hosted",
@@ -772,6 +762,22 @@
       }
     },
     {
+      "id": "smartfolder-wiki-bundle",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "知识库",
+      "tagline": "把资料增量沉淀成一座活的、互相链接的知识维基",
+      "version": "2.0.0",
+      "category": "general",
+      "path": "registry/smartfolder/smartfolder-wiki-bundle",
+      "manifest": "registry/smartfolder/smartfolder-wiki-bundle/clawasset.json",
+      "install": {
+        "type": "clawmod",
+        "url": "https://download.clawlego.com/mods/mod_wiki_bundle/2.0.0/mod_wiki_bundle-2.0.0.clawmod",
+        "target": null
+      }
+    },
+    {
       "id": "clawtpl-analyst",
       "kind": "tpl",
       "source": "hosted",
@@ -880,6 +886,22 @@
       "install": {
         "type": "clawtpl",
         "url": "https://download.clawlego.com/tpls/tpl_researcher/1.0.1/tpl_researcher-1.0.1.clawtpl",
+        "target": null
+      }
+    },
+    {
+      "id": "clawtpl-wikiflow",
+      "kind": "tpl",
+      "source": "hosted",
+      "name": "WikiFlow 知识库后端",
+      "tagline": "一个实例即一整套企业知识库后端",
+      "version": "0.20.0",
+      "category": "service",
+      "path": "registry/tpl/clawtpl-wikiflow",
+      "manifest": "registry/tpl/clawtpl-wikiflow/clawasset.json",
+      "install": {
+        "type": "clawtpl",
+        "url": "https://download.clawlego.com/tpls/tpl_wikiflow/0.20.0/tpl_wikiflow-0.20.0.clawtpl",
         "target": null
       }
     },

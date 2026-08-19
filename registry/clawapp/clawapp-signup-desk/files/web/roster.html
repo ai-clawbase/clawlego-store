@@ -4,11 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>名单 · 报名台</title>
-<!--
-  第二页：名单。清单里标了 visibility: owner，所以外人的导航里没有它。
-  文件本身仍然是能被访问到的静态资源，但对外那一面根本没有「读记录」这个
-  方法 —— 拦住数据的是服务端，这里只是把话说清楚。
--->
+<!-- 第二页：名单。主人面与公开面使用同一份应用内实体。 -->
 <link rel="stylesheet" href="app.css">
 <script src="/clawapp.js"></script>
 <script src="app.js"></script>
@@ -34,10 +30,10 @@
 
 <script type="module">
 await clawapp.ready()
-if (ownerOnly('名单')) {
-  let rows = []
-  let filter = 'all'
+let rows = []
+let filter = 'all'
 
+{
   for (const b of $('seg').querySelectorAll('button')) {
     b.onclick = () => {
       filter = b.dataset.f

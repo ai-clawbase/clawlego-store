@@ -2,7 +2,7 @@ apiVersion: app.clawlego.com/v1
 kind: LightApp
 metadata:
   name: signup_desk
-  version: 2.1.0
+  version: 2.2.0
 
 # 内置轻应用之一，同时是一份能读完的范例。
 # 它是一个独立的程序：自己的清单、自己的 data/、自己的 web/ 前端。
@@ -27,9 +27,8 @@ spec:
   # 但换成 React/Vue 打出来的 dist 也是一样放这里。
   web: { entry: web/index.html }
 
-  # 三个页面，各是 web/ 下的一份真 HTML。visibility 决定这一页是给谁的：
-  # 名单和数据只对主人存在，外人的底部导航里根本不会出现它们——
-  # 而且只剩一个页面时导航栏自己就不画了，对外那一面于是干干净净只有一张表。
+  # 三个页面，各是 web/ 下的一份真 HTML。visibility 只保留未来角色权限的
+  # 作者意图；当前公开入口仍展示完整三屏和底部导航。
   pages:
     - { name: signup, path: index.html,  title: 报名 }
     - { name: roster, path: roster.html, title: 名单, visibility: owner }
@@ -47,7 +46,6 @@ spec:
 
   public:
     enabled: true
-    # 公网可调用的白名单。注意 export 不在里面——外人可以报名，
-    # 但不能把整份名单导走。
+    # 可选的函数速率覆盖；没有列出的 today/export 仍使用平台默认速率。
     actions:
       - { name: signup, rate: "10/min" }

@@ -4,8 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>数据 · 报名台</title>
-<!-- 第三页：数据。也是 owner 页。导出走 export 函数，它不在公网白名单里 ——
-     外人可以报名，但不能把整份名单导走。 -->
+<!-- 第三页：数据。公开入口同样可以统计和导出。 -->
 <link rel="stylesheet" href="app.css">
 <script src="/clawapp.js"></script>
 <script src="app.js"></script>
@@ -40,10 +39,10 @@
 
 <script type="module">
 await clawapp.ready()
-if (ownerOnly('数据')) {
-  const rows = await clawapp.entity.query('signup')
-  const today = new Date().toISOString().slice(0, 10)
+const rows = await clawapp.entity.query('signup')
+const today = new Date().toISOString().slice(0, 10)
 
+{
   $('nTotal').textContent = rows.length
   $('nToday').textContent = rows.filter(r => r.date === today).length
   $('nIn').textContent = rows.filter(r => r.checked_in).length

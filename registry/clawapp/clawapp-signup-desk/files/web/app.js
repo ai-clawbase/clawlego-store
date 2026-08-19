@@ -16,15 +16,3 @@ window.toast = (function () {
     timer = setTimeout(() => el.classList.remove('show'), 2200)
   }
 })()
-
-/** 只有主理人能看的页面：外人顺着链接摸到这儿时，给句人话而不是一屏空白。
- *  真正拦住数据的是服务端 —— 对外那一面根本没有读记录这个方法。 */
-window.ownerOnly = function ownerOnly(what) {
-  if (clawapp.env.mode === 'owner') return true
-  document.body.innerHTML = ''
-  const p = document.createElement('p')
-  p.className = 'empty'
-  p.textContent = `${what}只有主理人能看。`
-  document.body.append(p)
-  return false
-}

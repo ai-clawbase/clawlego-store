@@ -11,9 +11,8 @@
   web/ 下一份能单独打开的 HTML；底部那条导航栏不在任何一页的代码里，是宿主
   按 app.yaml 的 tabbar 段画的。所以三页看起来是同一个程序，而不是三张网页。
 
-  名单和数据在清单里标了 visibility: owner。外人从公开链接进来时，导航栏里
-  只剩这一页，于是宿主干脆不画那条栏 —— 陌生人看到的就是一张干净的表单，
-  作者没有为此写过一行判断。
+  公开链接打开的也是完整三屏应用：根 URL 仍是这一页，名单和数据可从宿主底栏
+  进入。visibility 只保留未来认证中台按角色收窄时的作者意图。
 
   数据只经 window.clawapp 走。前端拿不到实例的 /api —— 那是主人的控制面。
 -->
@@ -47,15 +46,13 @@
 
 <script type="module">
 await clawapp.ready()
-const owner = clawapp.env.mode === 'owner'
 
-$('sub').textContent = owner ? '收报名 · 查名单 · 导出签到表' : '填一下就报上名了'
+$('sub').textContent = '收报名 · 查名单 · 导出签到表'
 $('f-campaign').value = new URLSearchParams(location.search).get('campaign') || ''
 
-// 主人看得见「名单」这个 tab，就在上面挂个今天的人数。角标是每页自己画的：
+// 「名单」tab 上挂今天的人数。角标是每页自己画的：
 // 页面加载时问一次，问的是它自己这一屏需要的数。
 async function badgeToday() {
-  if (!owner) return
   const rows = await clawapp.entity.query('signup')
   const today = new Date().toISOString().slice(0, 10)
   const n = rows.filter(r => r.date === today).length
@@ -89,8 +86,8 @@ $('submit').onclick = async () => {
   const btn = $('submit')
   btn.disabled = true
   try {
-    // 走声明过的动作，不是裸的实体写入：外人在对外页填表打的是同一个函数，
-    // 校验和限流因此只有一份，长在函数上。
+    // 走声明过的动作，不是裸的实体写入：两种入口打的是同一个函数，
+    // 校验只有一份；公开入口再叠加宿主速率。
     const res = await clawapp.call('signup', {
       name,
       contact: $('f-contact').value.trim(),
