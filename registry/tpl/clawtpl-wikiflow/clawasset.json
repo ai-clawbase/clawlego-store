@@ -5,7 +5,7 @@
   "name": "WikiFlow",
   "tagline": "一个实例即一整套企业知识库后端",
   "summary": "WikiFlow（企业知识库）的后端本体：一个实例即一整套后端。知识以文件形式住在 business/wiki/<bundle>/ —— 没有切块、没有 embedding、没有向量库、没有派生表示。实例携带三张元数据表（版本历史 / 语料登记 / 编译运行）与编译 worker；master 侧的 WikiApp + BFF 只做身份、隔离与契约翻译，自己不存任何东西。导出本实例的 ClawPkg 即完整备份整个后端。WikiFlow 0.25.0 需要 ClawLego 0.0.32 或更高版本。",
-  "version": "0.25.0",
+  "version": "0.28.2",
   "category": "service",
   "author": {
     "name": "ClawLego",
@@ -23,7 +23,7 @@
   ],
   "install": {
     "type": "clawtpl",
-    "url": "https://download.clawlego.com/tpls/tpl_wikiflow/0.25.0/tpl_wikiflow-0.25.0.clawtpl"
+    "url": "https://download.clawlego.com/tpls/tpl_wikiflow/0.28.2/tpl_wikiflow-0.28.2.clawtpl"
   },
   "artifact": {
     "asset": "tpl",
