@@ -12,7 +12,7 @@
     "url": "https://github.com/ai-clawbase/clawlego-store.git",
     "ref": "main"
   },
-  "count": 50,
+  "count": 51,
   "entries": [
     {
       "id": "prompt-commit-message",
@@ -470,6 +470,22 @@
       "install": {
         "type": "clawmod",
         "url": "https://download.clawlego.com/mods/mod_brand_kit/1.0.0/mod_brand_kit-1.0.0.clawmod",
+        "target": null
+      }
+    },
+    {
+      "id": "smartfolder-cfmgr",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "CF Manager",
+      "tagline": "一个本地文件夹透视管理全部 Cloudflare Workers 与 Pages",
+      "version": "1.0.0",
+      "category": "engineering",
+      "path": "registry/smartfolder/smartfolder-cfmgr",
+      "manifest": "registry/smartfolder/smartfolder-cfmgr/clawasset.json",
+      "install": {
+        "type": "clawmod",
+        "url": "https://download.clawlego.com/mods/mod_cfmgr/1.0.0/mod_cfmgr-1.0.0.clawmod",
         "target": null
       }
     },

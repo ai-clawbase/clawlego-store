@@ -1,0 +1,35 @@
+{
+  "id": "smartfolder-cfmgr",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "CF Manager",
+  "tagline": "一个本地文件夹透视管理全部 Cloudflare Workers 与 Pages",
+  "summary": "把 Cloudflare 连接、同步与管理能力装进一个直观的智能文件夹：初始化 API Token 后，自动同步可见账号、Workers、Pages、近期部署、端点健康、订阅与 Workers Analytics 参考用量。Token 只进入本机 Vault，不需要独立 Cloudflare 连接器；Pages retry/rollback 必须显式确认并留下本地审计。",
+  "version": "1.0.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_cfmgr",
+    "type": "clawmod"
+  },
+  "category": "engineering",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:cloud-services",
+  "accent": "#F48120",
+  "tags": [
+    "智能文件夹",
+    "Cloudflare",
+    "Workers",
+    "Pages",
+    "DevOps",
+    "健康扫描"
+  ],
+  "updated": "2026-08-23",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_cfmgr/1.0.0/mod_cfmgr-1.0.0.clawmod"
+  }
+}
