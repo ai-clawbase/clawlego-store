@@ -5,7 +5,7 @@
   "name": "知识库",
   "tagline": "把资料增量沉淀成一座活的、互相链接的知识维基",
   "summary": "受 Andrej Karpathy 的 LLM Wiki 启发：不是每次现查现答（RAG），而是把喂进来的资料逐条融进既有词条——写摘要页、更新实体/概念页、维护 [[交叉引用]]、标记矛盾。维基是纯 Markdown，永远属于你、带得走；/index 确定性重建目录与孤立页/断链健康检查。也能收编已有的文档树建立递归索引（/rollup /search /outline）。带 /ingest 喂来源、/ask 问维基、/page 手写词条、/lint 体检、/index、/panel 命令。",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "artifact": {
     "asset": "mod",
     "id": "mod_wiki_bundle",
@@ -29,6 +29,6 @@
   "updated": "2026-08-18",
   "install": {
     "type": "clawmod",
-    "url": "https://download.clawlego.com/mods/mod_wiki_bundle/2.0.0/mod_wiki_bundle-2.0.0.clawmod"
+    "url": "https://download.clawlego.com/mods/mod_wiki_bundle/2.0.1/mod_wiki_bundle-2.0.1.clawmod"
   }
 }

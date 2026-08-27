@@ -783,13 +783,13 @@
       "source": "hosted",
       "name": "知识库",
       "tagline": "把资料增量沉淀成一座活的、互相链接的知识维基",
-      "version": "2.0.0",
+      "version": "2.0.1",
       "category": "general",
       "path": "registry/smartfolder/smartfolder-wiki-bundle",
       "manifest": "registry/smartfolder/smartfolder-wiki-bundle/clawasset.json",
       "install": {
         "type": "clawmod",
-        "url": "https://download.clawlego.com/mods/mod_wiki_bundle/2.0.0/mod_wiki_bundle-2.0.0.clawmod",
+        "url": "https://download.clawlego.com/mods/mod_wiki_bundle/2.0.1/mod_wiki_bundle-2.0.1.clawmod",
         "target": null
       }
     },
