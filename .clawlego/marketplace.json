@@ -815,13 +815,13 @@
       "source": "hosted",
       "name": "ClawTax 智能税务",
       "tagline": "一个实例即一间税务事务所的工作台",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "category": "service",
       "path": "registry/tpl/clawtpl-clawtax",
       "manifest": "registry/tpl/clawtpl-clawtax/clawasset.json",
       "install": {
         "type": "clawtpl",
-        "url": "https://download.clawlego.com/tpls/tpl_clawtax/0.1.0/tpl_clawtax-0.1.0.clawtpl",
+        "url": "https://download.clawlego.com/tpls/tpl_clawtax/0.2.0/tpl_clawtax-0.2.0.clawtpl",
         "target": null
       }
     },
