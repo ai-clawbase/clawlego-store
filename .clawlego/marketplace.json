@@ -911,13 +911,13 @@
       "source": "hosted",
       "name": "WikiFlow",
       "tagline": "一个实例即一整套企业知识库后端",
-      "version": "0.30.5",
+      "version": "0.30.9",
       "category": "service",
       "path": "registry/tpl/clawtpl-wikiflow",
       "manifest": "registry/tpl/clawtpl-wikiflow/clawasset.json",
       "install": {
         "type": "clawtpl",
-        "url": "https://download.clawlego.com/tpls/tpl_wikiflow/0.30.5/tpl_wikiflow-0.30.5.clawtpl",
+        "url": "https://download.clawlego.com/tpls/tpl_wikiflow/0.30.9/tpl_wikiflow-0.30.9.clawtpl",
         "target": null
       }
     },
