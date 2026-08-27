@@ -5,7 +5,7 @@
   "name": "ClawTax 智能税务",
   "tagline": "一个实例即一间税务事务所的工作台",
   "summary": "ClawTax 税务事务所工作台：税务报告六维审阅（任务适配 / 事实与证据 / 结构与逻辑 / 法域与法规 / 专业表达 / 可交付性），出海架构、高净值人士、转让定价同期文档三类专业报告，税务问答，以及以文件形式沉淀的税务知识库。报告结论、事实三态台账、可核验引用与可下载 Word 由实例 Agent 按契约同次生成，并在出具前经过一次确定性校验：分数与维度对不上、专业报告夹带评分字段、事实状态越出三态、或声称生成的 Word 并不存在，都会被整份拒收并说明是哪一条不合格。知识库是 business/wiki/<bundle>/ 下可读、可编辑、可追溯的互链词条——没有切块、没有 embedding、没有向量库。全部数据住在工作空间文件树里，不使用外部数据库、对象存储或队列；导出本实例的 ClawPkg 即完整备份。装完即带一个公共知识库「本所税务底稿」，内含国家税务总局 2026 年 7 月《国际运输涉税服务指引》主册与《政策规定》《办税流程》两份附册的原文（约 10 万字，未经改写）以及由它们写出的词条，开箱即可检索与问答。账号由管理员在桌面端开设，管理面（账号 / 功能门控 / 版本）在 ClawUI 工作台，业务面是实例自带的独立网页工作台。",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "category": "service",
   "author": {
     "name": "ClawLego",
@@ -23,7 +23,7 @@
   ],
   "install": {
     "type": "clawtpl",
-    "url": "https://download.clawlego.com/tpls/tpl_clawtax/0.5.0/tpl_clawtax-0.5.0.clawtpl"
+    "url": "https://download.clawlego.com/tpls/tpl_clawtax/0.6.0/tpl_clawtax-0.6.0.clawtpl"
   },
   "artifact": {
     "asset": "tpl",
