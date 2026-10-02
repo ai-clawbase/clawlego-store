@@ -1,0 +1,34 @@
+{
+  "id": "smartfolder-music-studio",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "音乐工作室",
+  "tagline": "说一句要什么样的音乐，作曲编曲并渲染成一段真的音频，附 MIDI",
+  "summary": "一种作品类型：说一句要什么样的音乐（视频背景乐/片头片尾/歌曲小样/提示音/氛围循环，什么情绪、多长），作曲编曲并渲染成一段真的 WAV，同时导出 MIDI 方便拿去 GarageBand / Logic / FL 精修。作曲是数据（score.json：调式、速度、和声、旋律、贝斯、铺底、鼓型），演奏是随包附带的纯 Python 合成器（钢琴/电钢/铺底/弦乐/贝斯/拨弦/主音/钟琴/鼓，零依赖、离线可用）。不做人声：歌曲小样交付伴奏 + 旋律 + 歌词。",
+  "version": "1.0.1",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_music_studio",
+    "type": "clawmod"
+  },
+  "category": "life",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:music",
+  "accent": "#10B981",
+  "tags": [
+    "作品",
+    "音乐",
+    "配乐",
+    "作曲",
+    "MIDI"
+  ],
+  "updated": "2026-10-02",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_music_studio/1.0.1/mod_music_studio-1.0.1.clawmod"
+  }
+}

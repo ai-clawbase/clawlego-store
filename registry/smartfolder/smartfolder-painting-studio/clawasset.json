@@ -1,0 +1,34 @@
+{
+  "id": "smartfolder-painting-studio",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "画作工作室",
+  "tagline": "说一句想画什么，画出一幅真的画——油画、水彩、水墨、插画、像素画",
+  "summary": "一种作品类型：说一句想画什么（插画/油画/水彩/水墨/像素画/生成艺术），画出一幅真的画作，可以题款落印。有原生生图能力的引擎（Codex / agy nano banana）直接出图；没有的（如 Claude）用 SVG 滤镜真画——宣纸纹理、墨晕、水彩洇边、笔触、远淡近浓，一样能挂、无限清晰。附一幅能直接渲染的水墨示例。题款永远用矢量文字叠加，不让生图模型写错字。",
+  "version": "1.0.1",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_painting_studio",
+    "type": "clawmod"
+  },
+  "category": "design",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:paint-brush-alt",
+  "accent": "#F59E0B",
+  "tags": [
+    "作品",
+    "画作",
+    "插画",
+    "水墨",
+    "生成艺术"
+  ],
+  "updated": "2026-10-02",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_painting_studio/1.0.1/mod_painting_studio-1.0.1.clawmod"
+  }
+}

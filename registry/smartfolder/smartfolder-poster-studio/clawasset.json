@@ -5,7 +5,7 @@
   "name": "海报工作室",
   "tagline": "讲一句要做什么，就产出一张真海报——矢量、自适应、能下载 PNG/打印、可分享",
   "summary": "把一句需求做成一张真海报的智能文件夹：活动/促销/招聘/公告/社媒图，矢量 SVG 排版、桌面/手机自适应、一键下载 PNG/打印，发布成可分享托管页（/pub），永远属于你。主视觉按引擎走最佳路径——Codex 用内置生图、agy 用 nano banana(gemini-flash-image) 出图并内嵌；没有生图能力（如 Claude）就走设计系统的字体/几何/渐变矢量海报（claude-design 思路）。一张设计可一键出多尺寸（方图/竖屏故事/横幅）。难的部分（自适应/下载 PNG/打印/品牌页脚）固化在渲染器里，做图只需生成一张海报 SVG → 注入 → 发布。每张登记进 poster 实体、品牌套件进 brand 实体，/index 确定性重建画廊（缩略网格，点开看大图）。带 /new 做新图、/variants 出多尺寸、/revise 修改、/brand 维护品牌、/index、/panel 命令。",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "artifact": {
     "asset": "mod",
     "id": "mod_poster_studio",
@@ -29,6 +29,6 @@
   "updated": "2026-06-29",
   "install": {
     "type": "clawmod",
-    "url": "https://download.clawlego.com/mods/mod_poster_studio/1.0.0/mod_poster_studio-1.0.0.clawmod"
+    "url": "https://download.clawlego.com/mods/mod_poster_studio/1.0.2/mod_poster_studio-1.0.2.clawmod"
   }
 }

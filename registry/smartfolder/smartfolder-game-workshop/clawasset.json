@@ -1,0 +1,33 @@
+{
+  "id": "smartfolder-game-workshop",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "游戏工作室",
+  "tagline": "把一个想法聊成一个设计，再做成自己的小游戏",
+  "summary": "一种作品类型：把一个游戏想法聊成一个设计，再做成一个能玩、能一句话接着改的小游戏（mini_game 轻应用），跑在固化的 ClawPlay 运行时上（循环、渲染、输入、碰撞、声音都不用重写）。干活按宿主内置的 gamelab 技能；每次改完，用孩子看得懂的话说清「这次改了什么」（如「当 🐱 碰到 ⭐ → 分数 改变 1」）。",
+  "version": "1.0.2",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_game_workshop",
+    "type": "clawmod"
+  },
+  "category": "life",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:game-console",
+  "accent": "#F97316",
+  "tags": [
+    "作品",
+    "小游戏",
+    "ClawPlay",
+    "少儿编程"
+  ],
+  "updated": "2026-10-02",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_game_workshop/1.0.2/mod_game_workshop-1.0.2.clawmod"
+  }
+}

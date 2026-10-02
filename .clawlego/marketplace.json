@@ -12,7 +12,7 @@
     "url": "https://github.com/ai-clawbase/clawlego-store.git",
     "ref": "main"
   },
-  "count": 53,
+  "count": 59,
   "entries": [
     {
       "id": "prompt-commit-message",
@@ -458,6 +458,22 @@
       }
     },
     {
+      "id": "smartfolder-app-workshop",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "应用工作室",
+      "tagline": "说一句想要个什么小东西，做成一个真能用的小程序",
+      "version": "1.0.3",
+      "category": "engineering",
+      "path": "registry/smartfolder/smartfolder-app-workshop",
+      "manifest": "registry/smartfolder/smartfolder-app-workshop/clawasset.json",
+      "install": {
+        "type": "clawmod",
+        "url": "https://download.clawlego.com/mods/mod_app_workshop/1.0.3/mod_app_workshop-1.0.3.clawmod",
+        "target": null
+      }
+    },
+    {
       "id": "smartfolder-brand-kit",
       "kind": "smartfolder",
       "source": "hosted",
@@ -538,6 +554,22 @@
       }
     },
     {
+      "id": "smartfolder-comic-drama",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "AI 漫剧工作室",
+      "tagline": "讲一个故事梗概，做出一集竖屏 AI 漫剧——分镜、画格、配音、气泡字幕",
+      "version": "1.0.1",
+      "category": "design",
+      "path": "registry/smartfolder/smartfolder-comic-drama",
+      "manifest": "registry/smartfolder/smartfolder-comic-drama/clawasset.json",
+      "install": {
+        "type": "clawmod",
+        "url": "https://download.clawlego.com/mods/mod_comic_drama/1.0.1/mod_comic_drama-1.0.1.clawmod",
+        "target": null
+      }
+    },
+    {
       "id": "smartfolder-doc-vault",
       "kind": "smartfolder",
       "source": "hosted",
@@ -598,6 +630,22 @@
       "install": {
         "type": "clawmod",
         "url": "https://download.clawlego.com/mods/mod_finance_ledger/2.0.0/mod_finance_ledger-2.0.0.clawmod",
+        "target": null
+      }
+    },
+    {
+      "id": "smartfolder-game-workshop",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "游戏工作室",
+      "tagline": "把一个想法聊成一个设计，再做成自己的小游戏",
+      "version": "1.0.2",
+      "category": "life",
+      "path": "registry/smartfolder/smartfolder-game-workshop",
+      "manifest": "registry/smartfolder/smartfolder-game-workshop/clawasset.json",
+      "install": {
+        "type": "clawmod",
+        "url": "https://download.clawlego.com/mods/mod_game_workshop/1.0.2/mod_game_workshop-1.0.2.clawmod",
         "target": null
       }
     },
@@ -682,6 +730,22 @@
       }
     },
     {
+      "id": "smartfolder-music-studio",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "音乐工作室",
+      "tagline": "说一句要什么样的音乐，作曲编曲并渲染成一段真的音频，附 MIDI",
+      "version": "1.0.1",
+      "category": "life",
+      "path": "registry/smartfolder/smartfolder-music-studio",
+      "manifest": "registry/smartfolder/smartfolder-music-studio/clawasset.json",
+      "install": {
+        "type": "clawmod",
+        "url": "https://download.clawlego.com/mods/mod_music_studio/1.0.1/mod_music_studio-1.0.1.clawmod",
+        "target": null
+      }
+    },
+    {
       "id": "smartfolder-note-vault",
       "kind": "smartfolder",
       "source": "hosted",
@@ -714,18 +778,34 @@
       }
     },
     {
+      "id": "smartfolder-painting-studio",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "画作工作室",
+      "tagline": "说一句想画什么，画出一幅真的画——油画、水彩、水墨、插画、像素画",
+      "version": "1.0.1",
+      "category": "design",
+      "path": "registry/smartfolder/smartfolder-painting-studio",
+      "manifest": "registry/smartfolder/smartfolder-painting-studio/clawasset.json",
+      "install": {
+        "type": "clawmod",
+        "url": "https://download.clawlego.com/mods/mod_painting_studio/1.0.1/mod_painting_studio-1.0.1.clawmod",
+        "target": null
+      }
+    },
+    {
       "id": "smartfolder-poster-studio",
       "kind": "smartfolder",
       "source": "hosted",
       "name": "海报工作室",
       "tagline": "讲一句要做什么，就产出一张真海报——矢量、自适应、能下载 PNG/打印、可分享",
-      "version": "1.0.0",
+      "version": "1.0.2",
       "category": "design",
       "path": "registry/smartfolder/smartfolder-poster-studio",
       "manifest": "registry/smartfolder/smartfolder-poster-studio/clawasset.json",
       "install": {
         "type": "clawmod",
-        "url": "https://download.clawlego.com/mods/mod_poster_studio/1.0.0/mod_poster_studio-1.0.0.clawmod",
+        "url": "https://download.clawlego.com/mods/mod_poster_studio/1.0.2/mod_poster_studio-1.0.2.clawmod",
         "target": null
       }
     },
@@ -767,13 +847,29 @@
       "source": "hosted",
       "name": "绘本工作室",
       "tagline": "讲几句想法，为孩子做一本会翻页、有动画、能朗读的个性化绘本",
-      "version": "1.1.0",
+      "version": "1.1.2",
       "category": "general",
       "path": "registry/smartfolder/smartfolder-storybook",
       "manifest": "registry/smartfolder/smartfolder-storybook/clawasset.json",
       "install": {
         "type": "clawmod",
-        "url": "https://download.clawlego.com/mods/mod_storybook/1.1.0/mod_storybook-1.1.0.clawmod",
+        "url": "https://download.clawlego.com/mods/mod_storybook/1.1.2/mod_storybook-1.1.2.clawmod",
+        "target": null
+      }
+    },
+    {
+      "id": "smartfolder-video-studio",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "视频工作室",
+      "tagline": "说一句要讲什么，做出一条真的 MP4——脚本、配音、动效画面、字幕全包",
+      "version": "1.0.1",
+      "category": "design",
+      "path": "registry/smartfolder/smartfolder-video-studio",
+      "manifest": "registry/smartfolder/smartfolder-video-studio/clawasset.json",
+      "install": {
+        "type": "clawmod",
+        "url": "https://download.clawlego.com/mods/mod_video_studio/1.0.1/mod_video_studio-1.0.1.clawmod",
         "target": null
       }
     },

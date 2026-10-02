@@ -1,0 +1,34 @@
+{
+  "id": "smartfolder-comic-drama",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "AI 漫剧工作室",
+  "tagline": "讲一个故事梗概，做出一集竖屏 AI 漫剧——分镜、画格、配音、气泡字幕",
+  "summary": "一种作品类型：讲一个故事梗概，做出一集竖屏 AI 漫剧 MP4——剧本（钩子/冲突/反转/悬念）→ 逐格分镜 → 角色形象一致的画格 → 多角色配音 → 对白气泡与字幕 → 渲染。角色表（固定外观描述 + 固定音色）跨集复用，第二集还是同一张脸、同一个声音。画格按引擎走 Codex 生图 / agy nano banana（参考图保持一致）/ 矢量分镜；成片由固化的 Remotion 渲染器（画格慢推 + 气泡逐个弹出）生成。开工前问清题材、画风、时长、配音方式。",
+  "version": "1.0.1",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_comic_drama",
+    "type": "clawmod"
+  },
+  "category": "design",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:theater",
+  "accent": "#8B5CF6",
+  "tags": [
+    "作品",
+    "漫剧",
+    "短剧",
+    "AI 漫画",
+    "连载"
+  ],
+  "updated": "2026-10-02",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_comic_drama/1.0.1/mod_comic_drama-1.0.1.clawmod"
+  }
+}

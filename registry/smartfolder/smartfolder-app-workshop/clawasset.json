@@ -1,0 +1,33 @@
+{
+  "id": "smartfolder-app-workshop",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "应用工作室",
+  "tagline": "说一句想要个什么小东西，做成一个真能用的小程序",
+  "summary": "一种作品类型：说一句「我想要个能报名/记账/打卡的小东西」，在创造工坊里做成一个真能用的小程序（LightApp）——自己的数据、自己的函数、自己的真前端、自己的公开入口，装进「作品」点开就用。干活按宿主内置的 appkit 技能，几条分工并行（数据与功能 ∥ 界面 → 做出来装上）。开工前问一句主要在手机还是电脑上用。",
+  "version": "1.0.3",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_app_workshop",
+    "type": "clawmod"
+  },
+  "category": "engineering",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:application-web",
+  "accent": "#0EA5E9",
+  "tags": [
+    "作品",
+    "小程序",
+    "轻应用",
+    "appkit"
+  ],
+  "updated": "2026-10-02",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_app_workshop/1.0.3/mod_app_workshop-1.0.3.clawmod"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "id": "smartfolder-video-studio",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "视频工作室",
+  "tagline": "说一句要讲什么，做出一条真的 MP4——脚本、配音、动效画面、字幕全包",
+  "summary": "一种作品类型：说一句要讲什么（知识点/产品介绍/活动预告/读书笔记），在创造工坊里由主理人对接、几个工人并行，做出一条真的 MP4。流程是脚本 → 配音 → 按配音节奏排好的动效画面 → 字幕 → 渲染；画面由固化的 Remotion 渲染器生成（script.json 进、MP4 出，动效语法与风格包借鉴 StarMotion：音频是主时间轴、动效是预设语法、风格是一组 token），所以换风格重新渲染不花 token。配音按可用性走 edge-tts / macOS say / 纯字幕；配图按引擎走 Codex 生图 / agy nano banana / 矢量。开工前问清画幅、时长、配音、风格；成片在创造工坊与手机上都能直接播放。",
+  "version": "1.0.1",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_video_studio",
+    "type": "clawmod"
+  },
+  "category": "design",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:video",
+  "accent": "#EF4444",
+  "tags": [
+    "作品",
+    "视频",
+    "短视频",
+    "Remotion",
+    "配音"
+  ],
+  "updated": "2026-10-02",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_video_studio/1.0.1/mod_video_studio-1.0.1.clawmod"
+  }
+}
