@@ -1,0 +1,35 @@
+{
+  "id": "clawtpl-clawdesk",
+  "kind": "tpl",
+  "source": "hosted",
+  "name": "ClawDesk AI 客服工作台",
+  "tagline": "官网、IM、评论区的客服会话收进一个实例，AI 先接待，要人工时转坐席",
+  "summary": "ClawDesk AI 客服工作台：官网挂件、IM、评论区等前台渠道进来的客服会话统一收进一个实例，默认由本实例的 Agent 接待，访客要人工时转给当班坐席接手。AI 的依据是可编译、可追溯的知识库词条；人工接管后 AI 转为副驾给回复建议。会话记录、访客资料与知识库全部落在工作空间文件树里，导出实例 ClawPkg 即完整备份，不使用外部数据库、消息队列或第三方客服 SaaS。",
+  "version": "0.8.1",
+  "category": "service",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:headset",
+  "accent": "#4C6EF5",
+  "tags": [
+    "clawdesk",
+    "customer-service",
+    "live-chat",
+    "omnichannel",
+    "ai-agent",
+    "handover"
+  ],
+  "install": {
+    "type": "clawtpl",
+    "url": "https://download.clawlego.com/tpls/tpl_clawdesk/0.8.1/tpl_clawdesk-0.8.1.clawtpl"
+  },
+  "artifact": {
+    "asset": "tpl",
+    "id": "tpl_clawdesk",
+    "type": "clawtpl"
+  },
+  "updated": "2026-10-02"
+}

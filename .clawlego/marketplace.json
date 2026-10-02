@@ -12,7 +12,7 @@
     "url": "https://github.com/ai-clawbase/clawlego-store.git",
     "ref": "main"
   },
-  "count": 52,
+  "count": 53,
   "entries": [
     {
       "id": "prompt-commit-message",
@@ -810,18 +810,34 @@
       }
     },
     {
+      "id": "clawtpl-clawdesk",
+      "kind": "tpl",
+      "source": "hosted",
+      "name": "ClawDesk AI 客服工作台",
+      "tagline": "官网、IM、评论区的客服会话收进一个实例，AI 先接待，要人工时转坐席",
+      "version": "0.8.1",
+      "category": "service",
+      "path": "registry/tpl/clawtpl-clawdesk",
+      "manifest": "registry/tpl/clawtpl-clawdesk/clawasset.json",
+      "install": {
+        "type": "clawtpl",
+        "url": "https://download.clawlego.com/tpls/tpl_clawdesk/0.8.1/tpl_clawdesk-0.8.1.clawtpl",
+        "target": null
+      }
+    },
+    {
       "id": "clawtpl-clawtax",
       "kind": "tpl",
       "source": "hosted",
       "name": "ClawTax 智能税务",
       "tagline": "一个实例即一间税务事务所的工作台",
-      "version": "0.6.1",
+      "version": "0.8.2",
       "category": "service",
       "path": "registry/tpl/clawtpl-clawtax",
       "manifest": "registry/tpl/clawtpl-clawtax/clawasset.json",
       "install": {
         "type": "clawtpl",
-        "url": "https://download.clawlego.com/tpls/tpl_clawtax/0.6.1/tpl_clawtax-0.6.1.clawtpl",
+        "url": "https://download.clawlego.com/tpls/tpl_clawtax/0.8.2/tpl_clawtax-0.8.2.clawtpl",
         "target": null
       }
     },
@@ -927,13 +943,13 @@
       "source": "hosted",
       "name": "WikiFlow",
       "tagline": "一个实例即一整套企业知识库后端",
-      "version": "0.30.9",
+      "version": "0.31.2",
       "category": "service",
       "path": "registry/tpl/clawtpl-wikiflow",
       "manifest": "registry/tpl/clawtpl-wikiflow/clawasset.json",
       "install": {
         "type": "clawtpl",
-        "url": "https://download.clawlego.com/tpls/tpl_wikiflow/0.30.9/tpl_wikiflow-0.30.9.clawtpl",
+        "url": "https://download.clawlego.com/tpls/tpl_wikiflow/0.31.2/tpl_wikiflow-0.31.2.clawtpl",
         "target": null
       }
     },
