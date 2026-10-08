@@ -1,0 +1,29 @@
+{
+  "id": "skill-video-studio",
+  "kind": "brick",
+  "source": "hosted",
+  "name": "视频工作室手艺",
+  "tagline": "「视频工作室」这种作品的做法——任何能跑代码的智能体都能装",
+  "summary": "说一句要讲什么(知识点/产品介绍/活动预告/读书笔记),做出一条真的 MP4——写脚本、配音、按配音节奏出动效画面、配字幕、渲染成片。画面由代码生成(Remotion),换一种风格重新渲染不花 token。 这是作品类型「视频工作室」的手艺（技能包）：SKILL.md 加参考文件和自带代码，按它做完把成品和交付清单 delivery.json 放进产出目录。ClawLego 实例装对应的作品类型即可；云端智能体按 README 里的命令安装。",
+  "category": "design",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "material-symbols:palette-outline",
+  "accent": "#C2410C",
+  "tags": [
+    "技能",
+    "手艺",
+    "作品类型",
+    "视频工作室"
+  ],
+  "version": "1.0.3",
+  "install": {
+    "type": "tarball",
+    "url": "https://download.clawlego.com/skills/video-studio/1.0.3/video-studio-1.0.3.tgz",
+    "sha256": "1d3c2acb74e7dcbbe863635608b96ad058d55ea0676e26a9587a8834760e6fd7"
+  },
+  "updated": "2026-10-08"
+}

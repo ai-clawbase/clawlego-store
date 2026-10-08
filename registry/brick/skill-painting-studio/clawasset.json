@@ -1,0 +1,29 @@
+{
+  "id": "skill-painting-studio",
+  "kind": "brick",
+  "source": "hosted",
+  "name": "画作工作室手艺",
+  "tagline": "「画作工作室」这种作品的做法——任何能跑代码的智能体都能装",
+  "summary": "说一句想画什么(油画/水彩/水墨/插画/像素画/生成艺术),画出一幅真的画作,可以题款落印。有生图能力的引擎直接出图;没有的就用 SVG 滤镜真画——宣纸纹理、墨晕、水彩洇边、笔触。 这是作品类型「画作工作室」的手艺（技能包）：SKILL.md 加参考文件和自带代码，按它做完把成品和交付清单 delivery.json 放进产出目录。ClawLego 实例装对应的作品类型即可；云端智能体按 README 里的命令安装。",
+  "category": "design",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "material-symbols:palette-outline",
+  "accent": "#C2410C",
+  "tags": [
+    "技能",
+    "手艺",
+    "作品类型",
+    "画作工作室"
+  ],
+  "version": "1.0.2",
+  "install": {
+    "type": "tarball",
+    "url": "https://download.clawlego.com/skills/painting-studio/1.0.2/painting-studio-1.0.2.tgz",
+    "sha256": "25b33ef717a0c505fd23759cf45965f20e15f8635a84ecdad78b599ee8623559"
+  },
+  "updated": "2026-10-08"
+}

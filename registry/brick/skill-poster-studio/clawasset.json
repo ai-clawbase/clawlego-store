@@ -1,0 +1,29 @@
+{
+  "id": "skill-poster-studio",
+  "kind": "brick",
+  "source": "hosted",
+  "name": "海报工作室手艺",
+  "tagline": "「海报工作室」这种作品的做法——任何能跑代码的智能体都能装",
+  "summary": "讲一句要做什么(活动/促销/招聘/公告/社媒图),就产出一张真海报——矢量排版、自适应、可下载 PNG/打印、发布成可分享托管页(/pub)。主视觉按引擎走最佳路径:Codex 用内置生图、agy 用 nano banana(gemini-flash-image)出图;没有生图能力(如 Claude)就走设计系统的字体/几何/渐变矢量海报。一张设计可一键出多尺寸(方图/竖屏故事/横幅) 这是作品类型「海报工作室」的手艺（技能包）：SKILL.md 加参考文件和自带代码，按它做完把成品和交付清单 delivery.json 放进产出目录。ClawLego 实例装对应的作品类型即可；云端智能体按 README 里的命令安装。",
+  "category": "design",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "material-symbols:palette-outline",
+  "accent": "#C2410C",
+  "tags": [
+    "技能",
+    "手艺",
+    "作品类型",
+    "海报工作室"
+  ],
+  "version": "1.0.3",
+  "install": {
+    "type": "tarball",
+    "url": "https://download.clawlego.com/skills/poster-studio/1.0.3/poster-studio-1.0.3.tgz",
+    "sha256": "9ee27543cabb8156865e36b7bdc0914ba14ce15629bcb2a436730d3fd7008ddd"
+  },
+  "updated": "2026-10-08"
+}

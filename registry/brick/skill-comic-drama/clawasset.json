@@ -1,0 +1,29 @@
+{
+  "id": "skill-comic-drama",
+  "kind": "brick",
+  "source": "hosted",
+  "name": "AI 漫剧工作室手艺",
+  "tagline": "「AI 漫剧工作室」这种作品的做法——任何能跑代码的智能体都能装",
+  "summary": "讲一个故事梗概,做出一集竖屏 AI 漫剧——剧本、分镜、角色形象一致的逐格画面、多角色配音、对白气泡和字幕,渲染成能直接发的 MP4。角色表跨集复用,第二集还是同一个人、同一个声音。 这是作品类型「AI 漫剧工作室」的手艺（技能包）：SKILL.md 加参考文件和自带代码，按它做完把成品和交付清单 delivery.json 放进产出目录。ClawLego 实例装对应的作品类型即可；云端智能体按 README 里的命令安装。",
+  "category": "design",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "material-symbols:palette-outline",
+  "accent": "#C2410C",
+  "tags": [
+    "技能",
+    "手艺",
+    "作品类型",
+    "AI 漫剧工作室"
+  ],
+  "version": "1.0.3",
+  "install": {
+    "type": "tarball",
+    "url": "https://download.clawlego.com/skills/comic-drama/1.0.3/comic-drama-1.0.3.tgz",
+    "sha256": "53e72fe4dd6f76e476866a0ff04ffaadaae27d3d0cc779283b0259477c568dbd"
+  },
+  "updated": "2026-10-08"
+}

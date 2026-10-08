@@ -1,0 +1,29 @@
+{
+  "id": "skill-music-studio",
+  "kind": "brick",
+  "source": "hosted",
+  "name": "音乐工作室手艺",
+  "tagline": "「音乐工作室」这种作品的做法——任何能跑代码的智能体都能装",
+  "summary": "说一句要什么样的音乐(视频背景乐/片头片尾/歌曲小样/提示音,什么情绪、多长),作曲编曲并渲染成一段真的 WAV,同时给一份 MIDI 方便拿去专业软件精修。离线可用,不依赖任何音乐 API。 这是作品类型「音乐工作室」的手艺（技能包）：SKILL.md 加参考文件和自带代码，按它做完把成品和交付清单 delivery.json 放进产出目录。ClawLego 实例装对应的作品类型即可；云端智能体按 README 里的命令安装。",
+  "category": "design",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "material-symbols:palette-outline",
+  "accent": "#C2410C",
+  "tags": [
+    "技能",
+    "手艺",
+    "作品类型",
+    "音乐工作室"
+  ],
+  "version": "1.0.3",
+  "install": {
+    "type": "tarball",
+    "url": "https://download.clawlego.com/skills/music-studio/1.0.3/music-studio-1.0.3.tgz",
+    "sha256": "0239bc71b09075dfdc1e5c9c954ff3cf398b813ebbb95d674f4a74603504fed5"
+  },
+  "updated": "2026-10-08"
+}

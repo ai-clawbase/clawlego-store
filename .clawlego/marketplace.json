@@ -12,7 +12,7 @@
     "url": "https://github.com/ai-clawbase/clawlego-store.git",
     "ref": "main"
   },
-  "count": 59,
+  "count": 65,
   "entries": [
     {
       "id": "prompt-commit-message",
@@ -31,6 +31,22 @@
       }
     },
     {
+      "id": "skill-comic-drama",
+      "kind": "brick",
+      "source": "hosted",
+      "name": "AI 漫剧工作室手艺",
+      "tagline": "「AI 漫剧工作室」这种作品的做法——任何能跑代码的智能体都能装",
+      "version": "1.0.3",
+      "category": "design",
+      "path": "registry/brick/skill-comic-drama",
+      "manifest": "registry/brick/skill-comic-drama/clawasset.json",
+      "install": {
+        "type": "tarball",
+        "url": "https://download.clawlego.com/skills/comic-drama/1.0.3/comic-drama-1.0.3.tgz",
+        "target": "business/assets/bricks/skill-comic-drama"
+      }
+    },
+    {
       "id": "skill-meeting-notes",
       "kind": "brick",
       "source": "hosted",
@@ -44,6 +60,86 @@
         "type": "files",
         "files": "registry/brick/skill-meeting-notes/files",
         "target": "business/assets/bricks/skill-meeting-notes"
+      }
+    },
+    {
+      "id": "skill-music-studio",
+      "kind": "brick",
+      "source": "hosted",
+      "name": "音乐工作室手艺",
+      "tagline": "「音乐工作室」这种作品的做法——任何能跑代码的智能体都能装",
+      "version": "1.0.3",
+      "category": "design",
+      "path": "registry/brick/skill-music-studio",
+      "manifest": "registry/brick/skill-music-studio/clawasset.json",
+      "install": {
+        "type": "tarball",
+        "url": "https://download.clawlego.com/skills/music-studio/1.0.3/music-studio-1.0.3.tgz",
+        "target": "business/assets/bricks/skill-music-studio"
+      }
+    },
+    {
+      "id": "skill-painting-studio",
+      "kind": "brick",
+      "source": "hosted",
+      "name": "画作工作室手艺",
+      "tagline": "「画作工作室」这种作品的做法——任何能跑代码的智能体都能装",
+      "version": "1.0.2",
+      "category": "design",
+      "path": "registry/brick/skill-painting-studio",
+      "manifest": "registry/brick/skill-painting-studio/clawasset.json",
+      "install": {
+        "type": "tarball",
+        "url": "https://download.clawlego.com/skills/painting-studio/1.0.2/painting-studio-1.0.2.tgz",
+        "target": "business/assets/bricks/skill-painting-studio"
+      }
+    },
+    {
+      "id": "skill-poster-studio",
+      "kind": "brick",
+      "source": "hosted",
+      "name": "海报工作室手艺",
+      "tagline": "「海报工作室」这种作品的做法——任何能跑代码的智能体都能装",
+      "version": "1.0.3",
+      "category": "design",
+      "path": "registry/brick/skill-poster-studio",
+      "manifest": "registry/brick/skill-poster-studio/clawasset.json",
+      "install": {
+        "type": "tarball",
+        "url": "https://download.clawlego.com/skills/poster-studio/1.0.3/poster-studio-1.0.3.tgz",
+        "target": "business/assets/bricks/skill-poster-studio"
+      }
+    },
+    {
+      "id": "skill-storybook-studio",
+      "kind": "brick",
+      "source": "hosted",
+      "name": "绘本工作室手艺",
+      "tagline": "「绘本工作室」这种作品的做法——任何能跑代码的智能体都能装",
+      "version": "1.1.3",
+      "category": "design",
+      "path": "registry/brick/skill-storybook-studio",
+      "manifest": "registry/brick/skill-storybook-studio/clawasset.json",
+      "install": {
+        "type": "tarball",
+        "url": "https://download.clawlego.com/skills/storybook-studio/1.1.3/storybook-studio-1.1.3.tgz",
+        "target": "business/assets/bricks/skill-storybook-studio"
+      }
+    },
+    {
+      "id": "skill-video-studio",
+      "kind": "brick",
+      "source": "hosted",
+      "name": "视频工作室手艺",
+      "tagline": "「视频工作室」这种作品的做法——任何能跑代码的智能体都能装",
+      "version": "1.0.3",
+      "category": "design",
+      "path": "registry/brick/skill-video-studio",
+      "manifest": "registry/brick/skill-video-studio/clawasset.json",
+      "install": {
+        "type": "tarball",
+        "url": "https://download.clawlego.com/skills/video-studio/1.0.3/video-studio-1.0.3.tgz",
+        "target": "business/assets/bricks/skill-video-studio"
       }
     },
     {
