@@ -1,4 +1,4 @@
-# 音乐工作室手艺 · `music-studio` 1.0.3
+# 音乐工作室手艺 · `music-studio` 1.2.0
 
 作品类型「音乐工作室」的做法，Agent Skill 格式（`SKILL.md` + 参考文件 + 自带代码）。
 成品交付约定见 `SKILL.md` 末尾「Delivery / 交付」：成品与 `delivery.json` 放进产出目录。
@@ -7,8 +7,8 @@
 
 ```sh
 mkdir -p skills/music-studio && cd skills/music-studio
-curl -fsSL -o pack.tgz 'https://download.clawlego.com/skills/music-studio/1.0.3/music-studio-1.0.3.tgz'
-echo '0239bc71b09075dfdc1e5c9c954ff3cf398b813ebbb95d674f4a74603504fed5  pack.tgz' > pack.sha256
+curl -fsSL -o pack.tgz 'https://download.clawlego.com/skills/music-studio/1.2.0/music-studio-1.2.0.tgz'
+echo '12fcbda7007235320f372abc6d618bd3d2dae9d35aac2a944f60f5b7bb6f95a0  pack.tgz' > pack.sha256
 (sha256sum -c pack.sha256 || shasum -a 256 -c pack.sha256)
 tar -xzf pack.tgz && rm -f pack.tgz pack.sha256
 ```

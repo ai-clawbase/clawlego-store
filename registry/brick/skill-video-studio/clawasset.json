@@ -19,11 +19,11 @@
     "作品类型",
     "视频工作室"
   ],
-  "version": "1.0.3",
+  "version": "1.1.0",
   "install": {
     "type": "tarball",
-    "url": "https://download.clawlego.com/skills/video-studio/1.0.3/video-studio-1.0.3.tgz",
-    "sha256": "1d3c2acb74e7dcbbe863635608b96ad058d55ea0676e26a9587a8834760e6fd7"
+    "url": "https://download.clawlego.com/skills/video-studio/1.1.0/video-studio-1.1.0.tgz",
+    "sha256": "cfaf60feec489f76196cdeeac90d65598bcc1fea75203667d25c07e90089ad8e"
   },
-  "updated": "2026-10-08"
+  "updated": "2026-10-12"
 }

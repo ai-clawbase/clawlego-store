@@ -19,11 +19,11 @@
     "作品类型",
     "音乐工作室"
   ],
-  "version": "1.0.3",
+  "version": "1.2.0",
   "install": {
     "type": "tarball",
-    "url": "https://download.clawlego.com/skills/music-studio/1.0.3/music-studio-1.0.3.tgz",
-    "sha256": "0239bc71b09075dfdc1e5c9c954ff3cf398b813ebbb95d674f4a74603504fed5"
+    "url": "https://download.clawlego.com/skills/music-studio/1.2.0/music-studio-1.2.0.tgz",
+    "sha256": "12fcbda7007235320f372abc6d618bd3d2dae9d35aac2a944f60f5b7bb6f95a0"
   },
-  "updated": "2026-10-08"
+  "updated": "2026-10-12"
 }
