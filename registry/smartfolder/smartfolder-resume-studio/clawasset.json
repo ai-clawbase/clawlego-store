@@ -1,0 +1,32 @@
+{
+  "id": "smartfolder-resume-studio",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "简历工作室",
+  "tagline": "按岗位写成一份 A4 简历,同一个链接就是你的个人主页",
+  "summary": "一种作品类型——说说经历和目标岗位，写成一份真的简历：按岗位取舍经历、把职责改写成带数字的成果，排成 A4（一页或两页，浏览器打印即矢量 PDF），同一个页面在手机上就是可分享的个人主页。三套版式（经典单栏/左侧栏/极简）、可带照片与品牌色、中英文栏目标题。随包携带 resume-studio 技能（成果写法与按岗位取舍指南）与固化的纯 Python 渲染器 resume.py（resume.json 进、自包含 HTML 出，--check 估算页数并指出最长的部分）。",
+  "version": "1.0.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_resume_studio",
+    "type": "clawmod"
+  },
+  "category": "design",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:user-profile",
+  "accent": "#1971C2",
+  "tags": [
+    "作品",
+    "简历",
+    "求职"
+  ],
+  "updated": "2026-10-14",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_resume_studio/1.0.0/mod_resume_studio-1.0.0.clawmod"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "id": "smartfolder-slides-studio",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "演示文稿工作室",
+  "tagline": "丢材料或说一句,做成能放映的网页幻灯片,内嵌可编辑的 PPTX",
+  "summary": "一种作品类型（spec.creation）——丢材料或说一句要讲什么（汇报/提案/课件/路演/分享），做成一份真的演示文稿：网页版可直接放映、看全部页、打印成 PDF、分享链接，里面内嵌可下载的 .pptx（每段文字都是可编辑文本框、表格是真表格、带演讲者备注，PowerPoint/Keynote/WPS 都能打开）。随包携带 slides-studio 技能与固化的纯 Python 渲染器 deck.py（deck.json 进、PPTX+HTML 出；13 种版式、6 套主题、--check 逐页量出放不下的字；只用标准库，离线可用，同一份输入字节相同）。内容是数据、版面是固定代码。",
+  "version": "1.0.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_slides_studio",
+    "type": "clawmod"
+  },
+  "category": "design",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:presentation-file",
+  "accent": "#E8590C",
+  "tags": [
+    "作品",
+    "演示文稿",
+    "PPT",
+    "汇报"
+  ],
+  "updated": "2026-10-14",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_slides_studio/1.0.0/mod_slides_studio-1.0.0.clawmod"
+  }
+}

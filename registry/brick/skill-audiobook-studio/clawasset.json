@@ -1,0 +1,29 @@
+{
+  "id": "skill-audiobook-studio",
+  "kind": "brick",
+  "source": "hosted",
+  "name": "有声书工作室手艺",
+  "tagline": "「有声书工作室」这种作品的做法——任何能跑代码的智能体都能装",
+  "summary": "把一个故事、一本绘本或一篇文章做成有声书:旁白和角色用不同的声音,可以垫背景音乐;出整本音频、分章音频和读到哪句亮哪句的播放页。用电脑自带的语音合成,离线可用。 这是作品类型「有声书工作室」的手艺（技能包）：SKILL.md 加参考文件和自带代码，按它做完把成品和交付清单 delivery.json 放进产出目录。ClawLego 实例装对应的作品类型即可；云端智能体按 README 里的命令安装。",
+  "category": "design",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "material-symbols:palette-outline",
+  "accent": "#C2410C",
+  "tags": [
+    "技能",
+    "手艺",
+    "作品类型",
+    "有声书工作室"
+  ],
+  "version": "1.0.0",
+  "install": {
+    "type": "tarball",
+    "url": "https://download.clawlego.com/skills/audiobook-studio/1.0.0/audiobook-studio-1.0.0.tgz",
+    "sha256": "df8ab5ca751cc57c129af4015b22d94b163746df3be7230f83bae1f8d30e6b86"
+  },
+  "updated": "2026-10-14"
+}

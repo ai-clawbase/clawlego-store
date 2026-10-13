@@ -1,0 +1,29 @@
+{
+  "id": "skill-travel-guide-studio",
+  "kind": "brick",
+  "source": "hosted",
+  "name": "旅行手册工作室手艺",
+  "tagline": "「旅行手册工作室」这种作品的做法——任何能跑代码的智能体都能装",
+  "summary": "说去哪、几天、想玩什么(订好的机票酒店也丢进来),排成一本随身旅行手册:每天按时间排好、地点一点就导航、行李清单能勾选、预算算好;一键加到手机日历,也能打印。 这是作品类型「旅行手册工作室」的手艺（技能包）：SKILL.md 加参考文件和自带代码，按它做完把成品和交付清单 delivery.json 放进产出目录。ClawLego 实例装对应的作品类型即可；云端智能体按 README 里的命令安装。",
+  "category": "design",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "material-symbols:palette-outline",
+  "accent": "#C2410C",
+  "tags": [
+    "技能",
+    "手艺",
+    "作品类型",
+    "旅行手册工作室"
+  ],
+  "version": "1.0.0",
+  "install": {
+    "type": "tarball",
+    "url": "https://download.clawlego.com/skills/travel-guide-studio/1.0.0/travel-guide-studio-1.0.0.tgz",
+    "sha256": "e40234514c5f02dac5c3b350697a693a0435983c6918071ecdec66fe207973ba"
+  },
+  "updated": "2026-10-14"
+}

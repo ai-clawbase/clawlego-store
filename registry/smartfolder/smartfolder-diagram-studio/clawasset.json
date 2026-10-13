@@ -1,0 +1,33 @@
+{
+  "id": "smartfolder-diagram-studio",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "图解工作室",
+  "tagline": "把一段流程或提纲画成清楚的矢量图:流程图、思维导图、架构图…",
+  "summary": "一种作品类型——说一段流程、一份提纲或一组要点，画成一张清楚的图：流程图（分层排序、连线避让、回边虚线绕行）、思维导图（左右平衡）、组织架构/层级树、时间线、四象限、循环图、金字塔，6 套配色可加品牌色。成品是自包含 SVG 矢量图（无外部引用），放进 PPT/Keynote/Word/飞书文档都不糊。随包携带 diagram-studio 技能与固化的纯 Python 布局渲染器 diagram.py（diagram.json 进、SVG 出，只用标准库，--check 查引用错误/文字过长/节点过多）。",
+  "version": "1.0.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_diagram_studio",
+    "type": "clawmod"
+  },
+  "category": "design",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:flow",
+  "accent": "#0C8599",
+  "tags": [
+    "作品",
+    "图解",
+    "流程图",
+    "思维导图"
+  ],
+  "updated": "2026-10-14",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_diagram_studio/1.0.0/mod_diagram_studio-1.0.0.clawmod"
+  }
+}

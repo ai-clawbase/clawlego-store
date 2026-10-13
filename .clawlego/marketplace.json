@@ -12,7 +12,7 @@
     "url": "https://github.com/ai-clawbase/clawlego-store.git",
     "ref": "main"
   },
-  "count": 65,
+  "count": 91,
   "entries": [
     {
       "id": "prompt-commit-message",
@@ -31,6 +31,38 @@
       }
     },
     {
+      "id": "skill-audiobook-studio",
+      "kind": "brick",
+      "source": "hosted",
+      "name": "有声书工作室手艺",
+      "tagline": "「有声书工作室」这种作品的做法——任何能跑代码的智能体都能装",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "registry/brick/skill-audiobook-studio",
+      "manifest": "registry/brick/skill-audiobook-studio/clawasset.json",
+      "install": {
+        "type": "tarball",
+        "url": "https://download.clawlego.com/skills/audiobook-studio/1.0.0/audiobook-studio-1.0.0.tgz",
+        "target": "business/assets/bricks/skill-audiobook-studio"
+      }
+    },
+    {
+      "id": "skill-chart-studio",
+      "kind": "brick",
+      "source": "hosted",
+      "name": "图表工作室手艺",
+      "tagline": "「图表工作室」这种作品的做法——任何能跑代码的智能体都能装",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "registry/brick/skill-chart-studio",
+      "manifest": "registry/brick/skill-chart-studio/clawasset.json",
+      "install": {
+        "type": "tarball",
+        "url": "https://download.clawlego.com/skills/chart-studio/1.0.0/chart-studio-1.0.0.tgz",
+        "target": "business/assets/bricks/skill-chart-studio"
+      }
+    },
+    {
       "id": "skill-comic-drama",
       "kind": "brick",
       "source": "hosted",
@@ -44,6 +76,54 @@
         "type": "tarball",
         "url": "https://download.clawlego.com/skills/comic-drama/1.1.0/comic-drama-1.1.0.tgz",
         "target": "business/assets/bricks/skill-comic-drama"
+      }
+    },
+    {
+      "id": "skill-diagram-studio",
+      "kind": "brick",
+      "source": "hosted",
+      "name": "图解工作室手艺",
+      "tagline": "「图解工作室」这种作品的做法——任何能跑代码的智能体都能装",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "registry/brick/skill-diagram-studio",
+      "manifest": "registry/brick/skill-diagram-studio/clawasset.json",
+      "install": {
+        "type": "tarball",
+        "url": "https://download.clawlego.com/skills/diagram-studio/1.0.0/diagram-studio-1.0.0.tgz",
+        "target": "business/assets/bricks/skill-diagram-studio"
+      }
+    },
+    {
+      "id": "skill-flashcard-studio",
+      "kind": "brick",
+      "source": "hosted",
+      "name": "闪卡工作室手艺",
+      "tagline": "「闪卡工作室」这种作品的做法——任何能跑代码的智能体都能装",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "registry/brick/skill-flashcard-studio",
+      "manifest": "registry/brick/skill-flashcard-studio/clawasset.json",
+      "install": {
+        "type": "tarball",
+        "url": "https://download.clawlego.com/skills/flashcard-studio/1.0.0/flashcard-studio-1.0.0.tgz",
+        "target": "business/assets/bricks/skill-flashcard-studio"
+      }
+    },
+    {
+      "id": "skill-invitation-studio",
+      "kind": "brick",
+      "source": "hosted",
+      "name": "请柬工作室手艺",
+      "tagline": "「请柬工作室」这种作品的做法——任何能跑代码的智能体都能装",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "registry/brick/skill-invitation-studio",
+      "manifest": "registry/brick/skill-invitation-studio/clawasset.json",
+      "install": {
+        "type": "tarball",
+        "url": "https://download.clawlego.com/skills/invitation-studio/1.0.0/invitation-studio-1.0.0.tgz",
+        "target": "business/assets/bricks/skill-invitation-studio"
       }
     },
     {
@@ -95,6 +175,22 @@
       }
     },
     {
+      "id": "skill-photobook-studio",
+      "kind": "brick",
+      "source": "hosted",
+      "name": "相册工作室手艺",
+      "tagline": "「相册工作室」这种作品的做法——任何能跑代码的智能体都能装",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "registry/brick/skill-photobook-studio",
+      "manifest": "registry/brick/skill-photobook-studio/clawasset.json",
+      "install": {
+        "type": "tarball",
+        "url": "https://download.clawlego.com/skills/photobook-studio/1.0.0/photobook-studio-1.0.0.tgz",
+        "target": "business/assets/bricks/skill-photobook-studio"
+      }
+    },
+    {
       "id": "skill-poster-studio",
       "kind": "brick",
       "source": "hosted",
@@ -108,6 +204,86 @@
         "type": "tarball",
         "url": "https://download.clawlego.com/skills/poster-studio/1.0.5/poster-studio-1.0.5.tgz",
         "target": "business/assets/bricks/skill-poster-studio"
+      }
+    },
+    {
+      "id": "skill-recipe-book-studio",
+      "kind": "brick",
+      "source": "hosted",
+      "name": "菜谱书工作室手艺",
+      "tagline": "「菜谱书工作室」这种作品的做法——任何能跑代码的智能体都能装",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "registry/brick/skill-recipe-book-studio",
+      "manifest": "registry/brick/skill-recipe-book-studio/clawasset.json",
+      "install": {
+        "type": "tarball",
+        "url": "https://download.clawlego.com/skills/recipe-book-studio/1.0.0/recipe-book-studio-1.0.0.tgz",
+        "target": "business/assets/bricks/skill-recipe-book-studio"
+      }
+    },
+    {
+      "id": "skill-resume-studio",
+      "kind": "brick",
+      "source": "hosted",
+      "name": "简历工作室手艺",
+      "tagline": "「简历工作室」这种作品的做法——任何能跑代码的智能体都能装",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "registry/brick/skill-resume-studio",
+      "manifest": "registry/brick/skill-resume-studio/clawasset.json",
+      "install": {
+        "type": "tarball",
+        "url": "https://download.clawlego.com/skills/resume-studio/1.0.0/resume-studio-1.0.0.tgz",
+        "target": "business/assets/bricks/skill-resume-studio"
+      }
+    },
+    {
+      "id": "skill-slides-studio",
+      "kind": "brick",
+      "source": "hosted",
+      "name": "演示文稿工作室手艺",
+      "tagline": "「演示文稿工作室」这种作品的做法——任何能跑代码的智能体都能装",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "registry/brick/skill-slides-studio",
+      "manifest": "registry/brick/skill-slides-studio/clawasset.json",
+      "install": {
+        "type": "tarball",
+        "url": "https://download.clawlego.com/skills/slides-studio/1.0.0/slides-studio-1.0.0.tgz",
+        "target": "business/assets/bricks/skill-slides-studio"
+      }
+    },
+    {
+      "id": "skill-social-post-studio",
+      "kind": "brick",
+      "source": "hosted",
+      "name": "图文笔记工作室手艺",
+      "tagline": "「图文笔记工作室」这种作品的做法——任何能跑代码的智能体都能装",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "registry/brick/skill-social-post-studio",
+      "manifest": "registry/brick/skill-social-post-studio/clawasset.json",
+      "install": {
+        "type": "tarball",
+        "url": "https://download.clawlego.com/skills/social-post-studio/1.0.0/social-post-studio-1.0.0.tgz",
+        "target": "business/assets/bricks/skill-social-post-studio"
+      }
+    },
+    {
+      "id": "skill-sticker-studio",
+      "kind": "brick",
+      "source": "hosted",
+      "name": "表情包工作室手艺",
+      "tagline": "「表情包工作室」这种作品的做法——任何能跑代码的智能体都能装",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "registry/brick/skill-sticker-studio",
+      "manifest": "registry/brick/skill-sticker-studio/clawasset.json",
+      "install": {
+        "type": "tarball",
+        "url": "https://download.clawlego.com/skills/sticker-studio/1.0.0/sticker-studio-1.0.0.tgz",
+        "target": "business/assets/bricks/skill-sticker-studio"
       }
     },
     {
@@ -127,6 +303,22 @@
       }
     },
     {
+      "id": "skill-travel-guide-studio",
+      "kind": "brick",
+      "source": "hosted",
+      "name": "旅行手册工作室手艺",
+      "tagline": "「旅行手册工作室」这种作品的做法——任何能跑代码的智能体都能装",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "registry/brick/skill-travel-guide-studio",
+      "manifest": "registry/brick/skill-travel-guide-studio/clawasset.json",
+      "install": {
+        "type": "tarball",
+        "url": "https://download.clawlego.com/skills/travel-guide-studio/1.0.0/travel-guide-studio-1.0.0.tgz",
+        "target": "business/assets/bricks/skill-travel-guide-studio"
+      }
+    },
+    {
       "id": "skill-video-studio",
       "kind": "brick",
       "source": "hosted",
@@ -140,6 +332,22 @@
         "type": "tarball",
         "url": "https://download.clawlego.com/skills/video-studio/1.1.0/video-studio-1.1.0.tgz",
         "target": "business/assets/bricks/skill-video-studio"
+      }
+    },
+    {
+      "id": "skill-worksheet-studio",
+      "kind": "brick",
+      "source": "hosted",
+      "name": "练习卷工作室手艺",
+      "tagline": "「练习卷工作室」这种作品的做法——任何能跑代码的智能体都能装",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "registry/brick/skill-worksheet-studio",
+      "manifest": "registry/brick/skill-worksheet-studio/clawasset.json",
+      "install": {
+        "type": "tarball",
+        "url": "https://download.clawlego.com/skills/worksheet-studio/1.0.0/worksheet-studio-1.0.0.tgz",
+        "target": "business/assets/bricks/skill-worksheet-studio"
       }
     },
     {
@@ -570,6 +778,22 @@
       }
     },
     {
+      "id": "smartfolder-audiobook-studio",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "有声书工作室",
+      "tagline": "把故事做成有声书:旁白和角色分不同声音,可垫背景音乐",
+      "version": "1.0.0",
+      "category": "life",
+      "path": "registry/smartfolder/smartfolder-audiobook-studio",
+      "manifest": "registry/smartfolder/smartfolder-audiobook-studio/clawasset.json",
+      "install": {
+        "type": "clawmod",
+        "url": "https://download.clawlego.com/mods/mod_audiobook_studio/1.0.0/mod_audiobook_studio-1.0.0.clawmod",
+        "target": null
+      }
+    },
+    {
       "id": "smartfolder-brand-kit",
       "kind": "smartfolder",
       "source": "hosted",
@@ -598,6 +822,22 @@
       "install": {
         "type": "clawmod",
         "url": "https://download.clawlego.com/mods/mod_cfmgr/1.0.0/mod_cfmgr-1.0.0.clawmod",
+        "target": null
+      }
+    },
+    {
+      "id": "smartfolder-chart-studio",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "图表工作室",
+      "tagline": "丢一份 CSV / Excel,做成一页看得懂的数据看板",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "registry/smartfolder/smartfolder-chart-studio",
+      "manifest": "registry/smartfolder/smartfolder-chart-studio/clawasset.json",
+      "install": {
+        "type": "clawmod",
+        "url": "https://download.clawlego.com/mods/mod_chart_studio/1.0.0/mod_chart_studio-1.0.0.clawmod",
         "target": null
       }
     },
@@ -666,6 +906,22 @@
       }
     },
     {
+      "id": "smartfolder-diagram-studio",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "图解工作室",
+      "tagline": "把一段流程或提纲画成清楚的矢量图:流程图、思维导图、架构图…",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "registry/smartfolder/smartfolder-diagram-studio",
+      "manifest": "registry/smartfolder/smartfolder-diagram-studio/clawasset.json",
+      "install": {
+        "type": "clawmod",
+        "url": "https://download.clawlego.com/mods/mod_diagram_studio/1.0.0/mod_diagram_studio-1.0.0.clawmod",
+        "target": null
+      }
+    },
+    {
       "id": "smartfolder-doc-vault",
       "kind": "smartfolder",
       "source": "hosted",
@@ -730,6 +986,22 @@
       }
     },
     {
+      "id": "smartfolder-flashcard-studio",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "闪卡工作室",
+      "tagline": "把要背的东西做成闪卡:网页上背、按记忆复习,附 Anki 卡组",
+      "version": "1.0.0",
+      "category": "life",
+      "path": "registry/smartfolder/smartfolder-flashcard-studio",
+      "manifest": "registry/smartfolder/smartfolder-flashcard-studio/clawasset.json",
+      "install": {
+        "type": "clawmod",
+        "url": "https://download.clawlego.com/mods/mod_flashcard_studio/1.0.0/mod_flashcard_studio-1.0.0.clawmod",
+        "target": null
+      }
+    },
+    {
       "id": "smartfolder-game-workshop",
       "kind": "smartfolder",
       "source": "hosted",
@@ -758,6 +1030,22 @@
       "install": {
         "type": "clawmod",
         "url": "https://download.clawlego.com/mods/mod_git_repo/2.1.0/mod_git_repo-2.1.0.clawmod",
+        "target": null
+      }
+    },
+    {
+      "id": "smartfolder-invitation-studio",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "请柬工作室",
+      "tagline": "做一张会动的电子请柬或贺卡,每位客人都有专属链接",
+      "version": "1.0.0",
+      "category": "life",
+      "path": "registry/smartfolder/smartfolder-invitation-studio",
+      "manifest": "registry/smartfolder/smartfolder-invitation-studio/clawasset.json",
+      "install": {
+        "type": "clawmod",
+        "url": "https://download.clawlego.com/mods/mod_invitation_studio/1.0.0/mod_invitation_studio-1.0.0.clawmod",
         "target": null
       }
     },
@@ -890,6 +1178,22 @@
       }
     },
     {
+      "id": "smartfolder-photobook-studio",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "相册工作室",
+      "tagline": "把照片做成回忆相册:全屏放映配音乐,也能打印成相册书",
+      "version": "1.0.0",
+      "category": "life",
+      "path": "registry/smartfolder/smartfolder-photobook-studio",
+      "manifest": "registry/smartfolder/smartfolder-photobook-studio/clawasset.json",
+      "install": {
+        "type": "clawmod",
+        "url": "https://download.clawlego.com/mods/mod_photobook_studio/1.0.0/mod_photobook_studio-1.0.0.clawmod",
+        "target": null
+      }
+    },
+    {
       "id": "smartfolder-poster-studio",
       "kind": "smartfolder",
       "source": "hosted",
@@ -902,6 +1206,22 @@
       "install": {
         "type": "clawmod",
         "url": "https://download.clawlego.com/mods/mod_poster_studio/1.0.5/mod_poster_studio-1.0.5.clawmod",
+        "target": null
+      }
+    },
+    {
+      "id": "smartfolder-recipe-book-studio",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "菜谱书工作室",
+      "tagline": "把家里的拿手菜整理成一本菜谱书,份量可换算、步骤带计时",
+      "version": "1.0.0",
+      "category": "life",
+      "path": "registry/smartfolder/smartfolder-recipe-book-studio",
+      "manifest": "registry/smartfolder/smartfolder-recipe-book-studio/clawasset.json",
+      "install": {
+        "type": "clawmod",
+        "url": "https://download.clawlego.com/mods/mod_recipe_book_studio/1.0.0/mod_recipe_book_studio-1.0.0.clawmod",
         "target": null
       }
     },
@@ -938,6 +1258,70 @@
       }
     },
     {
+      "id": "smartfolder-resume-studio",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "简历工作室",
+      "tagline": "按岗位写成一份 A4 简历,同一个链接就是你的个人主页",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "registry/smartfolder/smartfolder-resume-studio",
+      "manifest": "registry/smartfolder/smartfolder-resume-studio/clawasset.json",
+      "install": {
+        "type": "clawmod",
+        "url": "https://download.clawlego.com/mods/mod_resume_studio/1.0.0/mod_resume_studio-1.0.0.clawmod",
+        "target": null
+      }
+    },
+    {
+      "id": "smartfolder-slides-studio",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "演示文稿工作室",
+      "tagline": "丢材料或说一句,做成能放映的网页幻灯片,内嵌可编辑的 PPTX",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "registry/smartfolder/smartfolder-slides-studio",
+      "manifest": "registry/smartfolder/smartfolder-slides-studio/clawasset.json",
+      "install": {
+        "type": "clawmod",
+        "url": "https://download.clawlego.com/mods/mod_slides_studio/1.0.0/mod_slides_studio-1.0.0.clawmod",
+        "target": null
+      }
+    },
+    {
+      "id": "smartfolder-social-post-studio",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "图文笔记工作室",
+      "tagline": "做一篇拿去就能发的小红书图文或公众号文章",
+      "version": "1.0.0",
+      "category": "design",
+      "path": "registry/smartfolder/smartfolder-social-post-studio",
+      "manifest": "registry/smartfolder/smartfolder-social-post-studio/clawasset.json",
+      "install": {
+        "type": "clawmod",
+        "url": "https://download.clawlego.com/mods/mod_social_post_studio/1.0.0/mod_social_post_studio-1.0.0.clawmod",
+        "target": null
+      }
+    },
+    {
+      "id": "smartfolder-sticker-studio",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "表情包工作室",
+      "tagline": "做一整套形象统一的表情包,每张都是微信表情规格的 PNG",
+      "version": "1.0.0",
+      "category": "life",
+      "path": "registry/smartfolder/smartfolder-sticker-studio",
+      "manifest": "registry/smartfolder/smartfolder-sticker-studio/clawasset.json",
+      "install": {
+        "type": "clawmod",
+        "url": "https://download.clawlego.com/mods/mod_sticker_studio/1.0.0/mod_sticker_studio-1.0.0.clawmod",
+        "target": null
+      }
+    },
+    {
       "id": "smartfolder-storybook",
       "kind": "smartfolder",
       "source": "hosted",
@@ -950,6 +1334,22 @@
       "install": {
         "type": "clawmod",
         "url": "https://download.clawlego.com/mods/mod_storybook/1.1.4/mod_storybook-1.1.4.clawmod",
+        "target": null
+      }
+    },
+    {
+      "id": "smartfolder-travel-guide-studio",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "旅行手册工作室",
+      "tagline": "把一次旅行排成随身手册:每天的安排、导航、行李清单、预算",
+      "version": "1.0.0",
+      "category": "life",
+      "path": "registry/smartfolder/smartfolder-travel-guide-studio",
+      "manifest": "registry/smartfolder/smartfolder-travel-guide-studio/clawasset.json",
+      "install": {
+        "type": "clawmod",
+        "url": "https://download.clawlego.com/mods/mod_travel_guide_studio/1.0.0/mod_travel_guide_studio-1.0.0.clawmod",
         "target": null
       }
     },
@@ -982,6 +1382,22 @@
       "install": {
         "type": "clawmod",
         "url": "https://download.clawlego.com/mods/mod_wiki_bundle/2.0.1/mod_wiki_bundle-2.0.1.clawmod",
+        "target": null
+      }
+    },
+    {
+      "id": "smartfolder-worksheet-studio",
+      "kind": "smartfolder",
+      "source": "hosted",
+      "name": "练习卷工作室",
+      "tagline": "说一句要练什么,出一张能打印的 A4 练习卷或字帖,附答案页",
+      "version": "1.0.0",
+      "category": "life",
+      "path": "registry/smartfolder/smartfolder-worksheet-studio",
+      "manifest": "registry/smartfolder/smartfolder-worksheet-studio/clawasset.json",
+      "install": {
+        "type": "clawmod",
+        "url": "https://download.clawlego.com/mods/mod_worksheet_studio/1.0.0/mod_worksheet_studio-1.0.0.clawmod",
         "target": null
       }
     },

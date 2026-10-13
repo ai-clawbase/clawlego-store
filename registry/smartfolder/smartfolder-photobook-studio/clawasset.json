@@ -1,0 +1,33 @@
+{
+  "id": "smartfolder-photobook-studio",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "相册工作室",
+  "tagline": "把照片做成回忆相册:全屏放映配音乐,也能打印成相册书",
+  "summary": "一种作品类型——把一组照片做成回忆相册：全屏放映（推拉镜头、淡入淡出、字幕、背景音乐循环、自动播放，点按/滑动/方向键切换）和可打印的相册书（封面、章节页、一张/两张/一大两小/四宫格自动版式、结尾页，A4 横版），同一个页面里切换。照片自动缩到长边 1600px 再内嵌（macOS 用自带 sips，其他用 ffmpeg，缓存放在 .clawrender 不进快照），原图不动。随包携带 photobook-studio 技能（分章挑图写说明的方法）与固化的纯 Python 渲染器 album.py（只用标准库）。",
+  "version": "1.0.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_photobook_studio",
+    "type": "clawmod"
+  },
+  "category": "life",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:image-reference",
+  "accent": "#A0522D",
+  "tags": [
+    "作品",
+    "相册",
+    "照片",
+    "回忆"
+  ],
+  "updated": "2026-10-14",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_photobook_studio/1.0.0/mod_photobook_studio-1.0.0.clawmod"
+  }
+}

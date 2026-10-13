@@ -1,0 +1,29 @@
+{
+  "id": "skill-slides-studio",
+  "kind": "brick",
+  "source": "hosted",
+  "name": "演示文稿工作室手艺",
+  "tagline": "「演示文稿工作室」这种作品的做法——任何能跑代码的智能体都能装",
+  "summary": "丢材料或说一句要讲什么(工作汇报/方案提案/课件/路演/分享),做成一份真的演示文稿——网页上直接放映、打印成 PDF、发链接,一键下载可编辑的 PPTX(PowerPoint/Keynote/WPS 都能打开,带演讲者备注)。离线可用,不依赖任何 API。 这是作品类型「演示文稿工作室」的手艺（技能包）：SKILL.md 加参考文件和自带代码，按它做完把成品和交付清单 delivery.json 放进产出目录。ClawLego 实例装对应的作品类型即可；云端智能体按 README 里的命令安装。",
+  "category": "design",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "material-symbols:palette-outline",
+  "accent": "#C2410C",
+  "tags": [
+    "技能",
+    "手艺",
+    "作品类型",
+    "演示文稿工作室"
+  ],
+  "version": "1.0.0",
+  "install": {
+    "type": "tarball",
+    "url": "https://download.clawlego.com/skills/slides-studio/1.0.0/slides-studio-1.0.0.tgz",
+    "sha256": "99896866d33a554d28bbce636c1c40dc9d2a6db6f24b0a34db1c04b86ed20481"
+  },
+  "updated": "2026-10-14"
+}

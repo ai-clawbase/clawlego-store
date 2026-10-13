@@ -1,0 +1,33 @@
+{
+  "id": "smartfolder-invitation-studio",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "请柬工作室",
+  "tagline": "做一张会动的电子请柬或贺卡,每位客人都有专属链接",
+  "summary": "一种作品类型——说说什么场合、什么时候、在哪，做一张会动的电子请柬或贺卡（生日会/婚礼/聚会/满月周岁/乔迁/节日祝福）：点信封拆开、彩纸/花瓣/爱心动效、活动倒计时、地点一点导航（高德/Google/Apple）、加到日历（.ics，提前一天提醒）、一键回复主人（手机上直接发短信）；链接加 ?to=名字 就是「敬邀 某某」的专属请柬，主人页一次生成全部客人的专属链接。五套配色（热闹橙/香槟金/粉蓝/藏青/中式红）。随包携带 invitation-studio 技能（各场合措辞）与固化的纯 Python 渲染器 invite.py（只用标准库）。",
+  "version": "1.0.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_invitation_studio",
+    "type": "clawmod"
+  },
+  "category": "life",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:email",
+  "accent": "#F76707",
+  "tags": [
+    "作品",
+    "请柬",
+    "贺卡",
+    "邀请函"
+  ],
+  "updated": "2026-10-14",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_invitation_studio/1.0.0/mod_invitation_studio-1.0.0.clawmod"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "skill-flashcard-studio",
+  "kind": "brick",
+  "source": "hosted",
+  "name": "闪卡工作室手艺",
+  "tagline": "「闪卡工作室」这种作品的做法——任何能跑代码的智能体都能装",
+  "summary": "把要背的东西(单词、古诗、公式、考点、一章课本)做成一副闪卡:网页上点卡翻面、按记忆程度间隔复习、外语能朗读、能打印成卡片;另给一份 Anki 卡组。 这是作品类型「闪卡工作室」的手艺（技能包）：SKILL.md 加参考文件和自带代码，按它做完把成品和交付清单 delivery.json 放进产出目录。ClawLego 实例装对应的作品类型即可；云端智能体按 README 里的命令安装。",
+  "category": "design",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "material-symbols:palette-outline",
+  "accent": "#C2410C",
+  "tags": [
+    "技能",
+    "手艺",
+    "作品类型",
+    "闪卡工作室"
+  ],
+  "version": "1.0.0",
+  "install": {
+    "type": "tarball",
+    "url": "https://download.clawlego.com/skills/flashcard-studio/1.0.0/flashcard-studio-1.0.0.tgz",
+    "sha256": "2fc82308aae9a9edea5da905566683b75deb02960ecdb8ca26a4a472f627ec5a"
+  },
+  "updated": "2026-10-14"
+}

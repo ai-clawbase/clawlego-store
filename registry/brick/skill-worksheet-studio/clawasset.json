@@ -1,0 +1,29 @@
+{
+  "id": "skill-worksheet-studio",
+  "kind": "brick",
+  "source": "hosted",
+  "name": "练习卷工作室手艺",
+  "tagline": "「练习卷工作室」这种作品的做法——任何能跑代码的智能体都能装",
+  "summary": "说一句要练什么(口算、竖式、生字描红、看拼音写词语、英语抄写、选择填空、作文稿纸),出一张能直接打印的 A4 练习卷,附答案页。算术题和答案由程序生成,不会算错;换一套题只要说一声。 这是作品类型「练习卷工作室」的手艺（技能包）：SKILL.md 加参考文件和自带代码，按它做完把成品和交付清单 delivery.json 放进产出目录。ClawLego 实例装对应的作品类型即可；云端智能体按 README 里的命令安装。",
+  "category": "design",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "material-symbols:palette-outline",
+  "accent": "#C2410C",
+  "tags": [
+    "技能",
+    "手艺",
+    "作品类型",
+    "练习卷工作室"
+  ],
+  "version": "1.0.0",
+  "install": {
+    "type": "tarball",
+    "url": "https://download.clawlego.com/skills/worksheet-studio/1.0.0/worksheet-studio-1.0.0.tgz",
+    "sha256": "63343c1a5e23e35f3074ba145ac09d7b9ae17647b8018981f7c6ff4fc2ba8726"
+  },
+  "updated": "2026-10-14"
+}

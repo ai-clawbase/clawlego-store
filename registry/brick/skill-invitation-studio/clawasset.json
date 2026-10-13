@@ -1,0 +1,29 @@
+{
+  "id": "skill-invitation-studio",
+  "kind": "brick",
+  "source": "hosted",
+  "name": "请柬工作室手艺",
+  "tagline": "「请柬工作室」这种作品的做法——任何能跑代码的智能体都能装",
+  "summary": "做一张会动的电子请柬或贺卡:生日会、婚礼、聚会、满月、乔迁、节日祝福。拆信封动画、倒计时、地点导航、加到日历、一键回复主人,每位客人还有写着自己名字的专属链接。 这是作品类型「请柬工作室」的手艺（技能包）：SKILL.md 加参考文件和自带代码，按它做完把成品和交付清单 delivery.json 放进产出目录。ClawLego 实例装对应的作品类型即可；云端智能体按 README 里的命令安装。",
+  "category": "design",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "material-symbols:palette-outline",
+  "accent": "#C2410C",
+  "tags": [
+    "技能",
+    "手艺",
+    "作品类型",
+    "请柬工作室"
+  ],
+  "version": "1.0.0",
+  "install": {
+    "type": "tarball",
+    "url": "https://download.clawlego.com/skills/invitation-studio/1.0.0/invitation-studio-1.0.0.tgz",
+    "sha256": "98ba80097f9006b6808befe29fa474f5ec7251540edd2cadbe5bd290e06963cf"
+  },
+  "updated": "2026-10-14"
+}

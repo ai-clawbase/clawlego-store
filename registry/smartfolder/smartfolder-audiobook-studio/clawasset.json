@@ -1,0 +1,33 @@
+{
+  "id": "smartfolder-audiobook-studio",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "有声书工作室",
+  "tagline": "把故事做成有声书:旁白和角色分不同声音,可垫背景音乐",
+  "summary": "一种作品类型——把一个故事、一本绘本或一篇文章做成有声书：旁白与角色分配不同声音（女声/男声/奶奶/爷爷/小孩，自动映射到这台机器的系统声音），段落自然停顿，可垫背景音乐（音乐工作室的成品可直接用，循环并首尾淡入淡出）；出整本 WAV、分章 WAV、逐句时间轴和跟读高亮/倍速的播放页。用系统自带语音合成（macOS say / Linux espeak-ng / Windows SAPI），离线可用，不依赖任何语音 API。随包携带 audiobook-studio 技能（把文字改成适合听的稿子）与固化的纯 Python 渲染器 narrate.py（只用标准库）。不会唱歌：儿歌做成节奏朗读 + 配乐。",
+  "version": "1.0.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_audiobook_studio",
+    "type": "clawmod"
+  },
+  "category": "life",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:headphones",
+  "accent": "#7048E8",
+  "tags": [
+    "作品",
+    "有声书",
+    "睡前故事",
+    "朗读"
+  ],
+  "updated": "2026-10-14",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_audiobook_studio/1.0.0/mod_audiobook_studio-1.0.0.clawmod"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "id": "smartfolder-sticker-studio",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "表情包工作室",
+  "tagline": "做一整套形象统一的表情包,每张都是微信表情规格的 PNG",
+  "summary": "一种作品类型——做一整套形象统一的表情包或头像：内置团子/猫/熊三种可换色的矢量角色、16 种表情（开心/大笑/爱你/收到/哭/生气/惊讶/晚安/害羞/思考/酷/无语/兴奋/晕/得意/难过）和 11 种道具，配白描边文字；某一张也可以自己画 SVG 或放生图结果。每张下载 240×240 透明底 PNG（微信表情规格，可切 2 倍图），一键下载全部，另有 640 头像和「聊天里的样子」预览。随包携带 sticker-studio 技能（常用 16 张套与配色）与固化的纯 Python 渲染器 stickers.py（只用标准库）。",
+  "version": "1.0.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_sticker_studio",
+    "type": "clawmod"
+  },
+  "category": "life",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:face-wink",
+  "accent": "#FAB005",
+  "tags": [
+    "作品",
+    "表情包",
+    "头像"
+  ],
+  "updated": "2026-10-14",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_sticker_studio/1.0.0/mod_sticker_studio-1.0.0.clawmod"
+  }
+}

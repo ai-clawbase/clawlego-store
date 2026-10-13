@@ -1,0 +1,32 @@
+{
+  "id": "smartfolder-recipe-book-studio",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "菜谱书工作室",
+  "tagline": "把家里的拿手菜整理成一本菜谱书,份量可换算、步骤带计时",
+  "summary": "一种作品类型——把家里的拿手菜（口述、聊天记录、手写菜谱照片）整理成一本菜谱书：封面、扉页、按分类的目录，每道菜一页（照片、配料换成克数并可按人数换算、步骤带计时器、小贴士、家人的原话），手机上边看边做，浏览器打印就是一本 A4 小书（每道菜新起一页）。随包携带 recipe-book-studio 技能（把「放一点」换成能照着做的量）与固化的纯 Python 渲染器 book.py（recipes.json 进、自包含 HTML 出，只用标准库）。",
+  "version": "1.0.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_recipe_book_studio",
+    "type": "clawmod"
+  },
+  "category": "life",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:restaurant",
+  "accent": "#C2410C",
+  "tags": [
+    "作品",
+    "菜谱",
+    "家庭"
+  ],
+  "updated": "2026-10-14",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_recipe_book_studio/1.0.0/mod_recipe_book_studio-1.0.0.clawmod"
+  }
+}

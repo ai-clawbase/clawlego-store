@@ -1,0 +1,29 @@
+{
+  "id": "skill-photobook-studio",
+  "kind": "brick",
+  "source": "hosted",
+  "name": "相册工作室手艺",
+  "tagline": "「相册工作室」这种作品的做法——任何能跑代码的智能体都能装",
+  "summary": "把一组照片做成回忆相册:全屏放映(推拉镜头、字幕、背景音乐,自动播放),切换一下就是能打印的相册书。旅行、宝宝成长、毕业、给爸妈的相册都行。 这是作品类型「相册工作室」的手艺（技能包）：SKILL.md 加参考文件和自带代码，按它做完把成品和交付清单 delivery.json 放进产出目录。ClawLego 实例装对应的作品类型即可；云端智能体按 README 里的命令安装。",
+  "category": "design",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "material-symbols:palette-outline",
+  "accent": "#C2410C",
+  "tags": [
+    "技能",
+    "手艺",
+    "作品类型",
+    "相册工作室"
+  ],
+  "version": "1.0.0",
+  "install": {
+    "type": "tarball",
+    "url": "https://download.clawlego.com/skills/photobook-studio/1.0.0/photobook-studio-1.0.0.tgz",
+    "sha256": "6eab998c01075df400ac6bff26606ce019bf32614e34c0531ae8f017d72868ff"
+  },
+  "updated": "2026-10-14"
+}

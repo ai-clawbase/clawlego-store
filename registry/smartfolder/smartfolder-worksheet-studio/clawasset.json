@@ -1,0 +1,34 @@
+{
+  "id": "smartfolder-worksheet-studio",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "练习卷工作室",
+  "tagline": "说一句要练什么,出一张能打印的 A4 练习卷或字帖,附答案页",
+  "summary": "一种作品类型——说一句要练什么，出一张能直接打印的 A4 练习卷或字帖：口算/竖式（题目与答案由随附程序按种子生成，不会算错，换一套题只换种子）、生字描红田字格、看拼音写词语、英语四线三格抄写、选择/填空/简答、作文方格稿纸，附可选打印的答案页。随包携带 worksheet-studio 技能与固化的纯 Python 渲染器 sheet.py（sheet.json 进、自包含 HTML 出，只用标准库）。",
+  "version": "1.0.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_worksheet_studio",
+    "type": "clawmod"
+  },
+  "category": "life",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:pen",
+  "accent": "#C92A2A",
+  "tags": [
+    "作品",
+    "练习卷",
+    "口算",
+    "字帖",
+    "学习"
+  ],
+  "updated": "2026-10-14",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_worksheet_studio/1.0.0/mod_worksheet_studio-1.0.0.clawmod"
+  }
+}

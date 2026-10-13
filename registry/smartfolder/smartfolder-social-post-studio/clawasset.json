@@ -1,0 +1,33 @@
+{
+  "id": "smartfolder-social-post-studio",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "图文笔记工作室",
+  "tagline": "做一篇拿去就能发的小红书图文或公众号文章",
+  "summary": "一种作品类型——说一个主题或丢一份素材，做成一篇拿去就能发的图文笔记。小红书：≤20 字标题 + 正文 + 话题 + 一套 1080×1440 轮播卡片（封面/清单/步骤/对比/金句/配图/结尾，6 种风格，每张可下载 PNG、可一次下载全部），标题正文话题一键复制；公众号：带内联样式、复制即可粘进编辑器的文章 + 2.35:1 封面图。随包携带 social-post-studio 技能（标题公式、卡片节奏、平台规则）与固化的纯 Python 渲染器 note.py（断行字号留白由程序算，--check 查平台限制与每张卡放不放得下，只用标准库）。不代发，发布由用户自己完成；装了小红书/公众号发布插件时可配合使用。",
+  "version": "1.0.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_social_post_studio",
+    "type": "clawmod"
+  },
+  "category": "design",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:image-copy",
+  "accent": "#E64980",
+  "tags": [
+    "作品",
+    "小红书",
+    "公众号",
+    "图文"
+  ],
+  "updated": "2026-10-14",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_social_post_studio/1.0.0/mod_social_post_studio-1.0.0.clawmod"
+  }
+}

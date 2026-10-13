@@ -1,0 +1,29 @@
+{
+  "id": "skill-resume-studio",
+  "kind": "brick",
+  "source": "hosted",
+  "name": "简历工作室手艺",
+  "tagline": "「简历工作室」这种作品的做法——任何能跑代码的智能体都能装",
+  "summary": "说说你的经历和想投的岗位,写成一份真的简历:按岗位挑经历、把职责改成有数字的成果,排成一页 A4(打印即 PDF);同一个链接在手机上就是你的个人主页。三套版式,可带照片。 这是作品类型「简历工作室」的手艺（技能包）：SKILL.md 加参考文件和自带代码，按它做完把成品和交付清单 delivery.json 放进产出目录。ClawLego 实例装对应的作品类型即可；云端智能体按 README 里的命令安装。",
+  "category": "design",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "material-symbols:palette-outline",
+  "accent": "#C2410C",
+  "tags": [
+    "技能",
+    "手艺",
+    "作品类型",
+    "简历工作室"
+  ],
+  "version": "1.0.0",
+  "install": {
+    "type": "tarball",
+    "url": "https://download.clawlego.com/skills/resume-studio/1.0.0/resume-studio-1.0.0.tgz",
+    "sha256": "21123af5011927c71b7997c4a90606d7fc1838ab9b119c10a5c630b4439b711e"
+  },
+  "updated": "2026-10-14"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "skill-social-post-studio",
+  "kind": "brick",
+  "source": "hosted",
+  "name": "图文笔记工作室手艺",
+  "tagline": "「图文笔记工作室」这种作品的做法——任何能跑代码的智能体都能装",
+  "summary": "说一个主题或丢一份素材,做成一篇能直接发的图文笔记:小红书标题 + 正文 + 话题 + 一套 3:4 轮播卡片(每张可下载 PNG);公众号文章复制即可粘进编辑器,带封面图。 这是作品类型「图文笔记工作室」的手艺（技能包）：SKILL.md 加参考文件和自带代码，按它做完把成品和交付清单 delivery.json 放进产出目录。ClawLego 实例装对应的作品类型即可；云端智能体按 README 里的命令安装。",
+  "category": "design",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "material-symbols:palette-outline",
+  "accent": "#C2410C",
+  "tags": [
+    "技能",
+    "手艺",
+    "作品类型",
+    "图文笔记工作室"
+  ],
+  "version": "1.0.0",
+  "install": {
+    "type": "tarball",
+    "url": "https://download.clawlego.com/skills/social-post-studio/1.0.0/social-post-studio-1.0.0.tgz",
+    "sha256": "91a1d2a1865b68e67cee1ea78bd61416ed23ba942409c9322139f89669413796"
+  },
+  "updated": "2026-10-14"
+}

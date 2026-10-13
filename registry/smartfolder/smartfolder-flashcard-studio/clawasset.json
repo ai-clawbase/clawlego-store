@@ -1,0 +1,34 @@
+{
+  "id": "smartfolder-flashcard-studio",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "闪卡工作室",
+  "tagline": "把要背的东西做成闪卡:网页上背、按记忆复习,附 Anki 卡组",
+  "summary": "一种作品类型——把要背的东西（单词、古诗词、公式、概念考点、一篇文章或一章课本）做成一副闪卡：网页上直接背（点卡翻面、按「不会/模糊/会了」莱特纳间隔复习、外语可朗读、看全部、打印成双面可裁剪卡片），同时生成可导入 Anki 的 .apkg（schema 11，已用官方 anki 26.9 导入验证）。随包携带 flashcard-studio 技能（一卡一点的拆卡方法）与固化的纯 Python 渲染器 cards.py（cards.json 进、背卡页 + .apkg 出，只用标准库 sqlite3/zipfile）。",
+  "version": "1.0.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_flashcard_studio",
+    "type": "clawmod"
+  },
+  "category": "life",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:card-stack",
+  "accent": "#5C7CFA",
+  "tags": [
+    "作品",
+    "闪卡",
+    "背单词",
+    "Anki",
+    "学习"
+  ],
+  "updated": "2026-10-14",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_flashcard_studio/1.0.0/mod_flashcard_studio-1.0.0.clawmod"
+  }
+}

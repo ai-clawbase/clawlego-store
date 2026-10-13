@@ -1,0 +1,29 @@
+{
+  "id": "skill-sticker-studio",
+  "kind": "brick",
+  "source": "hosted",
+  "name": "表情包工作室手艺",
+  "tagline": "「表情包工作室」这种作品的做法——任何能跑代码的智能体都能装",
+  "summary": "做一整套形象统一的表情包或头像:团子/猫/熊三种角色可换颜色,十几种表情配上你的口头禅;每张下载 240×240 PNG(微信表情规格),一键下载全部。 这是作品类型「表情包工作室」的手艺（技能包）：SKILL.md 加参考文件和自带代码，按它做完把成品和交付清单 delivery.json 放进产出目录。ClawLego 实例装对应的作品类型即可；云端智能体按 README 里的命令安装。",
+  "category": "design",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "material-symbols:palette-outline",
+  "accent": "#C2410C",
+  "tags": [
+    "技能",
+    "手艺",
+    "作品类型",
+    "表情包工作室"
+  ],
+  "version": "1.0.0",
+  "install": {
+    "type": "tarball",
+    "url": "https://download.clawlego.com/skills/sticker-studio/1.0.0/sticker-studio-1.0.0.tgz",
+    "sha256": "1995cd0604bf78d7081f653173e05abcff1aa95b589a53a4f38b853d7e86e277"
+  },
+  "updated": "2026-10-14"
+}

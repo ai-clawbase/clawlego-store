@@ -1,0 +1,33 @@
+{
+  "id": "smartfolder-chart-studio",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "图表工作室",
+  "tagline": "丢一份 CSV / Excel,做成一页看得懂的数据看板",
+  "summary": "一种作品类型——丢一份表格数据（CSV / Excel .xlsx / 手打几行）进来，做成一页看得懂的数据看板：关键数字（可比较变化/目标）、折线/面积、柱状（分组/堆叠/横向/排行）、饼图/环图、散点、明细表和结论；图是矢量 SVG、悬停看数值，12 栏自适应网格，手机电脑都能看、能打印。随包携带 chart-studio 技能（看板叙事指南）与固化的纯 Python 渲染器 chart.py（直接读 CSV/xlsx，分组汇总与万/亿格式由程序算，--check 校验列名并打印每个面板算出的数，只用标准库）。",
+  "version": "1.0.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_chart_studio",
+    "type": "clawmod"
+  },
+  "category": "design",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:chart-combo",
+  "accent": "#2F6FDB",
+  "tags": [
+    "作品",
+    "图表",
+    "数据看板",
+    "可视化"
+  ],
+  "updated": "2026-10-14",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_chart_studio/1.0.0/mod_chart_studio-1.0.0.clawmod"
+  }
+}

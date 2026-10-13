@@ -1,0 +1,32 @@
+{
+  "id": "smartfolder-travel-guide-studio",
+  "kind": "smartfolder",
+  "source": "hosted",
+  "name": "旅行手册工作室",
+  "tagline": "把一次旅行排成随身手册:每天的安排、导航、行李清单、预算",
+  "summary": "一种作品类型——说去哪、几天、想玩什么（订好的机票酒店也丢进来），排成一本随身旅行手册：行程总览、每天按时间排的安排（地点一点就能在高德/Google/Apple 地图导航，带交通方式与花费）、住宿、可勾选的行李清单（记在手机上）、预算汇总（按类别、按人）、紧急信息与小贴士；旅行当天打开自动跳到今天，一键导出日历 .ics，可打印。随包携带 travel-guide-studio 技能（排行程节奏与预算方法）与固化的纯 Python 渲染器 trip.py（trip.json 进、手册 + .ics 出，--check 查日期范围/缺天/时间顺序，只用标准库）。",
+  "version": "1.0.0",
+  "artifact": {
+    "asset": "mod",
+    "id": "mod_travel_guide_studio",
+    "type": "clawmod"
+  },
+  "category": "life",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:plane",
+  "accent": "#D9480F",
+  "tags": [
+    "作品",
+    "旅行",
+    "行程"
+  ],
+  "updated": "2026-10-14",
+  "install": {
+    "type": "clawmod",
+    "url": "https://download.clawlego.com/mods/mod_travel_guide_studio/1.0.0/mod_travel_guide_studio-1.0.0.clawmod"
+  }
+}
