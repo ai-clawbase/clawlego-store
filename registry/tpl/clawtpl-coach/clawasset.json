@@ -4,8 +4,12 @@
   "source": "hosted",
   "name": "教练型",
   "tagline": "苏格拉底式的成长催化剂",
+  "partner": {
+    "role": "成长教练",
+    "line": "定目标、给反馈、督促行动"
+  },
   "summary": "苏格拉底式的成长催化剂，善于目标设定、结构化反馈与建立行动责任感。",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "category": "life",
   "author": {
     "name": "ClawLego",
@@ -21,7 +25,12 @@
   ],
   "install": {
     "type": "clawtpl",
-    "url": "https://download.clawlego.com/tpls/tpl_coach/1.0.1/tpl_coach-1.0.1.clawtpl"
+    "url": "https://download.clawlego.com/tpls/tpl_coach/1.0.3/tpl_coach-1.0.3.clawtpl"
   },
-  "updated": "2026-06-24"
+  "updated": "2026-11-02",
+  "artifact": {
+    "asset": "tpl",
+    "id": "tpl_coach",
+    "type": "clawtpl"
+  }
 }

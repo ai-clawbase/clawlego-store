@@ -4,8 +4,12 @@
   "source": "hosted",
   "name": "分析型",
   "tagline": "数据分析与决策支持的理性思维者",
+  "partner": {
+    "role": "分析师",
+    "line": "看数据、做分析、给决策建议"
+  },
   "summary": "理性结构化的思维者，专注于数据分析、商业洞察与决策支持。",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "category": "general",
   "author": {
     "name": "ClawLego",
@@ -21,7 +25,12 @@
   ],
   "install": {
     "type": "clawtpl",
-    "url": "https://download.clawlego.com/tpls/tpl_analyst/1.0.1/tpl_analyst-1.0.1.clawtpl"
+    "url": "https://download.clawlego.com/tpls/tpl_analyst/1.0.3/tpl_analyst-1.0.3.clawtpl"
   },
-  "updated": "2026-06-24"
+  "updated": "2026-11-02",
+  "artifact": {
+    "asset": "tpl",
+    "id": "tpl_analyst",
+    "type": "clawtpl"
+  }
 }

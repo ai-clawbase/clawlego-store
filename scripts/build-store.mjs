@@ -261,6 +261,7 @@ for (const kind of KINDS) {
       install: installEntry,
     }
     if (m.app) entry.app = m.app
+    if (m.partner) entry.partner = m.partner
     entries.push(entry)
 
     if (!writeStore) continue
@@ -330,6 +331,7 @@ for (const kind of KINDS) {
       homepage: m.homepage || null,
       install: m.install || null,
       app: m.app || null,
+      partner: m.partner || null,
     })
   }
 }

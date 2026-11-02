@@ -4,8 +4,12 @@
   "source": "hosted",
   "name": "创作型",
   "tagline": "内容创作全流程闭环的工作基质",
+  "partner": {
+    "role": "内容创作者",
+    "line": "选题、起草、发布和复盘"
+  },
   "summary": "内容创作者的工作基质：观察 → 选题 → 起草 → 审阅 → 发布 → 复盘 全流程闭环。平台特化通过后装的 ClawMod 接入，同一实例可服务小红书、公众号、Mastodon 等渠道。",
-  "version": "3.2.0",
+  "version": "3.2.2",
   "category": "design",
   "author": {
     "name": "ClawLego",
@@ -21,7 +25,12 @@
   ],
   "install": {
     "type": "clawtpl",
-    "url": "https://download.clawlego.com/tpls/tpl_creator/3.2.0/tpl_creator-3.2.0.clawtpl"
+    "url": "https://download.clawlego.com/tpls/tpl_creator/3.2.2/tpl_creator-3.2.2.clawtpl"
   },
-  "updated": "2026-06-24"
+  "updated": "2026-11-02",
+  "artifact": {
+    "asset": "tpl",
+    "id": "tpl_creator",
+    "type": "clawtpl"
+  }
 }

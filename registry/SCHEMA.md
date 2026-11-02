@@ -78,6 +78,7 @@ registry/
 | `app` | `clawapp` 必需 | `{name,target,public,actions,requires,screenshots}`；用于下载前展示应用形态和对外能力 |
 | `artifact` |  | R2-hosted 官方条目的 clawasset 绑定 `{ asset, id, type }`，见「`artifact` 绑定」 |
 | `updated` |  | `YYYY-MM-DD`，用于排序 |
+| `partner` |  | 仅 `tpl`：它作为**伙伴角色**怎么出现 `{ role, line?, hidden? }`——角色名（研究员 / 税务师）、一句话定位、是否不作为伙伴角色提供。与模板 `_gene_meta.json` 的 `partner` 同义（starclaw3 `_design/partner-product.md` §5.2）；带 `vertical_app` 的模板是垂类伙伴，应用即它的后端 |
 
 ### `install` 字段
 
