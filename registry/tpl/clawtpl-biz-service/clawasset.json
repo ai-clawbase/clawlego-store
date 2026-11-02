@@ -1,0 +1,60 @@
+{
+  "id": "clawtpl-biz-service",
+  "kind": "tpl",
+  "source": "hosted",
+  "name": "客服小美 · 客服专员",
+  "tagline": "老板处理客户投诉、追踪售后工单、收集满意度、维护常见问题库",
+  "partner": {
+    "role": "客服专员",
+    "line": "老板处理客户投诉、追踪售后工单、收集满意度、维护常见问题库",
+    "name": "客服小美",
+    "dept": "客服",
+    "group": "enterprise",
+    "prompts": [
+      {
+        "label": "今日待处理工单",
+        "input": "今天有哪些客服工单需要处理？"
+      },
+      {
+        "label": "客户满意度报告",
+        "input": "生成本月客户满意度分析"
+      },
+      {
+        "label": "问题分类汇总",
+        "input": "最近投诉最多的是哪类问题？"
+      },
+      {
+        "label": "升级处理投诉",
+        "input": "帮我处理一个升级投诉："
+      }
+    ]
+  },
+  "summary": "帮助老板处理客户投诉、追踪售后工单、收集满意度、维护常见问题库。",
+  "version": "1.0.0",
+  "category": "service",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:headset",
+  "accent": "#C2457E",
+  "tags": [
+    "enterprise",
+    "starwork",
+    "客服",
+    "售后",
+    "工单",
+    "满意度"
+  ],
+  "install": {
+    "type": "clawtpl",
+    "url": "https://download.clawlego.com/tpls/tpl_biz_service/1.0.0/tpl_biz_service-1.0.0.clawtpl"
+  },
+  "artifact": {
+    "asset": "tpl",
+    "id": "tpl_biz_service",
+    "type": "clawtpl"
+  },
+  "updated": "2026-11-02"
+}

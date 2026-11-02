@@ -12,7 +12,7 @@
     "url": "https://github.com/ai-clawbase/clawlego-store.git",
     "ref": "main"
   },
-  "count": 91,
+  "count": 101,
   "entries": [
     {
       "id": "prompt-commit-message",
@@ -1422,6 +1422,416 @@
       }
     },
     {
+      "id": "clawtpl-biz-delivery",
+      "kind": "tpl",
+      "source": "hosted",
+      "name": "交付小王 · 交付专员",
+      "tagline": "老板跟踪订单物流、安排上门安装、确认客户验收、处理在途异常件",
+      "version": "1.0.0",
+      "category": "service",
+      "path": "registry/tpl/clawtpl-biz-delivery",
+      "manifest": "registry/tpl/clawtpl-biz-delivery/clawasset.json",
+      "install": {
+        "type": "clawtpl",
+        "url": "https://download.clawlego.com/tpls/tpl_biz_delivery/1.0.0/tpl_biz_delivery-1.0.0.clawtpl",
+        "target": null
+      },
+      "partner": {
+        "role": "交付专员",
+        "line": "老板跟踪订单物流、安排上门安装、确认客户验收、处理在途异常件",
+        "name": "交付小王",
+        "dept": "交付",
+        "group": "enterprise",
+        "prompts": [
+          {
+            "label": "在途订单状态",
+            "input": "当前有哪些在途订单？物流到哪了？"
+          },
+          {
+            "label": "今日安装计划",
+            "input": "今天有哪些上门安装任务？"
+          },
+          {
+            "label": "待签收确认",
+            "input": "哪些订单已到货待客户签收？"
+          },
+          {
+            "label": "处理异常件",
+            "input": "帮我处理一个物流异常件："
+          }
+        ]
+      }
+    },
+    {
+      "id": "clawtpl-biz-finance",
+      "kind": "tpl",
+      "source": "hosted",
+      "name": "财务小芳 · 财务管家",
+      "tagline": "完成日常记账、收支报表、资金流分析、税务提醒",
+      "version": "1.0.0",
+      "category": "service",
+      "path": "registry/tpl/clawtpl-biz-finance",
+      "manifest": "registry/tpl/clawtpl-biz-finance/clawasset.json",
+      "install": {
+        "type": "clawtpl",
+        "url": "https://download.clawlego.com/tpls/tpl_biz_finance/1.0.0/tpl_biz_finance-1.0.0.clawtpl",
+        "target": null
+      },
+      "partner": {
+        "role": "财务管家",
+        "line": "完成日常记账、收支报表、资金流分析、税务提醒",
+        "name": "财务小芳",
+        "dept": "财务",
+        "group": "enterprise",
+        "prompts": [
+          {
+            "label": "查看本月收支报表",
+            "input": "给我看看本月的收支情况"
+          },
+          {
+            "label": "帮我记一笔收入",
+            "input": "帮我记一笔收入："
+          },
+          {
+            "label": "分析本月利润",
+            "input": "分析一下本月的利润和成本结构"
+          },
+          {
+            "label": "检查未开票项目",
+            "input": "有哪些收款还没有开发票？"
+          }
+        ]
+      }
+    },
+    {
+      "id": "clawtpl-biz-hr",
+      "kind": "tpl",
+      "source": "hosted",
+      "name": "人事小慧 · 人事专员",
+      "tagline": "老板管理员工档案、排班考勤、招聘进度和劳动合规事项",
+      "version": "1.0.0",
+      "category": "service",
+      "path": "registry/tpl/clawtpl-biz-hr",
+      "manifest": "registry/tpl/clawtpl-biz-hr/clawasset.json",
+      "install": {
+        "type": "clawtpl",
+        "url": "https://download.clawlego.com/tpls/tpl_biz_hr/1.0.0/tpl_biz_hr-1.0.0.clawtpl",
+        "target": null
+      },
+      "partner": {
+        "role": "人事专员",
+        "line": "老板管理员工档案、排班考勤、招聘进度和劳动合规事项",
+        "name": "人事小慧",
+        "dept": "人力",
+        "group": "enterprise",
+        "prompts": [
+          {
+            "label": "今日排班情况",
+            "input": "今天的排班安排是什么？"
+          },
+          {
+            "label": "新增员工信息",
+            "input": "帮我录入一名新员工："
+          },
+          {
+            "label": "考勤异常汇总",
+            "input": "本周有哪些考勤异常？"
+          },
+          {
+            "label": "人事月报",
+            "input": "生成本月人事管理报告"
+          }
+        ]
+      }
+    },
+    {
+      "id": "clawtpl-biz-it",
+      "kind": "tpl",
+      "source": "hosted",
+      "name": "IT小智 · 数字化助手",
+      "tagline": "老板维护数字化系统、管理数据安全、选型数字化工具、管理API集成",
+      "version": "1.0.0",
+      "category": "service",
+      "path": "registry/tpl/clawtpl-biz-it",
+      "manifest": "registry/tpl/clawtpl-biz-it/clawasset.json",
+      "install": {
+        "type": "clawtpl",
+        "url": "https://download.clawlego.com/tpls/tpl_biz_it/1.0.0/tpl_biz_it-1.0.0.clawtpl",
+        "target": null
+      },
+      "partner": {
+        "role": "数字化助手",
+        "line": "老板维护数字化系统、管理数据安全、选型数字化工具、管理API集成",
+        "name": "IT小智",
+        "dept": "IT",
+        "group": "enterprise",
+        "prompts": [
+          {
+            "label": "系统运行状态",
+            "input": "当前各系统的运行状态是否正常？"
+          },
+          {
+            "label": "安全巡检报告",
+            "input": "生成本周数据安全巡检报告"
+          },
+          {
+            "label": "工具选型建议",
+            "input": "我需要一个工具来解决："
+          },
+          {
+            "label": "API集成状态",
+            "input": "查看当前所有 API 集成的健康状态"
+          }
+        ]
+      }
+    },
+    {
+      "id": "clawtpl-biz-ops",
+      "kind": "tpl",
+      "source": "hosted",
+      "name": "运营小营 · 运营助手",
+      "tagline": "老板监控日常运营数据、管理流程、策划活动、输出运营报告",
+      "version": "1.0.0",
+      "category": "service",
+      "path": "registry/tpl/clawtpl-biz-ops",
+      "manifest": "registry/tpl/clawtpl-biz-ops/clawasset.json",
+      "install": {
+        "type": "clawtpl",
+        "url": "https://download.clawlego.com/tpls/tpl_biz_ops/1.0.0/tpl_biz_ops-1.0.0.clawtpl",
+        "target": null
+      },
+      "partner": {
+        "role": "运营助手",
+        "line": "老板监控日常运营数据、管理流程、策划活动、输出运营报告",
+        "name": "运营小营",
+        "dept": "运营",
+        "group": "enterprise",
+        "prompts": [
+          {
+            "label": "今日运营日报",
+            "input": "生成今日运营数据日报"
+          },
+          {
+            "label": "数据异常预警",
+            "input": "今天有哪些数据异常需要关注？"
+          },
+          {
+            "label": "活动效果分析",
+            "input": "分析一下上次活动的效果"
+          },
+          {
+            "label": "流程优化建议",
+            "input": "当前哪个业务流程最需要优化？"
+          }
+        ]
+      }
+    },
+    {
+      "id": "clawtpl-biz-product",
+      "kind": "tpl",
+      "source": "hosted",
+      "name": "产品小策 · 产品顾问",
+      "tagline": "老板整理产品需求、做竞品分析、维护产品路线图、规划版本迭代",
+      "version": "1.0.0",
+      "category": "service",
+      "path": "registry/tpl/clawtpl-biz-product",
+      "manifest": "registry/tpl/clawtpl-biz-product/clawasset.json",
+      "install": {
+        "type": "clawtpl",
+        "url": "https://download.clawlego.com/tpls/tpl_biz_product/1.0.0/tpl_biz_product-1.0.0.clawtpl",
+        "target": null
+      },
+      "partner": {
+        "role": "产品顾问",
+        "line": "老板整理产品需求、做竞品分析、维护产品路线图、规划版本迭代",
+        "name": "产品小策",
+        "dept": "产品",
+        "group": "enterprise",
+        "prompts": [
+          {
+            "label": "整理本周需求",
+            "input": "帮我整理一下本周收到的产品需求"
+          },
+          {
+            "label": "竞品功能对比",
+            "input": "和竞品相比，我们在哪些功能上还有差距？"
+          },
+          {
+            "label": "更新产品路线图",
+            "input": "更新一下产品路线图，新增一个需求："
+          },
+          {
+            "label": "生成版本说明",
+            "input": "帮我生成下个版本的更新说明"
+          }
+        ]
+      }
+    },
+    {
+      "id": "clawtpl-biz-project",
+      "kind": "tpl",
+      "source": "hosted",
+      "name": "实施小陈 · 实施顾问",
+      "tagline": "老板管理实施项目全流程：方案部署、现场培训、上线支持、项目复盘",
+      "version": "1.0.0",
+      "category": "service",
+      "path": "registry/tpl/clawtpl-biz-project",
+      "manifest": "registry/tpl/clawtpl-biz-project/clawasset.json",
+      "install": {
+        "type": "clawtpl",
+        "url": "https://download.clawlego.com/tpls/tpl_biz_project/1.0.0/tpl_biz_project-1.0.0.clawtpl",
+        "target": null
+      },
+      "partner": {
+        "role": "实施顾问",
+        "line": "老板管理实施项目全流程：方案部署、现场培训、上线支持、项目复盘",
+        "name": "实施小陈",
+        "dept": "项目",
+        "group": "enterprise",
+        "prompts": [
+          {
+            "label": "项目进度汇总",
+            "input": "所有项目现在的进度是什么情况？"
+          },
+          {
+            "label": "今日里程碑",
+            "input": "今天有哪些项目里程碑需要推进？"
+          },
+          {
+            "label": "风险事项清单",
+            "input": "列出当前所有项目的风险事项"
+          },
+          {
+            "label": "客户验收材料",
+            "input": "帮我生成客户验收报告模板"
+          }
+        ]
+      }
+    },
+    {
+      "id": "clawtpl-biz-sales",
+      "kind": "tpl",
+      "source": "hosted",
+      "name": "销售小李 · 销售顾问",
+      "tagline": "老板管理客户关系、跟进商机、维护销售漏斗、催签合同",
+      "version": "1.0.0",
+      "category": "service",
+      "path": "registry/tpl/clawtpl-biz-sales",
+      "manifest": "registry/tpl/clawtpl-biz-sales/clawasset.json",
+      "install": {
+        "type": "clawtpl",
+        "url": "https://download.clawlego.com/tpls/tpl_biz_sales/1.0.0/tpl_biz_sales-1.0.0.clawtpl",
+        "target": null
+      },
+      "partner": {
+        "role": "销售顾问",
+        "line": "老板管理客户关系、跟进商机、维护销售漏斗、催签合同",
+        "name": "销售小李",
+        "dept": "销售",
+        "group": "enterprise",
+        "prompts": [
+          {
+            "label": "今日商机进展",
+            "input": "给我看看今天各商机的最新进展"
+          },
+          {
+            "label": "张总合同跟进",
+            "input": "张总合同现在什么情况？"
+          },
+          {
+            "label": "新增客户",
+            "input": "帮我登记一个新客户："
+          },
+          {
+            "label": "销售漏斗报告",
+            "input": "生成本月销售漏斗分析报告"
+          }
+        ]
+      }
+    },
+    {
+      "id": "clawtpl-biz-service",
+      "kind": "tpl",
+      "source": "hosted",
+      "name": "客服小美 · 客服专员",
+      "tagline": "老板处理客户投诉、追踪售后工单、收集满意度、维护常见问题库",
+      "version": "1.0.0",
+      "category": "service",
+      "path": "registry/tpl/clawtpl-biz-service",
+      "manifest": "registry/tpl/clawtpl-biz-service/clawasset.json",
+      "install": {
+        "type": "clawtpl",
+        "url": "https://download.clawlego.com/tpls/tpl_biz_service/1.0.0/tpl_biz_service-1.0.0.clawtpl",
+        "target": null
+      },
+      "partner": {
+        "role": "客服专员",
+        "line": "老板处理客户投诉、追踪售后工单、收集满意度、维护常见问题库",
+        "name": "客服小美",
+        "dept": "客服",
+        "group": "enterprise",
+        "prompts": [
+          {
+            "label": "今日待处理工单",
+            "input": "今天有哪些客服工单需要处理？"
+          },
+          {
+            "label": "客户满意度报告",
+            "input": "生成本月客户满意度分析"
+          },
+          {
+            "label": "问题分类汇总",
+            "input": "最近投诉最多的是哪类问题？"
+          },
+          {
+            "label": "升级处理投诉",
+            "input": "帮我处理一个升级投诉："
+          }
+        ]
+      }
+    },
+    {
+      "id": "clawtpl-biz-supply",
+      "kind": "tpl",
+      "source": "hosted",
+      "name": "采购小链 · 供应链专员",
+      "tagline": "老板管理采购计划、跟踪供应商、监控库存预警、追踪到货进度",
+      "version": "1.0.0",
+      "category": "service",
+      "path": "registry/tpl/clawtpl-biz-supply",
+      "manifest": "registry/tpl/clawtpl-biz-supply/clawasset.json",
+      "install": {
+        "type": "clawtpl",
+        "url": "https://download.clawlego.com/tpls/tpl_biz_supply/1.0.0/tpl_biz_supply-1.0.0.clawtpl",
+        "target": null
+      },
+      "partner": {
+        "role": "供应链专员",
+        "line": "老板管理采购计划、跟踪供应商、监控库存预警、追踪到货进度",
+        "name": "采购小链",
+        "dept": "供应链",
+        "group": "enterprise",
+        "prompts": [
+          {
+            "label": "库存预警清单",
+            "input": "哪些商品库存低于安全线？"
+          },
+          {
+            "label": "待采购物料汇总",
+            "input": "本周需要采购哪些物料？"
+          },
+          {
+            "label": "联系供应商",
+            "input": "帮我查一下供应商联系方式："
+          },
+          {
+            "label": "审批补货申请",
+            "input": "有哪些待审批的补货申请？"
+          }
+        ]
+      }
+    },
+    {
       "id": "clawtpl-clawdesk",
       "kind": "tpl",
       "source": "hosted",
@@ -1438,7 +1848,8 @@
       },
       "partner": {
         "role": "客服主管",
-        "line": "接住各渠道的客服会话"
+        "line": "接住各渠道的客服会话",
+        "group": "vertical"
       }
     },
     {
@@ -1458,7 +1869,8 @@
       },
       "partner": {
         "role": "税务师",
-        "line": "报税、审税务报告、答税务问题"
+        "line": "报税、审税务报告、答税务问题",
+        "group": "vertical"
       }
     },
     {
@@ -1598,7 +2010,8 @@
       },
       "partner": {
         "role": "知识库管理员",
-        "line": "把资料编成可查的知识库"
+        "line": "把资料编成可查的知识库",
+        "group": "vertical"
       }
     },
     {

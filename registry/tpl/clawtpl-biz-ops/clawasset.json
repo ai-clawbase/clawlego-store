@@ -1,0 +1,60 @@
+{
+  "id": "clawtpl-biz-ops",
+  "kind": "tpl",
+  "source": "hosted",
+  "name": "运营小营 · 运营助手",
+  "tagline": "老板监控日常运营数据、管理流程、策划活动、输出运营报告",
+  "partner": {
+    "role": "运营助手",
+    "line": "老板监控日常运营数据、管理流程、策划活动、输出运营报告",
+    "name": "运营小营",
+    "dept": "运营",
+    "group": "enterprise",
+    "prompts": [
+      {
+        "label": "今日运营日报",
+        "input": "生成今日运营数据日报"
+      },
+      {
+        "label": "数据异常预警",
+        "input": "今天有哪些数据异常需要关注？"
+      },
+      {
+        "label": "活动效果分析",
+        "input": "分析一下上次活动的效果"
+      },
+      {
+        "label": "流程优化建议",
+        "input": "当前哪个业务流程最需要优化？"
+      }
+    ]
+  },
+  "summary": "帮助老板监控日常运营数据、管理流程、策划活动、输出运营报告。",
+  "version": "1.0.0",
+  "category": "service",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:dashboard",
+  "accent": "#E8772E",
+  "tags": [
+    "enterprise",
+    "starwork",
+    "运营",
+    "数据监控",
+    "活动策划",
+    "流程管理"
+  ],
+  "install": {
+    "type": "clawtpl",
+    "url": "https://download.clawlego.com/tpls/tpl_biz_ops/1.0.0/tpl_biz_ops-1.0.0.clawtpl"
+  },
+  "artifact": {
+    "asset": "tpl",
+    "id": "tpl_biz_ops",
+    "type": "clawtpl"
+  },
+  "updated": "2026-11-02"
+}

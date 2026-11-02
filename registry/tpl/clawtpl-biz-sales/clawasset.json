@@ -1,0 +1,60 @@
+{
+  "id": "clawtpl-biz-sales",
+  "kind": "tpl",
+  "source": "hosted",
+  "name": "销售小李 · 销售顾问",
+  "tagline": "老板管理客户关系、跟进商机、维护销售漏斗、催签合同",
+  "partner": {
+    "role": "销售顾问",
+    "line": "老板管理客户关系、跟进商机、维护销售漏斗、催签合同",
+    "name": "销售小李",
+    "dept": "销售",
+    "group": "enterprise",
+    "prompts": [
+      {
+        "label": "今日商机进展",
+        "input": "给我看看今天各商机的最新进展"
+      },
+      {
+        "label": "张总合同跟进",
+        "input": "张总合同现在什么情况？"
+      },
+      {
+        "label": "新增客户",
+        "input": "帮我登记一个新客户："
+      },
+      {
+        "label": "销售漏斗报告",
+        "input": "生成本月销售漏斗分析报告"
+      }
+    ]
+  },
+  "summary": "帮助老板管理客户关系、跟进商机、维护销售漏斗、催签合同。随时更新每个客户的进展，让每一个商机都不遗漏。",
+  "version": "1.0.0",
+  "category": "service",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:growth",
+  "accent": "#D64545",
+  "tags": [
+    "enterprise",
+    "starwork",
+    "销售",
+    "客户",
+    "商机",
+    "CRM"
+  ],
+  "install": {
+    "type": "clawtpl",
+    "url": "https://download.clawlego.com/tpls/tpl_biz_sales/1.0.0/tpl_biz_sales-1.0.0.clawtpl"
+  },
+  "artifact": {
+    "asset": "tpl",
+    "id": "tpl_biz_sales",
+    "type": "clawtpl"
+  },
+  "updated": "2026-11-02"
+}

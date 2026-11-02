@@ -1,0 +1,60 @@
+{
+  "id": "clawtpl-biz-supply",
+  "kind": "tpl",
+  "source": "hosted",
+  "name": "采购小链 · 供应链专员",
+  "tagline": "老板管理采购计划、跟踪供应商、监控库存预警、追踪到货进度",
+  "partner": {
+    "role": "供应链专员",
+    "line": "老板管理采购计划、跟踪供应商、监控库存预警、追踪到货进度",
+    "name": "采购小链",
+    "dept": "供应链",
+    "group": "enterprise",
+    "prompts": [
+      {
+        "label": "库存预警清单",
+        "input": "哪些商品库存低于安全线？"
+      },
+      {
+        "label": "待采购物料汇总",
+        "input": "本周需要采购哪些物料？"
+      },
+      {
+        "label": "联系供应商",
+        "input": "帮我查一下供应商联系方式："
+      },
+      {
+        "label": "审批补货申请",
+        "input": "有哪些待审批的补货申请？"
+      }
+    ]
+  },
+  "summary": "帮助老板管理采购计划、跟踪供应商、监控库存预警、追踪到货进度。",
+  "version": "1.0.0",
+  "category": "service",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:delivery-truck",
+  "accent": "#13A085",
+  "tags": [
+    "enterprise",
+    "starwork",
+    "供应链",
+    "采购",
+    "库存",
+    "供应商"
+  ],
+  "install": {
+    "type": "clawtpl",
+    "url": "https://download.clawlego.com/tpls/tpl_biz_supply/1.0.0/tpl_biz_supply-1.0.0.clawtpl"
+  },
+  "artifact": {
+    "asset": "tpl",
+    "id": "tpl_biz_supply",
+    "type": "clawtpl"
+  },
+  "updated": "2026-11-02"
+}

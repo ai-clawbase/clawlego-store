@@ -1,0 +1,62 @@
+{
+  "id": "clawtpl-biz-hr",
+  "kind": "tpl",
+  "source": "hosted",
+  "name": "人事小慧 · 人事专员",
+  "tagline": "老板管理员工档案、排班考勤、招聘进度和劳动合规事项",
+  "partner": {
+    "role": "人事专员",
+    "line": "老板管理员工档案、排班考勤、招聘进度和劳动合规事项",
+    "name": "人事小慧",
+    "dept": "人力",
+    "group": "enterprise",
+    "prompts": [
+      {
+        "label": "今日排班情况",
+        "input": "今天的排班安排是什么？"
+      },
+      {
+        "label": "新增员工信息",
+        "input": "帮我录入一名新员工："
+      },
+      {
+        "label": "考勤异常汇总",
+        "input": "本周有哪些考勤异常？"
+      },
+      {
+        "label": "人事月报",
+        "input": "生成本月人事管理报告"
+      }
+    ]
+  },
+  "summary": "帮助老板管理员工档案、排班考勤、招聘进度和劳动合规事项。让人事管理不再靠表格，用对话就能完成。",
+  "version": "1.0.0",
+  "category": "service",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:user-multiple",
+  "accent": "#9B5DE5",
+  "tags": [
+    "enterprise",
+    "starwork",
+    "人力",
+    "人事",
+    "HR",
+    "排班",
+    "考勤",
+    "招聘"
+  ],
+  "install": {
+    "type": "clawtpl",
+    "url": "https://download.clawlego.com/tpls/tpl_biz_hr/1.0.0/tpl_biz_hr-1.0.0.clawtpl"
+  },
+  "artifact": {
+    "asset": "tpl",
+    "id": "tpl_biz_hr",
+    "type": "clawtpl"
+  },
+  "updated": "2026-11-02"
+}

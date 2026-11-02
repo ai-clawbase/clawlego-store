@@ -1,0 +1,60 @@
+{
+  "id": "clawtpl-biz-project",
+  "kind": "tpl",
+  "source": "hosted",
+  "name": "实施小陈 · 实施顾问",
+  "tagline": "老板管理实施项目全流程：方案部署、现场培训、上线支持、项目复盘",
+  "partner": {
+    "role": "实施顾问",
+    "line": "老板管理实施项目全流程：方案部署、现场培训、上线支持、项目复盘",
+    "name": "实施小陈",
+    "dept": "项目",
+    "group": "enterprise",
+    "prompts": [
+      {
+        "label": "项目进度汇总",
+        "input": "所有项目现在的进度是什么情况？"
+      },
+      {
+        "label": "今日里程碑",
+        "input": "今天有哪些项目里程碑需要推进？"
+      },
+      {
+        "label": "风险事项清单",
+        "input": "列出当前所有项目的风险事项"
+      },
+      {
+        "label": "客户验收材料",
+        "input": "帮我生成客户验收报告模板"
+      }
+    ]
+  },
+  "summary": "帮助老板管理实施项目全流程：方案部署、现场培训、上线支持、项目复盘。",
+  "version": "1.0.0",
+  "category": "service",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:task-complete",
+  "accent": "#B7791F",
+  "tags": [
+    "enterprise",
+    "starwork",
+    "项目",
+    "实施",
+    "培训",
+    "上线"
+  ],
+  "install": {
+    "type": "clawtpl",
+    "url": "https://download.clawlego.com/tpls/tpl_biz_project/1.0.0/tpl_biz_project-1.0.0.clawtpl"
+  },
+  "artifact": {
+    "asset": "tpl",
+    "id": "tpl_biz_project",
+    "type": "clawtpl"
+  },
+  "updated": "2026-11-02"
+}

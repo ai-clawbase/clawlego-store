@@ -1,0 +1,60 @@
+{
+  "id": "clawtpl-biz-product",
+  "kind": "tpl",
+  "source": "hosted",
+  "name": "产品小策 · 产品顾问",
+  "tagline": "老板整理产品需求、做竞品分析、维护产品路线图、规划版本迭代",
+  "partner": {
+    "role": "产品顾问",
+    "line": "老板整理产品需求、做竞品分析、维护产品路线图、规划版本迭代",
+    "name": "产品小策",
+    "dept": "产品",
+    "group": "enterprise",
+    "prompts": [
+      {
+        "label": "整理本周需求",
+        "input": "帮我整理一下本周收到的产品需求"
+      },
+      {
+        "label": "竞品功能对比",
+        "input": "和竞品相比，我们在哪些功能上还有差距？"
+      },
+      {
+        "label": "更新产品路线图",
+        "input": "更新一下产品路线图，新增一个需求："
+      },
+      {
+        "label": "生成版本说明",
+        "input": "帮我生成下个版本的更新说明"
+      }
+    ]
+  },
+  "summary": "帮助老板整理产品需求、做竞品分析、维护产品路线图、规划版本迭代。",
+  "version": "1.0.0",
+  "category": "service",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:idea",
+  "accent": "#6D5BD0",
+  "tags": [
+    "enterprise",
+    "starwork",
+    "产品",
+    "需求",
+    "竞品分析",
+    "路线图"
+  ],
+  "install": {
+    "type": "clawtpl",
+    "url": "https://download.clawlego.com/tpls/tpl_biz_product/1.0.0/tpl_biz_product-1.0.0.clawtpl"
+  },
+  "artifact": {
+    "asset": "tpl",
+    "id": "tpl_biz_product",
+    "type": "clawtpl"
+  },
+  "updated": "2026-11-02"
+}

@@ -1,0 +1,61 @@
+{
+  "id": "clawtpl-biz-it",
+  "kind": "tpl",
+  "source": "hosted",
+  "name": "IT小智 · 数字化助手",
+  "tagline": "老板维护数字化系统、管理数据安全、选型数字化工具、管理API集成",
+  "partner": {
+    "role": "数字化助手",
+    "line": "老板维护数字化系统、管理数据安全、选型数字化工具、管理API集成",
+    "name": "IT小智",
+    "dept": "IT",
+    "group": "enterprise",
+    "prompts": [
+      {
+        "label": "系统运行状态",
+        "input": "当前各系统的运行状态是否正常？"
+      },
+      {
+        "label": "安全巡检报告",
+        "input": "生成本周数据安全巡检报告"
+      },
+      {
+        "label": "工具选型建议",
+        "input": "我需要一个工具来解决："
+      },
+      {
+        "label": "API集成状态",
+        "input": "查看当前所有 API 集成的健康状态"
+      }
+    ]
+  },
+  "summary": "帮助老板维护数字化系统、管理数据安全、选型数字化工具、管理API集成。",
+  "version": "1.0.0",
+  "category": "service",
+  "author": {
+    "name": "ClawLego",
+    "url": "https://clawlego.com"
+  },
+  "license": "MIT",
+  "icon": "carbon:security",
+  "accent": "#3558DA",
+  "tags": [
+    "enterprise",
+    "starwork",
+    "IT",
+    "数字化",
+    "系统维护",
+    "数据安全",
+    "API集成"
+  ],
+  "install": {
+    "type": "clawtpl",
+    "url": "https://download.clawlego.com/tpls/tpl_biz_it/1.0.0/tpl_biz_it-1.0.0.clawtpl"
+  },
+  "artifact": {
+    "asset": "tpl",
+    "id": "tpl_biz_it",
+    "type": "clawtpl"
+  },
+  "updated": "2026-11-02"
+}
